@@ -1,2 +1,2 @@
-export {environment} from './environment';
-export {TimeTraxAppComponent} from './time-trax.component';
+export * from './environment';
+export * from './time-trax.component';
