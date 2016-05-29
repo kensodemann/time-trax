@@ -5,7 +5,7 @@ describe('time-trax App', function() {
 
   beforeEach(() => {
     page = new TimeTraxPage();
-  })
+  });
 
   it('should display message saying app works', () => {
     page.navigateTo();

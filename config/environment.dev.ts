@@ -1,3 +1,4 @@
 export const environment = {
-  production: false
+  production: false,
+  dataService: 'http://localhost:8080'
 };
