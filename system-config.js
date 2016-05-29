@@ -2,9 +2,27 @@
  * User Configuration.
  **********************************************************************************************/
 /** Map relative paths to URLs. */
-var map = {};
+var map = {
+    '@angular2-material': 'vendor/@angular2-material'
+};
 /** User packages configuration. */
 var packages = {};
+// put the names of any of your Material components here
+var materialPkgs = [
+    'button',
+    'core',
+    'icon',
+    'list',
+    'sidenav',
+    'toolbar'
+];
+materialPkgs.forEach(function (pkg) {
+    packages[("@angular2-material/" + pkg)] = {
+        format: 'cjs',
+        defaultExtension: 'js',
+        main: pkg + ".js"
+    };
+});
 ////////////////////////////////////////////////////////////////////////////////////////////////
 /***********************************************************************************************
  * Everything underneath this line is managed by the CLI.
@@ -23,6 +41,8 @@ var barrels = [
     // App specific barrels.
     'app',
     'app/shared',
+    'app/+projects',
+    'app/+timesheet',
 ];
 var cliSystemConfigPackages = {};
 barrels.forEach(function (barrelName) {
