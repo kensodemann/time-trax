@@ -50,6 +50,10 @@ const barrels: string[] = [
   'app/shared',
   'app/+projects',
   'app/+timesheet',
+  'app/+timesheet-history',
+  'app/+time-report',
+  'app/+about',
+  'app/+logout',
   /** @cli-barrel */
 ];
 

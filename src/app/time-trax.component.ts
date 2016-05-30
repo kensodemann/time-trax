@@ -8,6 +8,10 @@ import { MdToolbar } from '@angular2-material/toolbar';
 import { ProjectsComponent } from './+projects';
 import { Routes , ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from '@angular/router';
 import { TimesheetComponent } from './+timesheet';
+import { TimesheetHistoryComponent } from './+timesheet-history';
+import { TimeReportComponent } from './+time-report';
+import { AboutComponent } from './+about';
+import { LogoutComponent } from './+logout';
 
 @Component({
   moduleId: module.id,
@@ -19,7 +23,11 @@ import { TimesheetComponent } from './+timesheet';
 })
 @Routes([
   {path: '/projects', component: ProjectsComponent},
-  {path: '/timesheet', component: TimesheetComponent}
+  {path: '/timesheet/:id', component: TimesheetComponent},
+  {path: '/timesheet-history', component: TimesheetHistoryComponent},
+  {path: '/time-report/:id', component: TimeReportComponent},
+  {path: '/about', component: AboutComponent},
+  {path: '/logout', component: LogoutComponent}
 ])
 export class TimeTraxAppComponent implements OnInit {
   title = 'time-trax works!';
