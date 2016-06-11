@@ -6,6 +6,7 @@ import { MD_LIST_DIRECTIVES } from '@angular2-material/list';
 import { MD_RIPPLE_DIRECTIVES } from '@angular2-material/core';
 import { MD_SIDENAV_DIRECTIVES } from '@angular2-material/sidenav';
 import { MdToolbar } from '@angular2-material/toolbar';
+import { ConfigureStorage } from "h5webstorage";
 import { ROUTER_DIRECTIVES} from '@angular/router';
 
 @Component({
@@ -14,7 +15,7 @@ import { ROUTER_DIRECTIVES} from '@angular/router';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.css'],
   directives: [MdButton, MdIcon, MD_LIST_DIRECTIVES, MD_RIPPLE_DIRECTIVES, MD_SIDENAV_DIRECTIVES, MdToolbar, ROUTER_DIRECTIVES],
-  providers: [MdIconRegistry]
+  providers: [MdIconRegistry, ConfigureStorage({ prefix: "time-trax-" })]
 })
 export class AppComponent implements OnInit {
   title = 'time-trax works!';
