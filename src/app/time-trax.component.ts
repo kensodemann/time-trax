@@ -11,7 +11,8 @@ import { TimesheetComponent } from './+timesheet';
 import { TimesheetHistoryComponent } from './+timesheet-history';
 import { TimeReportComponent } from './+time-report';
 import { AboutComponent } from './+about';
-import { LogoutComponent } from './+logout';
+import { LoginComponent } from './authentication/+login';
+import { LogoutComponent } from './authentication/+logout';
 
 @Component({
   moduleId: module.id,
@@ -27,7 +28,8 @@ import { LogoutComponent } from './+logout';
   {path: '/timesheet-history', component: TimesheetHistoryComponent},
   {path: '/time-report/:id', component: TimeReportComponent},
   {path: '/about', component: AboutComponent},
-  {path: '/logout', component: LogoutComponent}
+  {path: '/authentication/login', component: LoginComponent},
+  {path: '/authentication/logout', component: LogoutComponent}
 ])
 export class TimeTraxAppComponent implements OnInit {
   title = 'time-trax works!';
