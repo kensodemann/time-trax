@@ -53,7 +53,8 @@ const barrels: string[] = [
   'app/+timesheet-history',
   'app/+time-report',
   'app/+about',
-  'app/+logout',
+  'app/authentication/+logout',
+  'app/authentication/+login',
   /** @cli-barrel */
 ];
 
