@@ -5,18 +5,18 @@ import {
   it,
   inject
 } from '@angular/core/testing';
-import { TimeTraxAppComponent } from '../app/time-trax.component';
+import { AppComponent } from '../app/app.component';
 
-beforeEachProviders(() => [TimeTraxAppComponent]);
+beforeEachProviders(() => [AppComponent]);
 
 describe('App: TimeTrax', () => {
   it('should create the app',
-      inject([TimeTraxAppComponent], (app: TimeTraxAppComponent) => {
+      inject([AppComponent], (app: AppComponent) => {
     expect(app).toBeTruthy();
   }));
 
   it('should have as title \'time-trax works!\'',
-      inject([TimeTraxAppComponent], (app: TimeTraxAppComponent) => {
+      inject([AppComponent], (app: AppComponent) => {
     expect(app.title).toEqual('time-trax works!');
   }));
 });

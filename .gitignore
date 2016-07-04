@@ -10,6 +10,10 @@
 
 # IDEs and editors
 /.idea
+.project
+.classpath
+*.launch
+.settings/
 
 # misc
 /.sass-cache
@@ -19,6 +23,8 @@
 npm-debug.log
 testem.log
 /typings
+.swp
+**/*.swp
 
 # e2e
 /e2e/*.js
@@ -26,3 +32,4 @@ testem.log
 
 #System Files
 .DS_Store
+Thumbs.db

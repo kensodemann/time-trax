@@ -1,2 +1,2 @@
 export * from './environment';
-export * from './time-trax.component';
+export * from './app.component';
