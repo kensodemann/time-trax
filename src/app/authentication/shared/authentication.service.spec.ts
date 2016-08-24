@@ -1,13 +1,4 @@
-import {
-  afterEach,
-  async,
-  beforeEach,
-  beforeEachProviders,
-  it,
-  describe,
-  expect,
-  inject
-} from '@angular/core/testing';
+import { addProviders, async, inject } from '@angular/core/testing';
 import { provide } from '@angular/core';
 import { HTTP_PROVIDERS, XHRBackend, RequestMethod, Response, ResponseOptions } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
@@ -15,11 +6,13 @@ import { AuthenticationService } from './authentication.service';
 import { environment } from '../../environment';
 
 describe('Authentication Service', () => {
-  beforeEachProviders(() => [
-    HTTP_PROVIDERS,
-    provide(XHRBackend, { useClass: MockBackend }),
-    AuthenticationService
-  ]);
+  beforeEach(() => {
+    addProviders([
+      HTTP_PROVIDERS,
+      provide(XHRBackend, { useClass: MockBackend }),
+      AuthenticationService
+    ]);
+  });
 
   it('should exist',
     inject([AuthenticationService], (service: AuthenticationService) => {

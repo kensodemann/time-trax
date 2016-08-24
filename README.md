@@ -1,17 +1,31 @@
-# Time Trax
+# TimeTrax
 
-This project is being used to develop a sample Angular2 application using the
-Angular2 CLI. I also hope to use the Angular2 Material library for this.
+This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.10.
 
-Since some of the libraries used are in RC status I don't expect too many fundamental
-changes to be required. The Material library is in Alpha at this time, so I expect
-some issues there.
+## Development server
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-Milestones:
+## Code scaffolding
 
-* get a base skeleton up and running
-* add authentication
-* add the project list and editor
-* add the current timesheet and task editor
-* add the time report
-* add prior timesheet reporting
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/route/class`.
+
+## Build
+
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+
+## Running unit tests
+
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+## Running end-to-end tests
+
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/). 
+Before running the tests make sure you are serving the app via `ng serve`.
+
+## Deploying to Github Pages
+
+Run `ng github-pages:deploy` to deploy to Github Pages.
+
+## Further help
+
+To get more help on the `angular-cli` use `ng --help` or go check out the [Angular-CLI README](https://github.com/angular/angular-cli/blob/master/README.md).

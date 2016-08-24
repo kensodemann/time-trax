@@ -1,12 +1,4 @@
-import {
-  beforeEach,
-  beforeEachProviders,
-  describe,
-  expect,
-  it,
-  inject,
-} from '@angular/core/testing';
-import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testing';
+import {addProviders, ComponentFixture, TestComponentBuilder, inject} from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { LoginComponent } from './login.component';
@@ -14,15 +6,18 @@ import { LoginComponent } from './login.component';
 describe('Component: Login', () => {
   let builder: TestComponentBuilder;
 
-  beforeEachProviders(() => [LoginComponent]);
-  beforeEach(inject([TestComponentBuilder], function (tcb: TestComponentBuilder) {
+  beforeEach(() => {
+    addProviders([LoginComponent]);
+  });
+
+  beforeEach(inject([TestComponentBuilder], function(tcb: TestComponentBuilder) {
     builder = tcb;
   }));
 
   it('should inject the component', inject([LoginComponent],
-      (component: LoginComponent) => {
-    expect(component).toBeTruthy();
-  }));
+    (component: LoginComponent) => {
+      expect(component).toBeTruthy();
+    }));
 
   it('should create the component', inject([], () => {
     return builder.createAsync(LoginComponentTestController)

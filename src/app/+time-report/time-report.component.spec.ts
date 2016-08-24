@@ -1,12 +1,4 @@
-import {
-  beforeEach,
-  beforeEachProviders,
-  describe,
-  expect,
-  it,
-  inject,
-} from '@angular/core/testing';
-import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testing';
+import {addProviders, ComponentFixture, inject, TestComponentBuilder} from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { TimeReportComponent } from './time-report.component';
@@ -14,15 +6,18 @@ import { TimeReportComponent } from './time-report.component';
 describe('Component: TimeReport', () => {
   let builder: TestComponentBuilder;
 
-  beforeEachProviders(() => [TimeReportComponent]);
-  beforeEach(inject([TestComponentBuilder], function (tcb: TestComponentBuilder) {
+  beforeEach(() => {
+    addProviders([TimeReportComponent]);
+  });
+
+  beforeEach(inject([TestComponentBuilder], function(tcb: TestComponentBuilder) {
     builder = tcb;
   }));
 
   it('should inject the component', inject([TimeReportComponent],
-      (component: TimeReportComponent) => {
-    expect(component).toBeTruthy();
-  }));
+    (component: TimeReportComponent) => {
+      expect(component).toBeTruthy();
+    }));
 
   it('should create the component', inject([], () => {
     return builder.createAsync(TimeReportComponentTestController)
