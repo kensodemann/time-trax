@@ -1,12 +1,4 @@
-import {
-  beforeEach,
-  beforeEachProviders,
-  describe,
-  expect,
-  it,
-  inject,
-} from '@angular/core/testing';
-import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testing';
+import { addProviders, ComponentFixture, inject, TestComponentBuilder } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { TimesheetHistoryComponent } from './timesheet-history.component';
@@ -14,15 +6,18 @@ import { TimesheetHistoryComponent } from './timesheet-history.component';
 describe('Component: TimesheetHistory', () => {
   let builder: TestComponentBuilder;
 
-  beforeEachProviders(() => [TimesheetHistoryComponent]);
-  beforeEach(inject([TestComponentBuilder], function (tcb: TestComponentBuilder) {
+  beforeEach(() => {
+    addProviders([TimesheetHistoryComponent]);
+  })
+
+  beforeEach(inject([TestComponentBuilder], function(tcb: TestComponentBuilder) {
     builder = tcb;
   }));
 
   it('should inject the component', inject([TimesheetHistoryComponent],
-      (component: TimesheetHistoryComponent) => {
-    expect(component).toBeTruthy();
-  }));
+    (component: TimesheetHistoryComponent) => {
+      expect(component).toBeTruthy();
+    }));
 
   it('should create the component', inject([], () => {
     return builder.createAsync(TimesheetHistoryComponentTestController)

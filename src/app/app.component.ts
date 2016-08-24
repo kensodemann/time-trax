@@ -3,6 +3,7 @@ import { environment } from './environment';
 import { MdButton } from '@angular2-material/button';
 import { MdIcon, MdIconRegistry } from '@angular2-material/icon';
 import { MD_LIST_DIRECTIVES } from '@angular2-material/list';
+import { MD_RIPPLE_DIRECTIVES } from '@angular2-material/core';
 import { MD_SIDENAV_DIRECTIVES } from '@angular2-material/sidenav';
 import { MdToolbar } from '@angular2-material/toolbar';
 import { ROUTER_DIRECTIVES} from '@angular/router';
@@ -12,7 +13,7 @@ import { ROUTER_DIRECTIVES} from '@angular/router';
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.css'],
-  directives: [MdButton, MdIcon, MD_LIST_DIRECTIVES, MD_SIDENAV_DIRECTIVES, MdToolbar, ROUTER_DIRECTIVES],
+  directives: [MdButton, MdIcon, MD_LIST_DIRECTIVES, MD_RIPPLE_DIRECTIVES, MD_SIDENAV_DIRECTIVES, MdToolbar, ROUTER_DIRECTIVES],
   providers: [MdIconRegistry]
 })
 export class AppComponent implements OnInit {
