@@ -1,15 +1,23 @@
 import { addProviders, async, inject } from '@angular/core/testing';
 import { provide } from '@angular/core';
 import { HTTP_PROVIDERS, XHRBackend, RequestMethod, Response, ResponseOptions } from '@angular/http';
+import { LocalStorage } from 'h5webstorage';
 import { MockBackend, MockConnection } from '@angular/http/testing';
+import { AuthenticationTokenService } from './authentication-token.service';
 import { AuthenticationService } from './authentication.service';
 import { environment } from '../../environment';
 
 describe('Authentication Service', () => {
+  let localStorage: Object;
+
+  beforeEach(() => { localStorage = {}; });
+
   beforeEach(() => {
     addProviders([
       HTTP_PROVIDERS,
+      provide(LocalStorage, { useValue: localStorage }),
       provide(XHRBackend, { useClass: MockBackend }),
+      AuthenticationTokenService,
       AuthenticationService
     ]);
   });
@@ -21,13 +29,14 @@ describe('Authentication Service', () => {
 
   describe('login', () => {
     it('posts to the login endpoint',
-      inject([XHRBackend, AuthenticationService], (mockBackend, service: AuthenticationService) => {
+      inject([XHRBackend, AuthenticationTokenService, AuthenticationService], (mockBackend, authenticationTokenService: AuthenticationTokenService, service: AuthenticationService) => {
         let connection: MockConnection;
         let credentials = {
           username: 'SuperBob',
           password: 'BigHarrySquidPant$'
         };
         mockBackend.connections.subscribe(c => connection = c);
+        spyOn(authenticationTokenService, 'setToken');
         service.login(credentials.username, credentials.password);
         expect(connection.request.url).toEqual(`${environment.dataService}/login`);
         expect(connection.request.method).toEqual(RequestMethod.Post);
@@ -46,9 +55,10 @@ describe('Authentication Service', () => {
       }));
 
     it('results in true if the login is successful',
-      inject([XHRBackend, AuthenticationService], (mockBackend, service: AuthenticationService) => {
+      inject([XHRBackend, AuthenticationTokenService, AuthenticationService], (mockBackend, authenticationTokenService: AuthenticationTokenService, service: AuthenticationService) => {
         let connection: MockConnection;
         mockBackend.connections.subscribe(c => connection = c);
+        spyOn(authenticationTokenService, 'setToken');
         service.login('user', 'password').subscribe((res) => {
           expect(res).toEqual(true);
         });
@@ -65,10 +75,11 @@ describe('Authentication Service', () => {
         })));
       }));
 
-    it('results in false if the login is successful',
-      inject([XHRBackend, AuthenticationService], (mockBackend, service: AuthenticationService) => {
+    it('results in false if the login is unsuccessful',
+      inject([XHRBackend, AuthenticationTokenService, AuthenticationService], (mockBackend, authenticationTokenService: AuthenticationTokenService, service: AuthenticationService) => {
         let connection: MockConnection;
         mockBackend.connections.subscribe(c => connection = c);
+        spyOn(authenticationTokenService, 'setToken');
         service.login('user', 'password').subscribe((res) => {
           expect(res).toEqual(false);
         });
@@ -79,6 +90,29 @@ describe('Authentication Service', () => {
           }
         })));
       }));
+
+    it('saves the token if the login is successful',
+      inject([XHRBackend, AuthenticationTokenService, AuthenticationService],
+        (mockBackend, authenticationTokenService: AuthenticationTokenService, service: AuthenticationService) => {
+          let connection: MockConnection;
+          mockBackend.connections.subscribe(c => connection = c);
+          spyOn(authenticationTokenService, 'setToken');
+          service.login('user', 'password').subscribe((res) => {
+            expect(authenticationTokenService.setToken).toHaveBeenCalledTimes(1);
+            expect(authenticationTokenService.setToken).toHaveBeenCalledWith('IAmToken');
+          });
+          connection.mockRespond(new Response(new ResponseOptions({
+            status: 200,
+            body: {
+              success: true,
+              user: {
+                firstName: 'James',
+                lastName: 'Jones'
+              },
+              token: 'IAmToken'
+            }
+          })));
+        }));
   });
 
   describe('logout', () => {

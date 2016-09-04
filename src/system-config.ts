@@ -9,11 +9,17 @@
  **********************************************************************************************/
 /** Map relative paths to URLs. */
 const map: any = {
-  '@angular2-material': 'vendor/@angular2-material'
+  '@angular2-material': 'vendor/@angular2-material',
+  'h5webstorage': 'vendor/h5webstorage'
 };
 
 /** User packages configuration. */
 const packages: any = {
+  'h5webstorage': {
+    format: 'cjs',
+    defaultExtension: 'js',
+    main: 'index.js'
+  }
 };
 
 // put the names of any of your Material components here
