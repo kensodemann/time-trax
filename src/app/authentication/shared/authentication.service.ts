@@ -3,6 +3,7 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import { environment } from '../../environment';
 import { AuthenticationTokenService } from './authentication-token.service';
 
+import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 
 @Injectable()
