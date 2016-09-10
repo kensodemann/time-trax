@@ -1,19 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { LocalStorage, WEB_STORAGE_PROVIDERS } from 'h5webstorage';
 
 @Component({
   moduleId: module.id,
   selector: 'app-about',
   templateUrl: 'about.component.html',
-  styleUrls: ['about.component.css'],
-  providers: [WEB_STORAGE_PROVIDERS]
+  styleUrls: ['about.component.css']
 })
 export class AboutComponent implements OnInit {
 
-  constructor(private ls: LocalStorage) {}
+  constructor() {}
 
   ngOnInit() {
-    this.ls['test-item'] = 'This is just a test. What does it look like?';
   }
-
 }
