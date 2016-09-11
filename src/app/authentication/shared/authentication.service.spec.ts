@@ -1,6 +1,5 @@
-import { addProviders, async, inject } from '@angular/core/testing';
-import { provide } from '@angular/core';
-import { HTTP_PROVIDERS, XHRBackend, RequestMethod, Response, ResponseOptions } from '@angular/http';
+import { TestBed, async, inject } from '@angular/core/testing';
+import { HttpModule, XHRBackend, RequestMethod, Response, ResponseOptions } from '@angular/http';
 import { LocalStorage } from 'h5webstorage';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { AuthenticationTokenService } from './authentication-token.service';
@@ -13,13 +12,15 @@ describe('Authentication Service', () => {
   beforeEach(() => { localStorage = {}; });
 
   beforeEach(() => {
-    addProviders([
-      HTTP_PROVIDERS,
-      provide(LocalStorage, { useValue: localStorage }),
-      provide(XHRBackend, { useClass: MockBackend }),
-      AuthenticationTokenService,
-      AuthenticationService
-    ]);
+    TestBed.configureTestingModule({
+      imports: [HttpModule],
+      providers: [
+        AuthenticationService,
+        AuthenticationTokenService,
+        { provide: LocalStorage, useValue: localStorage },
+        { provide: XHRBackend, useClass: MockBackend }
+      ]
+    });
   });
 
   it('should exist',

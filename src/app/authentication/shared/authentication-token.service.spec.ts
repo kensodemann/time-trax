@@ -1,11 +1,12 @@
-import { addProviders, inject } from '@angular/core/testing';
-import { provide } from '@angular/core';
+import { TestBed, inject } from '@angular/core/testing';
 import { AuthenticationTokenService } from './authentication-token.service';
 import { LocalStorage } from 'h5webstorage';
 
 describe('AuthenticationToken Service', () => {
   beforeEach(() => {
-    addProviders([provide(LocalStorage, { useClass: MockLocalStorage }), AuthenticationTokenService]);
+    TestBed.configureTestingModule({
+      providers: [AuthenticationTokenService, {provide: LocalStorage, useClass: MockLocalStorage}]
+    });
   });
 
   it('exists',
