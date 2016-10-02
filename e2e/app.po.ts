@@ -1,3 +1,5 @@
+import { browser, element, by } from 'protractor/globals';
+
 export class TimeTraxPage {
   navigateTo() {
     return browser.get('/');

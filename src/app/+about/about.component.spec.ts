@@ -1,41 +1,18 @@
-import { addProviders, ComponentFixture, inject, TestComponentBuilder } from '@angular/core/testing';
-import { Component } from '@angular/core';
-import { By } from '@angular/platform-browser';
+import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 import { AboutComponent } from './about.component';
 
 describe('Component: About', () => {
-  let builder: TestComponentBuilder;
-  
   beforeEach(() => {
-    addProviders([AboutComponent]);
+    TestBed.configureTestingModule({
+      declarations: [
+        AboutComponent
+      ],
+    });
   });
 
-  beforeEach(inject([TestComponentBuilder], function (tcb: TestComponentBuilder) {
-    builder = tcb;
-  }));
-
-  it('should inject the component', inject([AboutComponent],
-      (component: AboutComponent) => {
-    expect(component).toBeTruthy();
-  }));
-
-  it('should create the component', inject([], () => {
-    return builder.createAsync(AboutComponentTestController)
-      .then((fixture: ComponentFixture<any>) => {
-        let query = fixture.debugElement.query(By.directive(AboutComponent));
-        expect(query).toBeTruthy();
-        expect(query.componentInstance).toBeTruthy();
-      });
+  it('should create the component', async(() => {
+    let fixture = TestBed.createComponent(AboutComponent);
+    let app = fixture.debugElement.componentInstance;
+    expect(app).toBeTruthy();
   }));
 });
-
-@Component({
-  selector: 'test',
-  template: `
-    <app-about></app-about>
-  `,
-  directives: [AboutComponent]
-})
-class AboutComponentTestController {
-}
-

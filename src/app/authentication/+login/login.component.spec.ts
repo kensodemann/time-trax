@@ -1,41 +1,18 @@
-import {addProviders, ComponentFixture, TestComponentBuilder, inject} from '@angular/core/testing';
-import { Component } from '@angular/core';
-import { By } from '@angular/platform-browser';
+import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 import { LoginComponent } from './login.component';
 
-describe('Component: Login', () => {
-  let builder: TestComponentBuilder;
-
+describe('Component: About', () => {
   beforeEach(() => {
-    addProviders([LoginComponent]);
+    TestBed.configureTestingModule({
+      declarations: [
+        LoginComponent
+      ],
+    });
   });
 
-  beforeEach(inject([TestComponentBuilder], function(tcb: TestComponentBuilder) {
-    builder = tcb;
-  }));
-
-  it('should inject the component', inject([LoginComponent],
-    (component: LoginComponent) => {
-      expect(component).toBeTruthy();
-    }));
-
-  it('should create the component', inject([], () => {
-    return builder.createAsync(LoginComponentTestController)
-      .then((fixture: ComponentFixture<any>) => {
-        let query = fixture.debugElement.query(By.directive(LoginComponent));
-        expect(query).toBeTruthy();
-        expect(query.componentInstance).toBeTruthy();
-      });
+  it('should create the component', async(() => {
+    let fixture = TestBed.createComponent(LoginComponent);
+    let app = fixture.debugElement.componentInstance;
+    expect(app).toBeTruthy();
   }));
 });
-
-@Component({
-  selector: 'test',
-  template: `
-    <app-login></app-login>
-  `,
-  directives: [LoginComponent]
-})
-class LoginComponentTestController {
-}
-

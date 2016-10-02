@@ -23,8 +23,6 @@
 npm-debug.log
 testem.log
 /typings
-.swp
-**/*.swp
 
 # e2e
 /e2e/*.js

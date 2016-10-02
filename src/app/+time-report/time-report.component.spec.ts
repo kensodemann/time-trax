@@ -1,41 +1,18 @@
-import {addProviders, ComponentFixture, inject, TestComponentBuilder} from '@angular/core/testing';
-import { Component } from '@angular/core';
-import { By } from '@angular/platform-browser';
+import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 import { TimeReportComponent } from './time-report.component';
 
-describe('Component: TimeReport', () => {
-  let builder: TestComponentBuilder;
-
+describe('Component: About', () => {
   beforeEach(() => {
-    addProviders([TimeReportComponent]);
+    TestBed.configureTestingModule({
+      declarations: [
+        TimeReportComponent
+      ],
+    });
   });
 
-  beforeEach(inject([TestComponentBuilder], function(tcb: TestComponentBuilder) {
-    builder = tcb;
-  }));
-
-  it('should inject the component', inject([TimeReportComponent],
-    (component: TimeReportComponent) => {
-      expect(component).toBeTruthy();
-    }));
-
-  it('should create the component', inject([], () => {
-    return builder.createAsync(TimeReportComponentTestController)
-      .then((fixture: ComponentFixture<any>) => {
-        let query = fixture.debugElement.query(By.directive(TimeReportComponent));
-        expect(query).toBeTruthy();
-        expect(query.componentInstance).toBeTruthy();
-      });
+  it('should create the component', async(() => {
+    let fixture = TestBed.createComponent(TimeReportComponent);
+    let app = fixture.debugElement.componentInstance;
+    expect(app).toBeTruthy();
   }));
 });
-
-@Component({
-  selector: 'test',
-  template: `
-    <app-time-report></app-time-report>
-  `,
-  directives: [TimeReportComponent]
-})
-class TimeReportComponentTestController {
-}
-

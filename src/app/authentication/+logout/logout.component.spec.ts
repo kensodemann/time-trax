@@ -1,41 +1,18 @@
-import { addProviders, ComponentFixture, inject, TestComponentBuilder } from '@angular/core/testing';
-import { Component } from '@angular/core';
-import { By } from '@angular/platform-browser';
+import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 import { LogoutComponent } from './logout.component';
 
-describe('Component: Logout', () => {
-  let builder: TestComponentBuilder;
-
+describe('Component: About', () => {
   beforeEach(() => {
-    addProviders([LogoutComponent]);
+    TestBed.configureTestingModule({
+      declarations: [
+        LogoutComponent
+      ],
+    });
   });
 
-  beforeEach(inject([TestComponentBuilder], function(tcb: TestComponentBuilder) {
-    builder = tcb;
-  }));
-
-  it('should inject the component', inject([LogoutComponent],
-    (component: LogoutComponent) => {
-      expect(component).toBeTruthy();
-    }));
-
-  it('should create the component', inject([], () => {
-    return builder.createAsync(LogoutComponentTestController)
-      .then((fixture: ComponentFixture<any>) => {
-        let query = fixture.debugElement.query(By.directive(LogoutComponent));
-        expect(query).toBeTruthy();
-        expect(query.componentInstance).toBeTruthy();
-      });
+  it('should create the component', async(() => {
+    let fixture = TestBed.createComponent(LogoutComponent);
+    let app = fixture.debugElement.componentInstance;
+    expect(app).toBeTruthy();
   }));
 });
-
-@Component({
-  selector: 'test',
-  template: `
-    <app-logout></app-logout>
-  `,
-  directives: [LogoutComponent]
-})
-class LogoutComponentTestController {
-}
-
