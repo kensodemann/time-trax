@@ -4,7 +4,7 @@ import { LocalStorage } from 'h5webstorage';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { AuthenticationTokenService } from './authentication-token.service';
 import { AuthenticationService } from './authentication.service';
-import { environment } from '../../environment';
+import { environment } from '../../../environments/environment';
 
 describe('Authentication Service', () => {
   let localStorage: Object;

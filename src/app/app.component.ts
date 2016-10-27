@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from './environment';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +7,6 @@ import { environment } from './environment';
 })
 export class AppComponent implements OnInit {
   title = 'time-trax works!';
-  dataService: string;
 
-  ngOnInit() {
-    this.dataService = environment.dataService;
-  }
+  ngOnInit() { }
 }
