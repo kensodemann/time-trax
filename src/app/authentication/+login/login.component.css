@@ -1,0 +1,24 @@
+form {
+  align-content: center;
+}
+
+md-card {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  max-width: 500px;
+  text-align: center;
+}
+
+md-input {
+  min-width: 300px;
+}
+
+.button-row {
+  margin-top: 10px;
+}
+
+.error-msg {
+  color: red;
+}

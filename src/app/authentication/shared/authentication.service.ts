@@ -1,18 +1,20 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
-import { environment } from '../../environment';
+import { environment } from '../../../environments/environment';
 import { AuthenticationTokenService } from './authentication-token.service';
 
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 
 @Injectable()
-export class AuthenticationService implements OnInit {
+export class AuthenticationService {
   private opts: RequestOptions;
 
-  constructor(private http: Http, private authenticationTokenService: AuthenticationTokenService) { }
+  constructor(private http: Http, private authenticationTokenService: AuthenticationTokenService) {
+    this.initialize();
+  }
 
-  ngOnInit() {
+  private initialize() {
     let headers: Headers = new Headers();
     headers.append('content-type', 'application/json; charset=utf-8');
     this.opts = new RequestOptions();
