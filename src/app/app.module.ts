@@ -11,8 +11,11 @@ import { MdListModule } from '@angular2-material/list';
 import { MdSidenavModule } from '@angular2-material/sidenav';
 import { MdToolbarModule } from '@angular2-material/toolbar';
 
+import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from 'angular-2-local-storage';
 
-import { ConfigureStorage, WebStorageModule, BROWSER_STORAGE_PROVIDERS } from "h5webstorage";
+let localStorageServiceConfig = {
+  prefix: 'time-trax'
+};
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,14 +30,15 @@ import { ConfigureStorage, WebStorageModule, BROWSER_STORAGE_PROVIDERS } from "h
     MdToolbarModule,
 
     SharedModule,
-    routing,
-    WebStorageModule
+    routing
   ],
   bootstrap: [AppComponent],
   providers: [
-    ConfigureStorage({ prefix: "time-trax-" }),
-    BROWSER_STORAGE_PROVIDERS,
-    MdIconRegistry
+    MdIconRegistry,
+    LocalStorageService,
+    {
+      provide: LOCAL_STORAGE_SERVICE_CONFIG, useValue: localStorageServiceConfig
+    }
   ]
 })
 export class AppModule { }
