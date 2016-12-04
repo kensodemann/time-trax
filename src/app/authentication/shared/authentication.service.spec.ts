@@ -1,8 +1,8 @@
 import { TestBed, async, inject } from '@angular/core/testing';
-import { HttpModule, XHRBackend, RequestMethod, Response, ResponseOptions } from '@angular/http';
+import { HttpModule, XHRBackend, RequestMethod, RequestOptions, Response, ResponseOptions } from '@angular/http';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { MockBackend, MockConnection } from '@angular/http/testing';
-import { AuthenticationTokenService } from './authentication-token.service';
+import { AuthenticationTokenService } from '../../shared/authentication-token.service';
 import { AuthenticationService } from './authentication.service';
 import { environment } from '../../../environments/environment';
 
@@ -10,7 +10,7 @@ describe('Authentication Service', () => {
   let localStorageService: Object;
 
   beforeEach(() => { localStorageService = {}; });
-
+  
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpModule],

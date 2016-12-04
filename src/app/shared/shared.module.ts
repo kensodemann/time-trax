@@ -1,22 +1,18 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { MdButtonModule } from '@angular2-material/button';
-import { MdIconModule } from '@angular2-material/icon';
-import { MdListModule } from '@angular2-material/list';
-import { MdRippleModule } from '@angular2-material/core';
-import { MdSidenavModule } from '@angular2-material/sidenav';
-import { MdToolbarModule } from '@angular2-material/toolbar';
+import { Http, XHRBackend, RequestOptions } from '@angular/http';
+import { Router } from '@angular/router';
+import { AuthenticationTokenService } from './authentication-token.service';
+import { TimeTraxHttpService } from './time-trax-http.service';
 
 @NgModule({
-  exports: [
-    CommonModule,
-    MdButtonModule,
-    MdIconModule,
-    MdListModule,
-    MdRippleModule,
-    MdSidenavModule,
-    MdToolbarModule
+  providers: [
+    AuthenticationTokenService,
+    {
+      provide: Http,
+      useFactory: (xhrBackend: XHRBackend, requestOptions: RequestOptions, tokenService: AuthenticationTokenService, router: Router) => new TimeTraxHttpService(xhrBackend, requestOptions, tokenService, router),
+      deps: [XHRBackend, RequestOptions, AuthenticationTokenService, Router]
+    }
   ],
 })
 export class SharedModule { }
