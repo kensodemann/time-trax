@@ -23,6 +23,7 @@
       "scripts": [],
       "environments": {
         "source": "environments/environment.ts",
+        "c9": "environments/environment.c9.ts",
         "dev": "environments/environment.ts",
         "prod": "environments/environment.prod.ts"
       }
