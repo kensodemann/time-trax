@@ -7,11 +7,15 @@ export class AuthenticationTokenService {
 
   constructor(private localStorage: LocalStorageService) { }
 
-  setToken(token: string) {
+  set(token: string) {
     this.localStorage.set(this.key, token);
   }
 
-  getToken(): string {
+  get(): string {
     return this.localStorage.get<string>(this.key);
+  }
+
+  clear() {
+    this.localStorage.remove(this.key);
   }
 }

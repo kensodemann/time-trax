@@ -1,7 +1,6 @@
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, async, inject } from '@angular/core/testing';
-import { HttpModule, ConnectionBackend, RequestMethod, RequestOptions, BaseRequestOptions, Response, ResponseOptions } from '@angular/http';
+import { RequestMethod, BaseRequestOptions } from '@angular/http';
 import { Router } from '@angular/router';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { AuthenticationTokenService } from './authentication-token.service';
@@ -17,7 +16,7 @@ describe('TimeTraxHttpService', () => {
   beforeEach(() => {
     token = null;
     tokenService = {
-      getToken(): string { return token; }
+      get(): string { return token; }
     };
     let opt = new BaseRequestOptions();
     mockBackend = new MockBackend();

@@ -1,47 +1,46 @@
-import { TestBed, inject } from '@angular/core/testing';
 import { AuthenticationTokenService } from './authentication-token.service';
-import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from 'angular-2-local-storage';
+import { LocalStorageService } from 'angular-2-local-storage';
 
 describe('AuthenticationToken Service', () => {
-  let localStorageConfig = {};
+  let service;
+  let localStorageService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        AuthenticationTokenService,
-        LocalStorageService,
-        { provide: LOCAL_STORAGE_SERVICE_CONFIG, useValue: localStorageConfig }
-      ]
+    localStorageService = new LocalStorageService({});
+    service = new AuthenticationTokenService(localStorageService);
+  });
+
+  it('exists', () => {
+    expect(service).toBeTruthy();
+  });
+
+  describe('set', () => {
+    it('saves the token to local storage', () => {
+      spyOn(localStorageService, 'set')
+      service.set('IAmACuteLittleLoginToken');
+      expect(localStorageService.set).toHaveBeenCalledTimes(1);
+      expect(localStorageService.set).toHaveBeenCalledWith('authenticationToken', 'IAmACuteLittleLoginToken');
     });
   });
 
-  it('exists',
-    inject([AuthenticationTokenService], (service: AuthenticationTokenService) => {
-      expect(service).toBeTruthy();
-    }));
+  describe('get', () => {
+    it('gets the token from local storage', () => {
+      service.set('ThisIsTheToken');
+      expect(service.get()).toEqual('ThisIsTheToken');
+    });
 
-  describe('setting a token', () => {
-    it('saves the token to local storage',
-      inject([LocalStorageService, AuthenticationTokenService], (localStorage: LocalStorageService, service: AuthenticationTokenService) => {
-        spyOn(localStorage, 'set')
-        service.setToken('IAmACuteLittleLoginToken');
-        expect(localStorage.set).toHaveBeenCalledTimes(1);
-        expect(localStorage.set).toHaveBeenCalledWith('authenticationToken', 'IAmACuteLittleLoginToken');
-      }));
+    it('gets the last set token', () => {
+      service.set('ThisIsTheToken');
+      service.set('ThisIsANewToken');
+      expect(service.get()).toEqual('ThisIsANewToken');
+    });
   });
 
-  describe('getting a token', () => {
-    it('gets the token from local storage',
-      inject([LocalStorageService, AuthenticationTokenService], (localStorage: LocalStorageService, service: AuthenticationTokenService) => {
-        service.setToken('ThisIsTheToken');
-        expect(service.getToken()).toEqual('ThisIsTheToken');
-      }));
-
-    it('gets the last set token',
-      inject([LocalStorageService, AuthenticationTokenService], (localStorage: LocalStorageService, service: AuthenticationTokenService) => {
-        service.setToken('ThisIsTheToken');
-        service.setToken('ThisIsANewToken');
-        expect(service.getToken()).toEqual('ThisIsANewToken');
-      }));
+  describe('clear', () => {
+    it('clears the token', () => {
+      service.set('ThisIsMyFavoriteToken');
+      service.clear();
+      expect(service.get()).toBeNull();
+    });
   });
 });

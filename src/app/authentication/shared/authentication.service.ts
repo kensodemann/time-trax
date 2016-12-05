@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { environment } from '../../../environments/environment';
 import { AuthenticationTokenService } from '../../shared/authentication-token.service';
+import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
@@ -21,7 +22,7 @@ export class AuthenticationService {
     this.opts.headers = headers;
   }
 
-  login(userId: string, password: string) {
+  login(userId: string, password: string): Observable<boolean> {
     let credentials = {
       username: userId,
       password: password
@@ -29,13 +30,14 @@ export class AuthenticationService {
     return this.http.post(`${environment.dataService}/login`, JSON.stringify(credentials), this.opts)
       .do(res => {
         if (res.json().success) {
-          this.authenticationTokenService.setToken(res.json().token);
+          this.authenticationTokenService.set(res.json().token);
         }
       })
       .map(res=>res.json().success);
   }
 
-  logout() { 
+  logout(): Observable<Response> { 
+    this.authenticationTokenService.clear();
     return this.http.post(`${environment.dataService}/logout`, JSON.stringify({ logout: true }), this.opts);
   }
 }
