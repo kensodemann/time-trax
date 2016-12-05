@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { environment } from '../../../environments/environment';
-import { AuthenticationTokenService } from './authentication-token.service';
+import { AuthenticationTokenService } from '../../shared/authentication-token.service';
 
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
