@@ -8,6 +8,7 @@ import { routing } from './app.routing';
 import { SharedModule } from './shared/shared.module';
 
 import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from 'angular-2-local-storage';
+import 'hammerjs';
 
 let localStorageServiceConfig = {
   prefix: 'time-trax'
