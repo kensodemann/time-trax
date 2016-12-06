@@ -4,9 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { LoginComponent } from './login.component';
 import { AuthenticationService } from '../shared/authentication.service';
 
-import { MdButtonModule } from '@angular2-material/button';
-import { MdCardModule } from '@angular2-material/card';
-import { MdInputModule } from '@angular2-material/input';
+import { MaterialModule } from '@angular/material';
 
 import { Observable } from 'rxjs/Observable';
 
@@ -26,9 +24,7 @@ describe('Component: Login', () => {
       ],
       imports: [
         FormsModule,
-        MdButtonModule,
-        MdCardModule,
-        MdInputModule,
+        MaterialModule,
         RouterModule
       ],
       providers: [

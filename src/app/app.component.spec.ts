@@ -1,12 +1,7 @@
 /* tslint:disable:no-unused-variable */
 import { TestBed, async } from '@angular/core/testing';
 
-import { MdButtonModule } from '@angular2-material/button';
-import { MdCoreModule } from '@angular2-material/core';
-import { MdIconModule, MdIconRegistry } from '@angular2-material/icon';
-import { MdListModule } from '@angular2-material/list';
-import { MdSidenavModule } from '@angular2-material/sidenav';
-import { MdToolbarModule } from '@angular2-material/toolbar';
+import { MaterialModule, MdIconRegistry } from '@angular/material';
 
 import { RouterLinkStubDirective, RouterOutletStubComponent } from '../../testing/router-stubs';
 
@@ -21,13 +16,11 @@ describe('App: TimeTrax', () => {
         RouterOutletStubComponent
       ],
       imports: [
-        MdButtonModule,
-        MdIconModule,
-        MdListModule,
-        MdSidenavModule,
-        MdToolbarModule
+        MaterialModule
       ],
-      providers: [MdIconRegistry]
+      providers: [
+        MdIconRegistry
+      ]
     });
   });
 
