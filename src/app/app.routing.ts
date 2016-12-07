@@ -7,7 +7,7 @@ import { TimeReportComponent } from './+time-report';
 import { AboutComponent } from './+about';
 
 const ROUTES: Routes = [
-  { path: '', redirectTo: '/about', pathMatch: 'full' },
+  { path: '', redirectTo: '/authentication/login', pathMatch: 'full' },
   { path: 'timesheet-history', loadChildren: 'app/+timesheet-history/timesheet-history.module#TimesheetHistoryModule' },
   { path: 'about', loadChildren: 'app/+about/about.module#AboutModule' },
   { path: 'authentication', loadChildren: 'app/authentication/authentication.module#AuthenticationModule' },

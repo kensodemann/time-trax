@@ -1,3 +1,14 @@
-<p>
-  logout works!
-</p>
+<form (ngSubmit)="logout()" #logoutForm="ngForm">
+  <div class="message">
+    Logging out will mean that I will miss you dearly. Missing you dearly makes me a sad panda.
+  </div>
+
+  <div class="question">
+    Are you sure you want to log out?
+  </div>
+
+  <div class="button-row">
+    <button type="submit" md-raised-button color="primary">Yes</button>
+    <button type="button" md-raised-button color="default" (click)="stay()">No</button>
+  </div>
+</form>
