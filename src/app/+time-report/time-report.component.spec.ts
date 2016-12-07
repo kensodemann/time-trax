@@ -1,7 +1,7 @@
 import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 import { TimeReportComponent } from './time-report.component';
 
-describe('Component: About', () => {
+describe('Component: Time Report', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [

@@ -1,3 +1,15 @@
-<p>
-  projects works!
-</p>
+<div class="page-root">
+  <md-grid-list cols="4" gutterSize="15px" rowHeight="175px">
+    <md-grid-tile *ngFor="let project of projects">
+      <md-card>
+        <div class="title-section">
+          <div class="title">{{project?.sbvbTaskId}}</div>
+
+          <div class="sub-title">{{project?.jiraTaskId}}</div>
+        </div>
+
+        <div>{{project?.name}}</div>
+      </md-card>
+    </md-grid-tile>
+  </md-grid-list>
+</div>

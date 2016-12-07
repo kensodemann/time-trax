@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { MaterialModule } from '@angular/material';
 
 import { Http, XHRBackend, RequestOptions } from '@angular/http';
 import { Router } from '@angular/router';
@@ -6,6 +7,9 @@ import { AuthenticationTokenService } from './authentication-token.service';
 import { TimeTraxHttpService } from './time-trax-http.service';
 
 @NgModule({
+  imports: [
+    MaterialModule.forRoot()
+  ],
   providers: [
     AuthenticationTokenService,
     {
