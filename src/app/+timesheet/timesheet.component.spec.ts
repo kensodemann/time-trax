@@ -1,7 +1,7 @@
 import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 import { TimesheetComponent } from './timesheet.component';
 
-describe('Component: About', () => {
+describe('Component: Timesheet', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [

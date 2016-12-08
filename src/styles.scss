@@ -1,5 +1,25 @@
 @import '~@angular/material/core/theming/prebuilt/indigo-pink.scss';
 
+body {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+
+.title {
+  font-size: x-large;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+.sub-title {
+  font-size: larger;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+.page-root {
+  margin: 20px;
+}
+
 .error-msg {
   color: red;
 }

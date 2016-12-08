@@ -5,7 +5,7 @@ import { LogoutComponent } from './logout.component';
 
 import { AuthenticationService } from '../shared/authentication.service';
 
-describe('Component: About', () => {
+describe('Component: Logout', () => {
   beforeEach(() => {
     class AuthenticationServiceStub {
       logout() { }
