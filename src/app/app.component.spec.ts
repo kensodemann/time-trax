@@ -1,10 +1,8 @@
 /* tslint:disable:no-unused-variable */
 import { TestBed, async } from '@angular/core/testing';
-
-import { MaterialModule, MdIconRegistry } from '@angular/material';
+import { MaterialModule } from '@angular/material';
 
 import { RouterLinkStubDirective, RouterOutletStubComponent } from '../../testing/router-stubs';
-
 import { AppComponent } from './app.component';
 
 describe('App: TimeTrax', () => {
@@ -16,10 +14,7 @@ describe('App: TimeTrax', () => {
         RouterOutletStubComponent
       ],
       imports: [
-        MaterialModule
-      ],
-      providers: [
-        MdIconRegistry
+        MaterialModule.forRoot()
       ]
     });
   });

@@ -1,16 +1,16 @@
-@import '~@angular/material/core/theming/prebuilt/indigo-pink.scss';
+@import '~@angular/material/core/theming/prebuilt/pink-bluegrey.scss';
 
 body {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
 }
 
-.title {
+.primary-text {
   font-size: x-large;
   font-weight: bold;
   padding-bottom: 10px;
 }
 
-.sub-title {
+.secondary-text {
   font-size: larger;
   font-weight: bold;
   padding-bottom: 10px;
@@ -21,5 +21,5 @@ body {
 }
 
 .error-msg {
-  color: red;
+  color: #f44336;
 }

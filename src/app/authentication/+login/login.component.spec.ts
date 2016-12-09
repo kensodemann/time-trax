@@ -4,7 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { LoginComponent } from './login.component';
 import { AuthenticationService } from '../shared/authentication.service';
 
-import { MaterialModule } from '@angular/material';
+import { MaterialModule, MdSnackBar, MdSnackBarConfig } from '@angular/material';
 
 import { Observable } from 'rxjs/Observable';
 
@@ -17,7 +17,11 @@ describe('Component: Login', () => {
     class RouterStub {
       navigate() { }
     };
-    
+
+    class MdSnackBarStub {
+      open(message: string, actionLabel: string, config: MdSnackBarConfig) { }
+    };
+
     TestBed.configureTestingModule({
       declarations: [
         LoginComponent
@@ -29,6 +33,7 @@ describe('Component: Login', () => {
       ],
       providers: [
         { provide: AuthenticationService, useClass: AuthenticationServiceStub },
+        { provide: MdSnackBar, useClass: MdSnackBarStub },
         { provide: Router, useClass: RouterStub }
       ]
     });
@@ -41,13 +46,13 @@ describe('Component: Login', () => {
   }));
 
   describe('method: login', () => {
-    it('calls the authentication service, passing the email address and password', () => { 
+    it('calls the authentication service, passing the email address and password', () => {
       let fixture = TestBed.createComponent(LoginComponent);
       let app = fixture.debugElement.componentInstance;
       let authenticationServiceStub = fixture.debugElement.injector.get(AuthenticationService);
 
       spyOn(authenticationServiceStub, 'login').and.returnValue(Observable.of(false));
-      
+
       app.emailAddress = 'jimmy.poo@njdb.org';
       app.password = 'iAmaSecret';
       app.login();
@@ -70,23 +75,59 @@ describe('Component: Login', () => {
 
       expect(router.navigate).toHaveBeenCalledTimes(1);
       expect(router.navigate).toHaveBeenCalledWith(['timesheet', 'current']);
-     });
+    });
 
     it('clears the password and displays an error message if the login fails', () => {
       let fixture = TestBed.createComponent(LoginComponent);
       let app = fixture.debugElement.componentInstance;
       let authenticationServiceStub = fixture.debugElement.injector.get(AuthenticationService);
       let router = fixture.debugElement.injector.get(Router);
+      let snackBar = fixture.debugElement.injector.get(MdSnackBar);
 
       spyOn(authenticationServiceStub, 'login').and.returnValue(Observable.of(false));
       spyOn(router, 'navigate');
+      spyOn(snackBar, 'open');
       app.emailAddress = 'jimmy.poo@njdb.org';
       app.password = 'iAmaSecret';
       app.login();
 
       expect(router.navigate).not.toHaveBeenCalled();
       expect(app.password).toEqual('');
-      expect(app.invalidPassword).toEqual(true);
+      expect(snackBar.open).toHaveBeenCalledTimes(1);
+      expect(snackBar.open).toHaveBeenCalledWith('Login Failed', 'Invalid E-Mail Address or Password');
+    });
+  });
+
+  describe('clearing a login error', () => {
+    it('is not dismissed if there was no error', () => {
+      let fixture = TestBed.createComponent(LoginComponent);
+      let app = fixture.debugElement.componentInstance;
+      let snackBar = fixture.debugElement.injector.get(MdSnackBar);
+      let snackBarRef = { dismiss() { } };
+
+      spyOn(snackBar, 'open').and.returnValue(snackBarRef);   
+      spyOn(snackBarRef, 'dismiss').and.returnValue;
+
+      app.dismissErrorMessage();
+      expect(snackBarRef.dismiss).not.toHaveBeenCalled();
+    });
+
+    it('is dismissed once if there is an error', () => {
+      let fixture = TestBed.createComponent(LoginComponent);
+      let app = fixture.debugElement.componentInstance;
+      let authenticationServiceStub = fixture.debugElement.injector.get(AuthenticationService);
+      let snackBar = fixture.debugElement.injector.get(MdSnackBar);
+      let snackBarRef = { dismiss() { } };
+
+      spyOn(authenticationServiceStub, 'login').and.returnValue(Observable.of(false));
+      spyOn(snackBar, 'open').and.returnValue(snackBarRef);
+      spyOn(snackBarRef, 'dismiss');
+
+      app.login();      
+      app.dismissErrorMessage();
+      expect(snackBarRef.dismiss).toHaveBeenCalledTimes(1);
+      app.dismissErrorMessage();
+      expect(snackBarRef.dismiss).toHaveBeenCalledTimes(1);
     });
   });
 });

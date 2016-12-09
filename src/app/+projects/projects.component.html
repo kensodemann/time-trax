@@ -3,9 +3,9 @@
     <md-grid-tile *ngFor="let project of projects">
       <md-card>
         <div class="title-section">
-          <div class="title">{{project?.sbvbTaskId}}</div>
+          <div class="primary-text">{{project?.sbvbTaskId}}</div>
 
-          <div class="sub-title">{{project?.jiraTaskId}}</div>
+          <div class="secondary-text">{{project?.jiraTaskId}}</div>
         </div>
 
         <div>{{project?.name}}</div>

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MaterialModule } from '@angular/material';
+import { MaterialModule, MdSnackBar } from '@angular/material';
 
 import { LoginComponent } from './+login/login.component';
 import { LogoutComponent } from './+logout/logout.component';
@@ -14,6 +14,7 @@ import { routing } from './authentication.routing';
     MaterialModule,
     routing,
     SharedModule
-  ]
+  ],
+  providers: [MdSnackBar]
 })
 export class AuthenticationModule { }
