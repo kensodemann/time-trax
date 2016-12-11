@@ -1,8 +1,8 @@
 <form (ngSubmit)="login()" #loginForm="ngForm">
 	<md-card>
 		<div class="title-section">
-			<div class="title">Welcome to Time-Trax</div>
-			<div class="sub-title">Time Tracking - Simplified</div>
+			<div class="primary-text">Welcome to Time-Trax</div>
+			<div class="secondary-text">Time Tracking - Simplified</div>
 		</div>
 
 		<div class="input-section">
@@ -10,10 +10,8 @@
 				<md-input name="emailAddress" placeholder="E-Mail Address" [(ngModel)]="emailAddress" required></md-input>
 			</div>
 			<div>
-				<md-input name="password" placeholder="Password" type="password" [(ngModel)]="password" required></md-input>
+				<md-input name="password" placeholder="Password" type="password" [(ngModel)]="password" (ngModelChange)="dismissErrorMessage()" required></md-input>
 			</div>
-
-			<div class="error-msg error-msg-invalid-password" [hidden]="!invalidPassword">Invalid e-mail or password</div>
 		</div>
 
 		<div class="button-section">
