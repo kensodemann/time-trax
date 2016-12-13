@@ -5,6 +5,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { ProjectService } from './project/project.service';
 import { StageService } from './stage/stage.service';
 import { TimesheetService } from './timesheet/timesheet.service';
+import { TaskTimerService } from './taskTimer/taskTimer.service';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { TimesheetService } from './timesheet/timesheet.service';
   providers: [
     ProjectService,
     StageService,
+    TaskTimerService,
     TimesheetService
   ]
 })
