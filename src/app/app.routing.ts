@@ -1,11 +1,6 @@
 import { Routes, RouterModule }  from '@angular/router';
 import { ModuleWithProviders } from '@angular/core';
 
-import { TimesheetComponent } from './+timesheet';
-import { TimesheetHistoryComponent } from './+timesheet-history';
-import { TimeReportComponent } from './+time-report';
-import { AboutComponent } from './+about';
-
 const ROUTES: Routes = [
   { path: '', redirectTo: '/authentication/login', pathMatch: 'full' },
   { path: 'timesheet-history', loadChildren: 'app/+timesheet-history/timesheet-history.module#TimesheetHistoryModule' },

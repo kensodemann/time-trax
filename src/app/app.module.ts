@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
+import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 

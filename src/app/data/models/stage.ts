@@ -1,5 +1,5 @@
 export interface Stage {
-  _id: string,
-  stageNumber: number,
-  name: string
+  _id: string;
+  stageNumber: number;
+  name: string;
 }

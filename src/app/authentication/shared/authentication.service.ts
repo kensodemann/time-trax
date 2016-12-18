@@ -33,10 +33,10 @@ export class AuthenticationService {
           this.authenticationTokenService.set(res.json().token);
         }
       })
-      .map(res=>res.json().success);
+      .map(res => res.json().success);
   }
 
-  logout(): Observable<Response> { 
+  logout(): Observable<Response> {
     this.authenticationTokenService.clear();
     return this.http.post(`${environment.dataService}/logout`, JSON.stringify({ logout: true }), this.opts);
   }

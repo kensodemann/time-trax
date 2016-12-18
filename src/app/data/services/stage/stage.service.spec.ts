@@ -64,7 +64,7 @@ describe('StageService', () => {
 
     it('caches the result so stages are not fetched more than once', () => {
       let connection: MockConnection;
-      let connectionCount: number = 0;
+      let connectionCount = 0;
       mockBackend.connections.subscribe((c) => {
         connection = c;
         connectionCount++;
@@ -93,7 +93,7 @@ describe('StageService', () => {
       for (let x = 0; x < 100; x++) {
         service.getAll().subscribe(res => result = res);
       }
-      
+
       expect(connectionCount).toEqual(1);
       expect(result).toEqual([{
         _id: '42',

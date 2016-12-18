@@ -1,4 +1,4 @@
-import { TestBed, ComponentFixture, async } from '@angular/core/testing';
+import { TestBed, async } from '@angular/core/testing';
 import { TimesheetHistoryComponent } from './timesheet-history.component';
 
 describe('Component: Timesheet History', () => {

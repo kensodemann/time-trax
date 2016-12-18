@@ -16,5 +16,5 @@ export class ProjectService {
     return this.http.get(`${environment.dataService}/projects`)
       .map(res => res.json());
   }
-  
+
 }

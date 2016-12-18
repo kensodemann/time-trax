@@ -8,7 +8,8 @@ import 'rxjs/add/observable/empty';
 
 @Injectable()
 export class TimeTraxHttpService extends Http {
-  constructor(connection: ConnectionBackend, defaultOptions: RequestOptions, private tokenService: AuthenticationTokenService, private router: Router) {
+  constructor(connection: ConnectionBackend, defaultOptions: RequestOptions,
+    private tokenService: AuthenticationTokenService, private router: Router) {
     super(connection, defaultOptions);
   }
 
@@ -23,7 +24,7 @@ export class TimeTraxHttpService extends Http {
     return this.redirectIfNotLoggedIn(super.post(url, body, options));
   }
 
-  delete(url: string, options?: RequestOptionsArgs): Observable<Response>{
+  delete(url: string, options?: RequestOptionsArgs): Observable<Response> {
     options = this.appendToken(options);
     return this.redirectIfNotLoggedIn(super.delete(url, options));
   }
@@ -61,7 +62,7 @@ export class TimeTraxHttpService extends Http {
 
   private redirectIfNotLoggedIn(observable: Observable<Response>): Observable<Response> {
     return observable.catch((err, source) => {
-      if (err.status == 401) {
+      if (err.status === 401) {
         this.router.navigate(['authentication', 'login']);
         return Observable.empty();
       } else {

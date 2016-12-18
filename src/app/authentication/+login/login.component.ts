@@ -1,5 +1,5 @@
 import { AuthenticationService } from '../shared/authentication.service';
-import { MdSnackBar, MdSnackBarConfig, MdSnackBarRef } from '@angular/material';
+import { MdSnackBar, MdSnackBarRef } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
     if (this.loginFailureMessage) {
       this.loginFailureMessage.dismiss();
       this.loginFailureMessage = undefined;
-    } 
+    }
   }
 
   private displayLoginFailure() {

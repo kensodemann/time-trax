@@ -1,4 +1,4 @@
-import { TestBed, ComponentFixture, async } from '@angular/core/testing';
+import { TestBed, async } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { LoginComponent } from './login.component';
@@ -105,7 +105,7 @@ describe('Component: Login', () => {
       let snackBar = fixture.debugElement.injector.get(MdSnackBar);
       let snackBarRef = { dismiss() { } };
 
-      spyOn(snackBar, 'open').and.returnValue(snackBarRef);   
+      spyOn(snackBar, 'open').and.returnValue(snackBarRef);
       spyOn(snackBarRef, 'dismiss').and.returnValue;
 
       app.dismissErrorMessage();
@@ -123,7 +123,7 @@ describe('Component: Login', () => {
       spyOn(snackBar, 'open').and.returnValue(snackBarRef);
       spyOn(snackBarRef, 'dismiss');
 
-      app.login();      
+      app.login();
       app.dismissErrorMessage();
       expect(snackBarRef.dismiss).toHaveBeenCalledTimes(1);
       app.dismissErrorMessage();
