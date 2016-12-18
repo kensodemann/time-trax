@@ -4,6 +4,7 @@ import { MaterialModule } from '@angular/material';
 import { Http, XHRBackend, RequestOptions } from '@angular/http';
 import { Router } from '@angular/router';
 import { AuthenticationTokenService } from './authentication-token.service';
+import { DateService } from './date.service';
 import { TimeTraxHttpService } from './time-trax-http.service';
 
 @NgModule({
@@ -12,6 +13,7 @@ import { TimeTraxHttpService } from './time-trax-http.service';
   ],
   providers: [
     AuthenticationTokenService,
+    DateService,
     {
       provide: Http,
       useFactory: (xhrBackend: XHRBackend, requestOptions: RequestOptions, tokenService: AuthenticationTokenService,

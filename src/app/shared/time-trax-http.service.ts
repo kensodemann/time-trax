@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { AuthenticationTokenService } from './authentication-token.service';
 
 import 'rxjs/add/observable/empty';
+import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class TimeTraxHttpService extends Http {
