@@ -1,4 +1,4 @@
-import { TestBed, ComponentFixture, async } from '@angular/core/testing';
+import { TestBed, async } from '@angular/core/testing';
 import { Response } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
@@ -67,5 +67,5 @@ describe('Component: Projects', () => {
         name: 'Big Brother by Another Mother'
       }]);
     });
-  })
+  });
 });

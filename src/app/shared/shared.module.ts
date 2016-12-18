@@ -14,7 +14,8 @@ import { TimeTraxHttpService } from './time-trax-http.service';
     AuthenticationTokenService,
     {
       provide: Http,
-      useFactory: (xhrBackend: XHRBackend, requestOptions: RequestOptions, tokenService: AuthenticationTokenService, router: Router) => new TimeTraxHttpService(xhrBackend, requestOptions, tokenService, router),
+      useFactory: (xhrBackend: XHRBackend, requestOptions: RequestOptions, tokenService: AuthenticationTokenService,
+        router: Router) => new TimeTraxHttpService(xhrBackend, requestOptions, tokenService, router),
       deps: [XHRBackend, RequestOptions, AuthenticationTokenService, Router]
     }
   ],

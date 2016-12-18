@@ -1,4 +1,4 @@
-import { Http, XHRBackend, RequestMethod, Response, ResponseOptions, BaseRequestOptions } from '@angular/http';
+import { Http, RequestMethod, Response, ResponseOptions, BaseRequestOptions } from '@angular/http';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { AuthenticationTokenService } from '../../shared/authentication-token.service';
@@ -8,7 +8,6 @@ import { environment } from '../../../environments/environment';
 describe('Authentication Service', () => {
   let authenticationTokenService;
   let mockBackend;
-  let mockConnection;
   let service;
 
   beforeEach(() => {

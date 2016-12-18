@@ -16,7 +16,7 @@ describe('AuthenticationToken Service', () => {
 
   describe('set', () => {
     it('saves the token to local storage', () => {
-      spyOn(localStorageService, 'set')
+      spyOn(localStorageService, 'set');
       service.set('IAmACuteLittleLoginToken');
       expect(localStorageService.set).toHaveBeenCalledTimes(1);
       expect(localStorageService.set).toHaveBeenCalledWith('authenticationToken', 'IAmACuteLittleLoginToken');

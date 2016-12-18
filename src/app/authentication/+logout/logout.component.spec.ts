@@ -1,4 +1,4 @@
-import { TestBed, ComponentFixture, async } from '@angular/core/testing';
+import { TestBed, async } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { LogoutComponent } from './logout.component';
@@ -73,5 +73,5 @@ describe('Component: Logout', () => {
       expect(router.navigate).toHaveBeenCalledTimes(1);
       expect(router.navigate).toHaveBeenCalledWith(['timesheet', 'current']);
     });
-  })
+  });
 });
