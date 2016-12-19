@@ -10,9 +10,15 @@ describe('Component: About', () => {
     });
   });
 
-  it('should create the component', async(() => {
+  it('builds', async(() => {
     let fixture = TestBed.createComponent(AboutComponent);
     let app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
+  }));
+
+  it('implements OnInit', async(() => {
+    let fixture = TestBed.createComponent(AboutComponent);
+    let app = fixture.debugElement.componentInstance;
+    app.ngOnInit();
   }));
 });

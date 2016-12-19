@@ -19,15 +19,15 @@ describe('App: TimeTrax', () => {
     });
   });
 
-  it('should create the app', async(() => {
+  it('builds', async(() => {
     let fixture = TestBed.createComponent(AppComponent);
     let app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));
 
-  it('should have as title \'time-trax works!\'', async(() => {
+  it('implements OnInit', async(() => {
     let fixture = TestBed.createComponent(AppComponent);
     let app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('time-trax works!');
+    app.ngOnInit();
   }));
 });
