@@ -4,8 +4,8 @@ import { ProjectService } from '../data/services/project/project.service';
 
 @Component({
   selector: 'app-projects',
-  templateUrl: 'projects.component.html',
-  styleUrls: ['projects.component.scss']
+  templateUrl: './projects.component.html',
+  styleUrls: ['./projects.component.scss']
 })
 export class ProjectsComponent implements OnInit {
   projects: Array<Project>;
