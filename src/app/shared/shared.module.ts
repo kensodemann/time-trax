@@ -7,6 +7,11 @@ import { AuthenticationTokenService } from './authentication-token.service';
 import { DateService } from './date.service';
 import { TimeTraxHttpService } from './time-trax-http.service';
 
+export function timeTraxHttpServiceFactory(xhrBackend: XHRBackend, requestOptions: RequestOptions,
+  tokenService: AuthenticationTokenService, router: Router) {
+  return new TimeTraxHttpService(xhrBackend, requestOptions, tokenService, router);
+}
+
 @NgModule({
   imports: [
     MaterialModule.forRoot()
@@ -16,8 +21,7 @@ import { TimeTraxHttpService } from './time-trax-http.service';
     DateService,
     {
       provide: Http,
-      useFactory: (xhrBackend: XHRBackend, requestOptions: RequestOptions, tokenService: AuthenticationTokenService,
-        router: Router) => new TimeTraxHttpService(xhrBackend, requestOptions, tokenService, router),
+      useFactory: timeTraxHttpServiceFactory,
       deps: [XHRBackend, RequestOptions, AuthenticationTokenService, Router]
     }
   ],

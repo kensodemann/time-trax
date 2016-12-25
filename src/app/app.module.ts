@@ -7,26 +7,21 @@ import { AppComponent } from './app.component';
 import { routing } from './app.routing';
 import { SharedModule } from './shared/shared.module';
 
-import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from 'angular-2-local-storage';
+import { LocalStorageModule } from 'angular-2-local-storage';
 import 'hammerjs';
-
-let localStorageServiceConfig = {
-  prefix: 'time-trax'
-};
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     HttpModule,
+    LocalStorageModule.withConfig({
+      prefix: 'time-trax'
+    }),
     MaterialModule.forRoot(),
     SharedModule,
     routing
   ],
-  bootstrap: [AppComponent],
-  providers: [
-    LocalStorageService,
-    { provide: LOCAL_STORAGE_SERVICE_CONFIG, useValue: localStorageServiceConfig }
-  ]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
