@@ -8,20 +8,23 @@ import { MaterialModule, MdSnackBar, MdSnackBarConfig } from '@angular/material'
 
 import { Observable } from 'rxjs/Observable';
 
+class AuthenticationServiceStub {
+  login(emailAddress: string, password: string) { }
+};
+
+class RouterStub {
+  navigate() { }
+};
+
+class MdSnackBarStub {
+  open(message: string, actionLabel: string, config: MdSnackBarConfig) { }
+};
+
 describe('Component: Login', () => {
+  let app;
+  let fixture;
+
   beforeEach(() => {
-    class AuthenticationServiceStub {
-      login(emailAddress: string, password: string) { }
-    };
-
-    class RouterStub {
-      navigate() { }
-    };
-
-    class MdSnackBarStub {
-      open(message: string, actionLabel: string, config: MdSnackBarConfig) { }
-    };
-
     TestBed.configureTestingModule({
       declarations: [
         LoginComponent
@@ -37,18 +40,17 @@ describe('Component: Login', () => {
         { provide: Router, useClass: RouterStub }
       ]
     });
+
+    fixture = TestBed.createComponent(LoginComponent);
+    app = fixture.debugElement.componentInstance;
   });
 
   it('should create the component', async(() => {
-    let fixture = TestBed.createComponent(LoginComponent);
-    let app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));
 
   describe('method: login', () => {
     it('calls the authentication service, passing the email address and password', () => {
-      let fixture = TestBed.createComponent(LoginComponent);
-      let app = fixture.debugElement.componentInstance;
       let authenticationServiceStub = fixture.debugElement.injector.get(AuthenticationService);
 
       spyOn(authenticationServiceStub, 'login').and.returnValue(Observable.of(false));
@@ -62,8 +64,6 @@ describe('Component: Login', () => {
     });
 
     it('navigates to the current timesheet view if the login succeeds', () => {
-      let fixture = TestBed.createComponent(LoginComponent);
-      let app = fixture.debugElement.componentInstance;
       let authenticationServiceStub = fixture.debugElement.injector.get(AuthenticationService);
       let router = fixture.debugElement.injector.get(Router);
 
@@ -78,8 +78,6 @@ describe('Component: Login', () => {
     });
 
     it('clears the password and displays an error message if the login fails', () => {
-      let fixture = TestBed.createComponent(LoginComponent);
-      let app = fixture.debugElement.componentInstance;
       let authenticationServiceStub = fixture.debugElement.injector.get(AuthenticationService);
       let router = fixture.debugElement.injector.get(Router);
       let snackBar = fixture.debugElement.injector.get(MdSnackBar);
@@ -100,8 +98,6 @@ describe('Component: Login', () => {
 
   describe('clearing a login error', () => {
     it('is not dismissed if there was no error', () => {
-      let fixture = TestBed.createComponent(LoginComponent);
-      let app = fixture.debugElement.componentInstance;
       let snackBar = fixture.debugElement.injector.get(MdSnackBar);
       let snackBarRef = { dismiss() { } };
 
@@ -113,8 +109,6 @@ describe('Component: Login', () => {
     });
 
     it('is dismissed once if there is an error', () => {
-      let fixture = TestBed.createComponent(LoginComponent);
-      let app = fixture.debugElement.componentInstance;
       let authenticationServiceStub = fixture.debugElement.injector.get(AuthenticationService);
       let snackBar = fixture.debugElement.injector.get(MdSnackBar);
       let snackBarRef = { dismiss() { } };

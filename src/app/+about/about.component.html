@@ -1,3 +1,31 @@
-<p>
-  about works!
-</p>
+<div class="title">
+  <div>
+    <img src="../assets/time-trax-logo.png">
+  </div>
+
+  <div class="primary-text">
+    Time Trax
+  </div>
+
+  <div class="secondary-text">
+    Time Tracking, Simplified...
+  </div>
+</div>
+
+<div class="content">
+  <div class="about-information center">
+    <dl>
+      <dt>Version</dt>
+      <dd>{{version?.client}}</dd>
+
+      <dt>Release Date</dt>
+      <dd>{{version?.releaseDate.format('LL')}}</dd>
+
+      <dt>Server Version</dt>
+      <dd>{{version?.server}}</dd>
+
+      <dt>Copyright</dt>
+      <dd>&copy; {{copyright}}</dd>
+    </dl>
+  </div>
+</div>

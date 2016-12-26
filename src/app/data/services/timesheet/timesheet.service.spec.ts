@@ -7,16 +7,15 @@ import { TimesheetService } from './timesheet.service';
 import { DateService } from '../../../shared/date.service';
 import { environment } from '../../../../environments/environment';
 
-describe('ProjectService', () => {
+describe('TimesheetService', () => {
   let service;
 
-  let http;
   let mockBackend;
 
   beforeEach(() => {
     let opt = new BaseRequestOptions();
     mockBackend = new MockBackend();
-    http = new Http(mockBackend, opt);
+    let http = new Http(mockBackend, opt);
     let dates = new DateService();
 
     service = new TimesheetService(http, dates);

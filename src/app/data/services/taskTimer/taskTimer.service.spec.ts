@@ -9,13 +9,12 @@ import { environment } from '../../../../environments/environment';
 describe('TaskTimerService', () => {
   let service;
 
-  let http;
   let mockBackend;
 
   beforeEach(() => {
     let opt = new BaseRequestOptions();
     mockBackend = new MockBackend();
-    http = new Http(mockBackend, opt);
+    let http = new Http(mockBackend, opt);
 
     service = new TaskTimerService(http);
   });
