@@ -4,3 +4,24 @@ md-card {
 
   margin-top: 15px;
 }
+
+.header {
+  margin-bottom: 10px;
+
+  .row {
+    display: table;
+    width: 100%;
+
+    .col {
+      display: table-cell;
+
+      &.col-right {
+        text-align: right;
+      }
+
+      md-input-container {
+        width: 100%;
+      }
+    }
+  }
+}

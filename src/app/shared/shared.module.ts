@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { MaterialModule } from '@angular/material';
+import { HttpModule } from '@angular/http';
 
 import { Http, XHRBackend, RequestOptions } from '@angular/http';
 import { Router } from '@angular/router';
@@ -14,7 +14,7 @@ export function timeTraxHttpServiceFactory(xhrBackend: XHRBackend, requestOption
 
 @NgModule({
   imports: [
-    MaterialModule.forRoot()
+    HttpModule
   ],
   providers: [
     AuthenticationTokenService,
@@ -24,6 +24,6 @@ export function timeTraxHttpServiceFactory(xhrBackend: XHRBackend, requestOption
       useFactory: timeTraxHttpServiceFactory,
       deps: [XHRBackend, RequestOptions, AuthenticationTokenService, Router]
     }
-  ],
+  ]
 })
 export class SharedModule { }

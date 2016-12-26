@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -14,7 +13,6 @@ import 'hammerjs';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    HttpModule,
     LocalStorageModule.withConfig({
       prefix: 'time-trax'
     }),
