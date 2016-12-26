@@ -1,21 +1,26 @@
 <form (ngSubmit)="login()" #loginForm="ngForm">
-	<md-card>
-		<div class="title-section">
-			<div class="primary-text">Welcome to Time-Trax</div>
-			<div class="secondary-text">Time Tracking - Simplified</div>
-		</div>
+  <md-card>
+    <div class="title-section">
+      <div class="primary-text">Welcome to Time-Trax</div>
+      <div class="secondary-text">Time Tracking - Simplified</div>
+    </div>
 
-		<div class="input-section">
-			<div>
-				<md-input name="emailAddress" placeholder="E-Mail Address" [(ngModel)]="emailAddress" required></md-input>
-			</div>
-			<div>
-				<md-input name="password" placeholder="Password" type="password" [(ngModel)]="password" (ngModelChange)="dismissErrorMessage()" required></md-input>
-			</div>
-		</div>
+    <div class="input-section">
+      <div>
+        <md-input-container>
+          <input md-input name="emailAddress" placeholder="E-Mail Address" [(ngModel)]="emailAddress" required />
+        </md-input-container>
+      </div>
+      <div>
+        <md-input-container>
+          <input md-input name="password" placeholder="Password" type="password" [(ngModel)]="password" (ngModelChange)="dismissErrorMessage()"
+            required />
+        </md-input-container>
+      </div>
+    </div>
 
-		<div class="button-section">
-			<button type="submit" md-raised-button color="primary" [disabled]="!loginForm.form.valid">Sign In</button>
-		</div>
-	</md-card>
+    <div class="button-section">
+      <button type="submit" md-raised-button color="primary" [disabled]="!loginForm.form.valid">Sign In</button>
+    </div>
+  </md-card>
 </form>
