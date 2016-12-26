@@ -49,7 +49,7 @@ describe('ProjectService', () => {
           endDate: '2016-11-30',
           userRid: 'me'
         }, {
-          _id: '42',
+          _id: '314',
           endDate: '2016-12-06',
           userRid: 'me'
         }]
@@ -59,7 +59,7 @@ describe('ProjectService', () => {
         endDate: '2016-11-30',
         userRid: 'me'
       }, {
-        _id: '42',
+        _id: '314',
         endDate: '2016-12-06',
         userRid: 'me'
       }]);
