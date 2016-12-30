@@ -1,15 +1,30 @@
 <div class="page-root">
-  <md-grid-list cols="4" gutterSize="15px" rowHeight="175px">
-    <md-grid-tile *ngFor="let project of projects">
-      <md-card>
-        <div class="title-section">
-          <div class="primary-text">{{project?.sbvbTaskId}}</div>
+  <div class="header">
+    <div class="row">
+      <div class="col">
+        <md-input-container>
+          <input md-input placeholder="Find Project..." [(ngModel)]="projectFilter" />
+        </md-input-container>
+      </div>
+      <div class="col col-right">
+        <md-checkbox [(ngModel)]="showClosedProjects">Show Closed Projects</md-checkbox>
+      </div>
+    </div>
+  </div>
 
-          <div class="secondary-text">{{project?.jiraTaskId}}</div>
-        </div>
+  <div class="content">
+    <md-grid-list cols="4" gutterSize="15px" rowHeight="175px">
+      <md-grid-tile *ngFor="let project of filteredProjects()">
+        <md-card>
+          <div class="title-section">
+            <div class="primary-text">{{project?.sbvbTaskId}}</div>
 
-        <div>{{project?.name}}</div>
-      </md-card>
-    </md-grid-tile>
-  </md-grid-list>
+            <div class="secondary-text">{{project?.jiraTaskId}}</div>
+          </div>
+
+          <div>{{project?.name}}</div>
+        </md-card>
+      </md-grid-tile>
+    </md-grid-list>
+  </div>
 </div>
