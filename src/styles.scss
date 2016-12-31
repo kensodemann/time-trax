@@ -23,3 +23,28 @@ body {
 .error-msg {
   color: #f44336;
 }
+
+dl {
+  dt {
+    float: left;
+    clear: left;
+    width: 150px;
+    text-align: right;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+
+  dt:after {
+    content: ":";
+  }
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.done {
+  text-decoration: line-through;
+}

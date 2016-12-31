@@ -6,6 +6,7 @@ import { ProjectService } from './project/project.service';
 import { StageService } from './stage/stage.service';
 import { TimesheetService } from './timesheet/timesheet.service';
 import { TaskTimerService } from './taskTimer/taskTimer.service';
+import { VersionService } from './version/version.service';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { TaskTimerService } from './taskTimer/taskTimer.service';
     ProjectService,
     StageService,
     TaskTimerService,
-    TimesheetService
+    TimesheetService,
+    VersionService
   ]
 })
 export class DataServiceModule { }

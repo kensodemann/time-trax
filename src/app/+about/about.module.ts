@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 
-import { AboutComponent }   from './about.component';
+import { AboutComponent } from './about.component';
+import { DataModule } from '../data/data.module';
 import { routing } from './about.routing';
 
 @NgModule({
-  imports: [routing],
+  imports: [DataModule, routing],
   exports: [],
-  declarations: [AboutComponent],
+  declarations: [AboutComponent]
 })
 export class AboutModule { }
