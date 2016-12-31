@@ -151,7 +151,7 @@ describe('Component: Projects', () => {
         name: 'Some other Random task',
         sbvbTaskId: 'RFP14295',
         status: 'active'
-      }])
+      }]);
     });
 
     it('includes inactive projects when the flag is set', () => {

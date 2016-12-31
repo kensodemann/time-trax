@@ -44,10 +44,10 @@ export class TaskTimerService {
       return Observable.throw(new Error('No Timers Fetched Yet'));
     }
 
-    return this.taskTimers.flatMap(x => {
-      let timersToStop: Array<Observable<any>> = _.chain(x)
+    return this.taskTimers.flatMap(timers => {
+      let timersToStop: Array<Observable<any>> = _.chain(timers)
         .filter('isActive')
-        .map(x => this.stop(x))
+        .map(t => this.stop(t))
         .value();
 
       return timersToStop.length > 0 ? Observable.forkJoin(timersToStop) : Observable.of(null);
