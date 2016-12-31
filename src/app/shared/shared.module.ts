@@ -1,29 +1,18 @@
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
 
-import { Http, XHRBackend, RequestOptions } from '@angular/http';
-import { Router } from '@angular/router';
-import { AuthenticationTokenService } from './authentication-token.service';
-import { DateService } from './date.service';
-import { TimeTraxHttpService } from './time-trax-http.service';
-
-export function timeTraxHttpServiceFactory(xhrBackend: XHRBackend, requestOptions: RequestOptions,
-  tokenService: AuthenticationTokenService, router: Router) {
-  return new TimeTraxHttpService(xhrBackend, requestOptions, tokenService, router);
-}
+import { AuthenticationTokenModule } from './authentication-token/authentication-token.module';
+import { DateModule } from './date/date.module';
+import { ErrorHandlerModule } from './error-handler/error-handler.module';
+import { MessageDialogModule } from './message-dialog/message-dialog.module';
+import { TimeTraxHttpModule } from './time-trax-http/time-trax-http.module';
 
 @NgModule({
-  imports: [
-    HttpModule
-  ],
-  providers: [
-    AuthenticationTokenService,
-    DateService,
-    {
-      provide: Http,
-      useFactory: timeTraxHttpServiceFactory,
-      deps: [XHRBackend, RequestOptions, AuthenticationTokenService, Router]
-    }
+  exports: [
+    AuthenticationTokenModule,
+    DateModule,
+    ErrorHandlerModule,
+    MessageDialogModule,
+    TimeTraxHttpModule
   ]
 })
 export class SharedModule { }

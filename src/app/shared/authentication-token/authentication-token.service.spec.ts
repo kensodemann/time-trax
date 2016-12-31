@@ -1,7 +1,7 @@
 import { AuthenticationTokenService } from './authentication-token.service';
 import { LocalStorageService } from 'angular-2-local-storage';
 
-describe('AuthenticationToken Service', () => {
+describe('AuthenticationTokenService', () => {
   let service;
   let localStorageService;
 

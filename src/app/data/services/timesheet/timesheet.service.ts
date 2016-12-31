@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { DateService } from '../../../shared/date.service';
+import { DateService } from '../../../shared/date/date.service';
 import { Timesheet } from '../../models/timesheet';
 import { environment } from '../../../../environments/environment';
 
