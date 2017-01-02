@@ -97,7 +97,7 @@ describe('ErrorHandlerService', () => {
       spyOn(dialog, 'error').and.returnValue(Observable.of('Toast'));
 
       let result: string;
-      service.show(res, vcr).subscribe(res => result = res);
+      service.show(res, vcr).subscribe(r => result = r);
       expect(result).toEqual('Toast');
     });
   });
