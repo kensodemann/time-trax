@@ -7,7 +7,6 @@ import { MessageDialogService } from './message-dialog.service';
 
 @NgModule({
   imports: [MaterialModule],
-  exports: [],
   declarations: [ErrorDialogComponent],
   providers: [MessageDialogService],
   entryComponents: [ErrorDialogComponent]

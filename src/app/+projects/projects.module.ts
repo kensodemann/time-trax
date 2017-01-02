@@ -5,6 +5,7 @@ import { MaterialModule } from '@angular/material';
 
 import { routing } from './projects.routing';
 import { DataModule } from '../data/data.module';
+import { ProjectEditorModule} from '../editor/project-editor/project-editor.module';
 import { SharedModule } from '../shared/shared.module';
 import { ProjectsComponent } from './projects.component';
 
@@ -14,6 +15,7 @@ import { ProjectsComponent } from './projects.component';
     DataModule,
     FormsModule,
     MaterialModule,
+    ProjectEditorModule,
     routing,
     SharedModule
   ],

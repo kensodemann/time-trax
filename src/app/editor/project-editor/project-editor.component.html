@@ -1,0 +1,36 @@
+<div class="editor project-editor">
+  <h1 md-dialog-title>{{title}}</h1>
+
+  <md-dialog-content>
+    <div>
+      <md-input-container>
+        <input md-input name="name" placeholder="Name" [(ngModel)]="name" required />
+      </md-input-container>
+    </div>
+
+    <div>
+      <md-input-container>
+        <input md-input name="jiraTaskId" placeholder="JIRA Task Id" [(ngModel)]="jiraTaskId" />
+      </md-input-container>
+    </div>
+
+    <div>
+      <md-input-container>
+        <input md-input name="sbvbTaskId" placeholder="SBVB Task Id" [(ngModel)]="sbvbTaskId" required />
+      </md-input-container>
+    </div>
+
+    <div>
+      <md-checkbox name="isActive" [(ngModel)]="isActive">Active</md-checkbox>
+    </div>
+
+    <div class="error-msg" *ngIf="!canSave()">
+      Name and SBVB Task Id are required.
+    </div>
+  </md-dialog-content>
+
+  <md-dialog-actions>
+    <button md-button color="accent" (click)="cancel()">Cancel</button>
+    <button md-raised-button color="primary" (click)="save()" [disabled]="!canSave()">{{buttonLabel}}</button>
+  </md-dialog-actions>
+</div>

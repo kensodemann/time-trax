@@ -9,13 +9,16 @@
       <div class="col col-right">
         <md-checkbox [(ngModel)]="showClosedProjects">Show Closed Projects</md-checkbox>
       </div>
+      <div class="col col-right">
+        <button md-button color="primary" (click)="newProject()">Add Project</button>
+      </div>
     </div>
   </div>
 
   <div class="content">
     <md-grid-list cols="4" gutterSize="15px" rowHeight="175px">
       <md-grid-tile *ngFor="let project of filteredProjects()">
-        <md-card>
+        <md-card (click)="editProject(project)">
           <div class="title-section">
             <div class="primary-text">{{project?.sbvbTaskId}}</div>
 

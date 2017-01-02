@@ -109,7 +109,7 @@ describe('TimeTraxHttpService', () => {
       mockBackend.connections.subscribe(c => connection = c);
       service.post();
       service.post('http://test.dr.who/companions', { name: 'Rose Tyler' });
-      expect(connection.request.headers.get('content-type')).toEqual('application/json; charset=utf-8');
+      expect(connection.request.headers.get('Content-Type')).toEqual('application/json; charset=utf-8');
     });
 
     it('does not add an Authorization header if there no token', () => {
