@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
+
+import { Observable } from 'rxjs/Observable';
+
 import { Project } from '../data/models/project';
 import { ProjectService } from '../data/services/project/project.service';
+import { ErrorMessageService } from '../shared/error-message/error-message.service';
 
 import * as _ from 'lodash';
 
@@ -14,10 +18,15 @@ export class ProjectsComponent implements OnInit {
   projectFilter: string;
   showClosedProjects: boolean;
 
-  constructor(private data: ProjectService) { }
+  constructor(private data: ProjectService, private errorMessage: ErrorMessageService, private viewContainerRef: ViewContainerRef) { }
 
   ngOnInit() {
-    this.data.getAll().subscribe(res => this.projects = res);
+    this.data.getAll()
+      .catch(res => {
+        this.errorMessage.show(res, this.viewContainerRef);
+        return Observable.of(res);
+      })
+      .subscribe(res => this.projects = res);
   }
 
   filteredProjects() {

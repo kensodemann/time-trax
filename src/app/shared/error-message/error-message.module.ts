@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 
 import { MessageDialogModule } from '../message-dialog/message-dialog.module';
-import { ErrorHandlerService } from './error-handler.service';
+import { ErrorMessageService } from './error-message.service';
 
 @NgModule({
   imports: [MessageDialogModule],
-  providers: [ErrorHandlerService]
+  providers: [ErrorMessageService]
 })
-export class ErrorHandlerModule { }
+export class ErrorMessageModule { }
