@@ -4,7 +4,7 @@ import { DateService } from './date.service';
 
 import * as moment from 'moment';
 
-describe('ProjectService', () => {
+describe('DateService', () => {
   let service;
   beforeEach(() => {
     service = new DateService();
