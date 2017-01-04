@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+
 import { Version } from '../data/models/version';
 import { VersionService } from '../data/services/version/version.service';
+import { ErrorMessageService } from '../shared/error-message/error-message.service';
 
 import * as moment from 'moment';
 
@@ -11,11 +14,18 @@ import * as moment from 'moment';
 })
 export class AboutComponent implements OnInit {
   version: Version;
-  copyright = '2016 Kenneth W. Sodemann';
+  copyright = '2017 Kenneth W. Sodemann';
 
-  constructor(private versionService: VersionService) { }
+  constructor(private versionService: VersionService,
+    private errorMessage: ErrorMessageService,
+    private viewContainerRef: ViewContainerRef) { }
 
   ngOnInit() {
-    this.versionService.get().subscribe(v => this.version = v);
+    this.versionService.get()
+      .catch(res => {
+        this.errorMessage.show(res, this.viewContainerRef);
+        return Observable.of(res);
+      })
+      .subscribe(v => this.version = v);
   }
 }

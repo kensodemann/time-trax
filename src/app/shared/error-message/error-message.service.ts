@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { MessageDialogService } from '../message-dialog/message-dialog.service';
 
 @Injectable()
-export class ErrorHandlerService {
+export class ErrorMessageService {
 
   constructor(private dialog: MessageDialogService) { }
 

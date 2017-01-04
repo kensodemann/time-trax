@@ -4,7 +4,7 @@ import { ViewContainerRef } from '@angular/core';
 import { Response, ResponseOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { ErrorHandlerService } from './error-handler.service';
+import { ErrorMessageService } from './error-message.service';
 
 class MessageDialogStub {
   error(title: string, message: string, viewContainerRef: ViewContainerRef): Observable<any> {
@@ -12,12 +12,12 @@ class MessageDialogStub {
   }
 }
 
-describe('ErrorHandlerService', () => {
+describe('ErrorMessageService', () => {
   let dialog;
   let service;
   beforeEach(() => {
     dialog = new MessageDialogStub();
-    service = new ErrorHandlerService(dialog);
+    service = new ErrorMessageService(dialog);
   });
 
   it('exists', () => {

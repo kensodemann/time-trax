@@ -5,6 +5,7 @@ import { MaterialModule } from '@angular/material';
 
 import { routing } from './projects.routing';
 import { DataModule } from '../data/data.module';
+import { SharedModule } from '../shared/shared.module';
 import { ProjectsComponent } from './projects.component';
 
 @NgModule({
@@ -13,7 +14,8 @@ import { ProjectsComponent } from './projects.component';
     DataModule,
     FormsModule,
     MaterialModule,
-    routing
+    routing,
+    SharedModule
   ],
   declarations: [ProjectsComponent],
 })

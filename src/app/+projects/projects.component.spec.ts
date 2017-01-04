@@ -1,22 +1,30 @@
 import { TestBed, async } from '@angular/core/testing';
-import { Response } from '@angular/http';
+import { ViewContainerRef } from '@angular/core';
+import { Response, ResponseOptions } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 
+import { ErrorMessageService } from '../shared/error-message/error-message.service';
 import { ProjectService } from '../data/services/project/project.service';
 import { ProjectsComponent } from './projects.component';
 
 import 'rxjs/add/observable/empty';
 
+class DataServiceStub {
+  getAll(): Observable<Response> {
+    return Observable.empty();
+  }
+}
+
+class ErrorMessageStub {
+  show(res: Response, viewContainerRef: ViewContainerRef): Observable<any> {
+    return Observable.empty();
+  }
+}
+
 describe('Component: Projects', () => {
   beforeEach(() => {
-    class DataService {
-      getAll(): Observable<Response> {
-        return Observable.empty();
-      }
-    }
-
     TestBed.configureTestingModule({
       declarations: [
         ProjectsComponent
@@ -26,7 +34,8 @@ describe('Component: Projects', () => {
         MaterialModule
       ],
       providers: [
-        { provide: ProjectService, useClass: DataService }
+        { provide: ErrorMessageService, useClass: ErrorMessageStub },
+        { provide: ProjectService, useClass: DataServiceStub }
       ]
     });
   });
@@ -73,6 +82,26 @@ describe('Component: Projects', () => {
         name: 'Big Brother by Another Mother',
         status: 'active'
       }]);
+    });
+
+    it('shows the error if there is one', () => {
+      let fixture = TestBed.createComponent(ProjectsComponent);
+      let app = fixture.debugElement.componentInstance;
+      let dataService = fixture.debugElement.injector.get(ProjectService);
+      let errorMessage = fixture.debugElement.injector.get(ErrorMessageService);
+
+      let opt = new ResponseOptions({
+        status: 400,
+        statusText: 'Not OK',
+        body: {}
+      });
+      let res = new Response(opt);
+
+      spyOn(dataService, 'getAll').and.returnValue(Observable.throw(res));
+      spyOn(errorMessage, 'show');
+
+      app.ngOnInit();
+      expect(errorMessage.show).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -288,6 +317,5 @@ describe('Component: Projects', () => {
         status: 'active'
       }]);
     });
-
   });
 });
