@@ -1,50 +1,10 @@
 @import '~@angular/material/core/theming/prebuilt/indigo-pink.scss';
 
+@import './scss/error';
+@import './scss/layout';
+@import './scss/list';
+@import './scss/typography';
+
 body {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
-}
-
-.primary-text {
-  font-size: x-large;
-  font-weight: bold;
-  padding-bottom: 10px;
-}
-
-.secondary-text {
-  font-size: larger;
-  font-weight: bold;
-  padding-bottom: 10px;
-}
-
-.page-root {
-  margin: 20px;
-}
-
-.error-msg {
-  color: #f44336;
-}
-
-dl {
-  dt {
-    float: left;
-    clear: left;
-    width: 150px;
-    text-align: right;
-    font-weight: bold;
-    margin-right: 10px;
-  }
-
-  dt:after {
-    content: ":";
-  }
-}
-
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.done {
-  text-decoration: line-through;
 }

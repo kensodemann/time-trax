@@ -1,0 +1,14 @@
+dl {
+  dt {
+    float: left;
+    clear: left;
+    width: 150px;
+    text-align: right;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+
+  dt:after {
+    content: ":";
+  }
+}
