@@ -1,6 +1,5 @@
 /* tslint:disable:no-unused-variable */
 
-import { ViewContainerRef } from '@angular/core';
 import { MdDialogConfig, MdDialogRef } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 

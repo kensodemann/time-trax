@@ -2,18 +2,27 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
+import { DataService } from '../data-service.interface';
 import { Project } from '../../models/project';
 import { environment } from '../../../../environments/environment';
 
 import 'rxjs/add/operator/map';
 
 @Injectable()
-export class ProjectService {
+export class ProjectService implements DataService<Project> {
+  private url: string;
 
-  constructor(private http: Http) { }
+  constructor(private http: Http) {
+    this.url = `${environment.dataService}/projects`;
+  }
 
   getAll(): Observable<Array<Project>> {
-    return this.http.get(`${environment.dataService}/projects`)
+    return this.http.get(this.url)
+      .map(res => res.json());
+  }
+
+  save(project: Project): Observable<Project> {
+    return this.http.post(this.url + (project._id ? `/${project._id}` : ''), project)
       .map(res => res.json());
   }
 
