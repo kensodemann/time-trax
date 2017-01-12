@@ -52,6 +52,33 @@ describe('ProjectService', () => {
     });
   });
 
+  describe('get', () => {
+    it('gets the specified project', () => {
+      let connection: MockConnection;
+      mockBackend.connections.subscribe(c => connection = c);
+
+      let result;
+      service.get('42731138').subscribe((res) => { result = res; });
+      expect(connection.request.url).toEqual(`${environment.dataService}/projects/42731138`);
+      expect(connection.request.method).toEqual(RequestMethod.Get);
+      connection.mockRespond(new Response(new ResponseOptions({
+        status: 200,
+        body: {
+          _id: '42731138',
+          name: 'Deep Geeky Thoughts About Total Control'
+        }
+      })));
+      expect(result).toEqual({
+        _id: '42731138',
+        name: 'Deep Geeky Thoughts About Total Control'
+      });
+    });
+
+    it('throws an exception if called without an id', function() {
+      expect(function() { service.get(); }).toThrowError('ProjectService.get() called without id');
+    });
+  });
+
   describe('save', () => {
     it('posts new projects', () => {
       let connection: MockConnection;

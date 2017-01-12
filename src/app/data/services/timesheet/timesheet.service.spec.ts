@@ -172,7 +172,7 @@ describe('TimesheetService', () => {
       let connection: MockConnection;
       mockBackend.connections.subscribe(c => connection = c);
 
-      service.post({
+      service.save({
         _id: '42',
         endDate: '2016-12-24',
         userRid: 'me'
@@ -190,7 +190,7 @@ describe('TimesheetService', () => {
       let connection: MockConnection;
       mockBackend.connections.subscribe(c => connection = c);
 
-      service.post({
+      service.save({
         endDate: '2016-12-24',
         userRid: 'me'
       });
@@ -207,7 +207,7 @@ describe('TimesheetService', () => {
       mockBackend.connections.subscribe(c => connection = c);
 
       let result;
-      service.post({
+      service.save({
         endDate: '2016-12-24',
         userRid: 'me'
       }).subscribe(res => result = res);

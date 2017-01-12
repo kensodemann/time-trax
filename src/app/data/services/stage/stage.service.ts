@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
+import { DataService } from '../data-service.interface';
 import { Stage } from '../../models/stage';
 import { environment } from '../../../../environments/environment';
 
 import 'rxjs/add/operator/map';
 
 @Injectable()
-export class StageService {
+export class StageService implements DataService<Stage> {
   private stages: Observable<Array<Stage>>;
 
   constructor(private http: Http) { }
@@ -16,7 +17,7 @@ export class StageService {
   getAll(): Observable<Array<Stage>> {
     if (!this.stages) {
       this.stages = this.http.get(`${environment.dataService}/stages`)
-      .map(res => res.json());
+        .map(res => res.json());
     }
 
     return this.stages;

@@ -21,6 +21,15 @@ export class ProjectService implements DataService<Project> {
       .map(res => res.json());
   }
 
+  get(id: string): Observable<Project> {
+    if (!id) {
+      throw new Error('ProjectService.get() called without id');
+    }
+
+    return this.http.get(`${this.url}/${id}`)
+      .map(res => res.json());
+  }
+
   save(project: Project): Observable<Project> {
     return this.http.post(this.url + (project._id ? `/${project._id}` : ''), project)
       .map(res => res.json());

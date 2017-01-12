@@ -2,6 +2,7 @@
 
 import { Http, Response, ResponseOptions, RequestMethod, BaseRequestOptions } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
+import { Observable } from 'rxjs/Observable';
 
 import { TaskTimerService } from './taskTimer.service';
 import { environment } from '../../../../environments/environment';
@@ -23,12 +24,22 @@ describe('TaskTimerService', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('get all for timesheet', () => {
+  describe('get all', () => {
+    it('throws an error if called with no parameter', () => {
+      expect(function() { service.getAll(); })
+        .toThrowError('TaskTimerService.getAll() must be called with a parameter object specifying the timesheetId');
+    });
+
+    it('throws an error if called with a parameter specifying somethting other than a timesheetId', () => {
+      expect(function() { service.getAll({ projectId: '42' }); })
+        .toThrowError('TaskTimerService.getAll() must be called with a parameter object specifying the timesheetId');
+    });
+
     it('sends a request to get all task timers for the timesheet', () => {
       let connection: MockConnection;
       mockBackend.connections.subscribe(c => connection = c);
 
-      service.getAllForTimesheet('1138');
+      service.getAll({ timesheetId: '1138' });
       expect(connection.request.url).toEqual(`${environment.dataService}/timesheets/1138/taskTimers`);
       expect(connection.request.method).toEqual(RequestMethod.Get);
     });
@@ -38,7 +49,7 @@ describe('TaskTimerService', () => {
       mockBackend.connections.subscribe(c => connection = c);
 
       let result;
-      service.getAllForTimesheet('1138').subscribe(res => result = res);
+      service.getAll({ timesheetId: '1138' }).subscribe(res => result = res);
       connection.mockRespond(new Response(new ResponseOptions({
         status: 200,
         body: [{
@@ -79,7 +90,7 @@ describe('TaskTimerService', () => {
       });
 
       let result;
-      service.getAllForTimesheet('1138').subscribe(res => result = res);
+      service.getAll({ timesheetId: '1138' }).subscribe(res => result = res);
       connection.mockRespond(new Response(new ResponseOptions({
         status: 200,
         body: [{
@@ -98,7 +109,7 @@ describe('TaskTimerService', () => {
       })));
 
       for (let x = 0; x < 100; x++) {
-        service.getAllForTimesheet('1138').subscribe(res => result = res);
+        service.getAll({ timesheetId: '1138' }).subscribe(res => result = res);
       }
 
       expect(connectionCount).toEqual(1);
@@ -116,7 +127,7 @@ describe('TaskTimerService', () => {
         workDate: '2016-12-01'
       }]);
 
-      service.getAllForTimesheet('7342');
+      service.getAll({ timesheetId: '7342' });
       expect(connectionCount).toEqual(2);
       expect(connection.request.url).toEqual(`${environment.dataService}/timesheets/7342/taskTimers`);
       expect(connection.request.method).toEqual(RequestMethod.Get);
@@ -124,11 +135,23 @@ describe('TaskTimerService', () => {
   });
 
   describe('start', () => {
+    it('throws an error if task timers have not been fetched yet', () => {
+      let res;
+      service.start({
+        _id: '42',
+        timesheetRid: '1138'
+      }).catch(err => {
+        res = err;
+        return Observable.empty();
+      }).subscribe();
+      expect(res).toEqual(new Error('No Timers Fetched Yet'));
+    });
+
     it('sends a request to start the given timer', () => {
       let connection: MockConnection;
       mockBackend.connections.subscribe(c => connection = c);
 
-      service.getAllForTimesheet('1138').subscribe();
+      service.getAll({ timesheetId: '1138' }).subscribe();
       connection.mockRespond(new Response(new ResponseOptions({
         status: 200,
         body: [{
@@ -150,7 +173,7 @@ describe('TaskTimerService', () => {
       let connection: MockConnection;
       mockBackend.connections.subscribe(c => connection = c);
 
-      service.getAllForTimesheet('1138').subscribe();
+      service.getAll({ timesheetId: '1138' }).subscribe();
       connection.mockRespond(new Response(new ResponseOptions({
         status: 200,
         body: [{
@@ -190,7 +213,7 @@ describe('TaskTimerService', () => {
         connections.push(c);
       });
 
-      service.getAllForTimesheet('1138').subscribe();
+      service.getAll({ timesheetId: '1138' }).subscribe();
       connection.mockRespond(new Response(new ResponseOptions({
         status: 200,
         body: [{
