@@ -1,0 +1,45 @@
+<div fxLayout="column" fxLayout.gt-sm="row" class="time-log">
+  <div fxFlex fxFlex.gt-sm="100px">
+    <div fxLayout="row">
+      <div fxFlex>
+        <div class="time">
+          {{timeLog?.milliseconds | hoursMinutes}}
+        </div>
+      </div>
+
+      <div class="actions" fxFlex fxHide="true" fxShow.sm fxShow.xs>
+        <div class="actions">
+          <md-icon class="clickable">mode_edit</md-icon>
+          <md-icon class="clickable">delete_forever</md-icon>
+          <md-icon class="clickable">{{timeLog?.isActive ? 'pause_circle_outline' : 'play_circle_outline'}}</md-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div fxFlex="20">
+    <div class="title">
+      {{timeLog?.project | projectTitle}}
+    </div>
+  </div>
+
+  <div fxFlex>
+    <div class="description">
+      {{timeLog?.project.name}}
+    </div>
+  </div>
+
+  <div fxFlex="20">
+    <div class="description">
+      {{timeLog?.stage.name}}
+    </div>
+  </div>
+
+  <div fxFlex="10" fxHide="false" fxHide.sm fxHide.xs>
+    <div class="actions">
+      <md-icon class="clickable">mode_edit</md-icon>
+      <md-icon class="clickable">delete_forever</md-icon>
+      <md-icon class="clickable">{{timeLog?.isActive ? 'pause_circle_outline' : 'play_circle_outline'}}</md-icon>
+    </div>
+  </div>
+</div>

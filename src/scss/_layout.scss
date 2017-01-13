@@ -7,3 +7,34 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+.row {
+  display: table;
+  width: 100%;
+
+  .col {
+    display: table-cell;
+
+    &.col-right {
+      text-align: right;
+    }
+
+    md-input-container {
+      width: 100%;
+    }
+  }
+}
+
+.header {
+  margin-bottom: 10px;
+}
+
+.actions {
+  text-align: right;
+  width: 100%;
+  display: block;
+}
+
+.clickable {
+  cursor: pointer;
+}

@@ -1,3 +1,22 @@
-<p>
-  timesheet works!
-</p>
+<div class="page-root timesheet">
+  <section class="day" *ngFor="let day of days">
+    <div class="header" fxLayout="row">
+      <div fxFlex class="title">{{day.date | date: 'mediumDate'}}</div>
+      <div fxFlex>
+        <div class="actions">
+          <md-icon class="clickable" (click)="addTaskTimer(day.date)">add_circle_outline</md-icon>
+        </div>
+      </div>
+    </div>
+
+    <div class="no-detail" *ngIf="day.timeLogs.length === 0">
+      No Time Entries
+    </div>
+
+    <div class="detail" *ngIf="day.timeLogs.length > 0">
+      <div *ngFor="let timeLog of day.timeLogs">
+        <trx-task-timer [timeLog]="timeLog"></trx-task-timer>
+      </div>
+    </div>
+  </section>
+</div>

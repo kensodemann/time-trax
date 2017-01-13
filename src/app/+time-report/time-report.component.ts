@@ -3,7 +3,7 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { MessageDialogService } from '../shared/message-dialog/message-dialog.service';
 
 @Component({
-  selector: 'app-time-report',
+  selector: 'trx-time-report',
   templateUrl: './time-report.component.html',
   styleUrls: ['./time-report.component.scss']
 })

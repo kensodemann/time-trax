@@ -1,24 +1,32 @@
 <div class="page-root">
   <div class="header">
-    <div class="row">
-      <div class="col">
+    <div class="flex-container" fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="start stretch" fxLayoutAlign.gt-sm="start center">
+      <div fxFlex>
         <md-input-container>
           <input md-input placeholder="Find Project..." [(ngModel)]="projectFilter" />
         </md-input-container>
       </div>
-      <div class="col col-right">
-        <md-checkbox [(ngModel)]="showClosedProjects">Show Closed Projects</md-checkbox>
-      </div>
-      <div class="col col-right">
-        <button md-button color="primary" (click)="newProject()">Add Project</button>
+
+      <div fxFlex="50">
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <div fxFlex="75" fxFlexOffset="0" fxFlexOffset.gt-sm="50px">
+            <md-checkbox [(ngModel)]="showClosedProjects">Show Closed Projects</md-checkbox>
+          </div>
+
+          <div fxFlex>
+            <div class="actions">
+              <button md-button color="primary" (click)="newProject()">Add Project</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="content">
-    <md-grid-list cols="4" gutterSize="15px" rowHeight="175px">
-      <md-grid-tile *ngFor="let project of filteredProjects()">
-        <md-card (click)="editProject(project)">
+    <div class="flex-container" fxLayout="row" fxLayoutWrap="wrap" fxLayout.xs="column" fxLayoutWrap.xs="none">
+      <div fxFlex="25" fxFlex.md="33.33333" fxFlex.sm="50" *ngFor="let project of filteredProjects()">
+        <md-card class="clickable" (click)="editProject(project)">
           <div class="title-section">
             <div class="primary-text">{{project?.sbvbTaskId}}</div>
 
@@ -27,7 +35,7 @@
 
           <div>{{project?.name}}</div>
         </md-card>
-      </md-grid-tile>
-    </md-grid-list>
+      </div>
+    </div>
   </div>
 </div>

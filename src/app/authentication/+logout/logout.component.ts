@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../shared/authentication.service';
 
 @Component({
-  selector: 'app-logout',
+  selector: 'trx-logout',
   templateUrl: './logout.component.html',
   styleUrls: ['./logout.component.scss']
 })

@@ -5,7 +5,7 @@ import { Project } from '../../data/models/project';
 import { DataService } from '../../data/services/data-service.interface';
 
 @Component({
-  selector: 'app-project-editor',
+  selector: 'trx-project-editor',
   templateUrl: './project-editor.component.html',
   styleUrls: ['./project-editor.component.scss']
 })

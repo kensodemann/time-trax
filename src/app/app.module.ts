@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -13,6 +14,7 @@ import 'hammerjs';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    FlexLayoutModule.forRoot(),
     LocalStorageModule.withConfig({
       prefix: 'time-trax'
     }),
