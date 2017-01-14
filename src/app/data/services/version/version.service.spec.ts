@@ -13,9 +13,9 @@ describe('TimesheetService', () => {
   let mockBackend;
 
   beforeEach(() => {
-    let opt = new BaseRequestOptions();
+    const opt = new BaseRequestOptions();
     mockBackend = new MockBackend();
-    let http = new Http(mockBackend, opt);
+    const http = new Http(mockBackend, opt);
 
     service = new VersionService(http);
   });

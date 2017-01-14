@@ -9,13 +9,12 @@ import { environment } from '../../../../environments/environment';
 
 describe('ProjectService', () => {
   let service;
-
   let mockBackend;
 
   beforeEach(() => {
-    let opt = new BaseRequestOptions();
+    const opt = new BaseRequestOptions();
     mockBackend = new MockBackend();
-    let http = new Http(mockBackend, opt);
+    const http = new Http(mockBackend, opt);
 
     service = new ProjectService(http);
   });
@@ -58,7 +57,7 @@ describe('ProjectService', () => {
       let connection: MockConnection;
       mockBackend.connections.subscribe(c => connection = c);
 
-      let prj = new Project();
+      const prj = new Project();
       prj.name = 'Butthead';
       prj.jiraTaskId = 'BB-2203';
       prj.sbvbTaskId = 'RFP004995';
@@ -91,7 +90,7 @@ describe('ProjectService', () => {
       let connection: MockConnection;
       mockBackend.connections.subscribe(c => connection = c);
 
-      let prj = new Project();
+      const prj = new Project();
       prj._id = '11383141594273';
       prj.name = 'Butthead';
       prj.jiraTaskId = 'BB-2203';

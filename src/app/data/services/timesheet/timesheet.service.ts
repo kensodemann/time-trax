@@ -26,7 +26,7 @@ export class TimesheetService {
   }
 
   getCurrent(): Observable<Timesheet> {
-    let endDate = this.dates.weekEndDate(new Date());
+    const endDate = this.dates.weekEndDate(new Date());
     return this.http.get(`${environment.dataService}/timesheets?endDate=${endDate}`)
       .map(res => res.json())
       .catch((e) => {

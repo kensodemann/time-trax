@@ -55,7 +55,7 @@ describe('ProjectEditorService', () => {
     });
 
     it('opens the dialog', () => {
-      let vcr = {
+      const vcr = {
         name: 'I am a view component ref',
         element: null,
         injector: null,

@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    let router = this.router;
+    const router = this.router;
     this.authService.login(this.emailAddress, this.password).subscribe((success) => {
       if (success) {
         router.navigate(['timesheet', 'current']);

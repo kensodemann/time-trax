@@ -51,7 +51,7 @@ describe('Component: Login', () => {
 
   describe('method: login', () => {
     it('calls the authentication service, passing the email address and password', () => {
-      let authenticationServiceStub = fixture.debugElement.injector.get(AuthenticationService);
+      const authenticationServiceStub = fixture.debugElement.injector.get(AuthenticationService);
 
       spyOn(authenticationServiceStub, 'login').and.returnValue(Observable.of(false));
 
@@ -64,8 +64,8 @@ describe('Component: Login', () => {
     });
 
     it('navigates to the current timesheet view if the login succeeds', () => {
-      let authenticationServiceStub = fixture.debugElement.injector.get(AuthenticationService);
-      let router = fixture.debugElement.injector.get(Router);
+      const authenticationServiceStub = fixture.debugElement.injector.get(AuthenticationService);
+      const router = fixture.debugElement.injector.get(Router);
 
       spyOn(authenticationServiceStub, 'login').and.returnValue(Observable.of(true));
       spyOn(router, 'navigate');
@@ -78,9 +78,9 @@ describe('Component: Login', () => {
     });
 
     it('clears the password and displays an error message if the login fails', () => {
-      let authenticationServiceStub = fixture.debugElement.injector.get(AuthenticationService);
-      let router = fixture.debugElement.injector.get(Router);
-      let snackBar = fixture.debugElement.injector.get(MdSnackBar);
+      const authenticationServiceStub = fixture.debugElement.injector.get(AuthenticationService);
+      const router = fixture.debugElement.injector.get(Router);
+      const snackBar = fixture.debugElement.injector.get(MdSnackBar);
 
       spyOn(authenticationServiceStub, 'login').and.returnValue(Observable.of(false));
       spyOn(router, 'navigate');
@@ -98,8 +98,8 @@ describe('Component: Login', () => {
 
   describe('clearing a login error', () => {
     it('is not dismissed if there was no error', () => {
-      let snackBar = fixture.debugElement.injector.get(MdSnackBar);
-      let snackBarRef = { dismiss() { } };
+      const snackBar = fixture.debugElement.injector.get(MdSnackBar);
+      const snackBarRef = { dismiss() { } };
 
       spyOn(snackBar, 'open').and.returnValue(snackBarRef);
       spyOn(snackBarRef, 'dismiss').and.returnValue;
@@ -109,9 +109,9 @@ describe('Component: Login', () => {
     });
 
     it('is dismissed once if there is an error', () => {
-      let authenticationServiceStub = fixture.debugElement.injector.get(AuthenticationService);
-      let snackBar = fixture.debugElement.injector.get(MdSnackBar);
-      let snackBarRef = { dismiss() { } };
+      const authenticationServiceStub = fixture.debugElement.injector.get(AuthenticationService);
+      const snackBar = fixture.debugElement.injector.get(MdSnackBar);
+      const snackBarRef = { dismiss() { } };
 
       spyOn(authenticationServiceStub, 'login').and.returnValue(Observable.of(false));
       spyOn(snackBar, 'open').and.returnValue(snackBarRef);

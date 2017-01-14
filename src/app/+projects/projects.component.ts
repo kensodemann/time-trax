@@ -51,7 +51,7 @@ export class ProjectsComponent implements OnInit {
 
   private containsFilterText(p: Project): boolean {
     let matchesTokens = true;
-    let tokens = this.projectFilter ? this.projectFilter.split(' ') : [];
+    const tokens = this.projectFilter ? this.projectFilter.split(' ') : [];
 
     tokens.forEach(token => matchesTokens = matchesTokens && this.containsToken(p, token));
 
@@ -59,8 +59,8 @@ export class ProjectsComponent implements OnInit {
   }
 
   private containsToken(p: Project, token: string): boolean {
-    let str = `${this.prepareForSearch(p.name)} ${this.prepareForSearch(p.jiraTaskId)} ${this.prepareForSearch(p.sbvbTaskId)}`;
-    let t = this.prepareForSearch(token);
+    const str = `${this.prepareForSearch(p.name)} ${this.prepareForSearch(p.jiraTaskId)} ${this.prepareForSearch(p.sbvbTaskId)}`;
+    const t = this.prepareForSearch(token);
 
     return str.includes(t);
   }

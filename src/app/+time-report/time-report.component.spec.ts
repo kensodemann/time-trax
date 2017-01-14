@@ -24,14 +24,14 @@ describe('Component: Time Report', () => {
   });
 
   it('builds', async(() => {
-    let fixture = TestBed.createComponent(TimeReportComponent);
-    let app = fixture.debugElement.componentInstance;
+    const fixture = TestBed.createComponent(TimeReportComponent);
+    const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));
 
   it('implements OnInit', async(() => {
-    let fixture = TestBed.createComponent(TimeReportComponent);
-    let app = fixture.debugElement.componentInstance;
+    const fixture = TestBed.createComponent(TimeReportComponent);
+    const app = fixture.debugElement.componentInstance;
     app.ngOnInit();
   }));
 });

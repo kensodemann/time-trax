@@ -10,12 +10,12 @@ export class ErrorMessageService {
   constructor(private dialog: MessageDialogService) { }
 
   getMessage(res: Response): string {
-    let body = res.json();
+    const body = res.json();
     return body.reason || res.statusText || 'Unknown Error';
   }
 
   show(res: Response, viewContainerRef: ViewContainerRef): Observable<any> {
-    let message = this.getMessage(res);
+    const message = this.getMessage(res);
     return this.dialog.error('Error', message, viewContainerRef);
   }
 

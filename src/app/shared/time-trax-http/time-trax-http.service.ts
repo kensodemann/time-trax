@@ -37,7 +37,7 @@ export class TimeTraxHttpService extends Http {
   }
 
   private appendToken(options?: RequestOptionsArgs): RequestOptionsArgs {
-    let token = this.tokenService.get();
+    const token = this.tokenService.get();
     if (token) {
       options = this.buildOptions(options);
       options.headers.append('Authorization', `Bearer ${token}`);

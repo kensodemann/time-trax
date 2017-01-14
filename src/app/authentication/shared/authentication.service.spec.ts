@@ -11,10 +11,10 @@ describe('Authentication Service', () => {
   let service;
 
   beforeEach(() => {
-    let opt = new BaseRequestOptions();
+    const opt = new BaseRequestOptions();
     mockBackend = new MockBackend();
-    let http = new Http(mockBackend, opt);
-    let localStorageService = new LocalStorageService({});
+    const http = new Http(mockBackend, opt);
+    const localStorageService = new LocalStorageService({});
     authenticationTokenService = new AuthenticationTokenService(localStorageService);
 
     service = new AuthenticationService(http, authenticationTokenService);
@@ -27,7 +27,7 @@ describe('Authentication Service', () => {
   describe('login', () => {
     it('posts to the login endpoint', () => {
       let connection: MockConnection;
-      let credentials = {
+      const credentials = {
         username: 'SuperBob',
         password: 'BigHarrySquidPant$'
       };

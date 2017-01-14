@@ -10,10 +10,10 @@ export class MessageDialogService {
   constructor(private dialog: MdDialog) { }
 
   error(title: string, message: string, viewContainerRef: ViewContainerRef): Observable<any> {
-    let config = new MdDialogConfig();
+    const config = new MdDialogConfig();
     config.viewContainerRef = viewContainerRef;
 
-    let dialogRef = this.dialog.open(ErrorDialogComponent, config);
+    const dialogRef = this.dialog.open(ErrorDialogComponent, config);
 
     dialogRef.componentInstance.title = title;
     dialogRef.componentInstance.message = message;

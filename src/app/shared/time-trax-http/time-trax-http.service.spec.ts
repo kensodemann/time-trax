@@ -18,7 +18,7 @@ describe('TimeTraxHttpService', () => {
     tokenService = {
       get(): string { return token; }
     };
-    let opt = new BaseRequestOptions();
+    const opt = new BaseRequestOptions();
     mockBackend = new MockBackend();
     mockRouter = {
       navigate() { }
@@ -64,7 +64,7 @@ describe('TimeTraxHttpService', () => {
       spyOn(mockRouter, 'navigate');
       mockBackend.connections.subscribe(c => connection = c);
       service.get('http://test.dr.who/companions').subscribe();
-      let response = new Response(new ResponseOptions({
+      const response = new Response(new ResponseOptions({
         status: 401
       }));
       connection.mockError(response as any as Error);
@@ -82,7 +82,7 @@ describe('TimeTraxHttpService', () => {
       service.get('http://test.dr.who/companions')
         .subscribe(() => { }, (e) => { err = e; });
 
-      let response = new Response(new ResponseOptions({
+      const response = new Response(new ResponseOptions({
         status: 400,
         body: {
           reason: 'I do not like to do things for you'
@@ -137,7 +137,7 @@ describe('TimeTraxHttpService', () => {
       spyOn(mockRouter, 'navigate');
       mockBackend.connections.subscribe(c => connection = c);
       service.post('http://test.dr.who/companions', { name: 'Rose Tyler' }).subscribe();
-      let response = new Response(new ResponseOptions({
+      const response = new Response(new ResponseOptions({
         status: 401
       }));
       connection.mockError(response as any as Error);
@@ -155,7 +155,7 @@ describe('TimeTraxHttpService', () => {
       service.post('http://test.dr.who/companions', { name: 'Rose Tyler' })
         .subscribe(() => { }, (e) => { err = e; });
 
-      let response = new Response(new ResponseOptions({
+      const response = new Response(new ResponseOptions({
         status: 400,
         body: {
           reason: 'I do not like to do things for you'
@@ -202,7 +202,7 @@ describe('TimeTraxHttpService', () => {
       spyOn(mockRouter, 'navigate');
       mockBackend.connections.subscribe(c => connection = c);
       service.delete('http://test.dr.who/companions/73').subscribe();
-      let response = new Response(new ResponseOptions({
+      const response = new Response(new ResponseOptions({
         status: 401
       }));
       connection.mockError(response as any as Error);
@@ -220,7 +220,7 @@ describe('TimeTraxHttpService', () => {
       service.delete('http://test.dr.who/companions/73')
         .subscribe(() => { }, (e) => { err = e; });
 
-      let response = new Response(new ResponseOptions({
+      const response = new Response(new ResponseOptions({
         status: 400,
         body: {
           reason: 'I do not like to do things for you'
@@ -267,7 +267,7 @@ describe('TimeTraxHttpService', () => {
       spyOn(mockRouter, 'navigate');
       mockBackend.connections.subscribe(c => connection = c);
       service.put('http://test.dr.who/companions/42', { id: '42', name: 'Amy Pond' }).subscribe();
-      let response = new Response(new ResponseOptions({
+      const response = new Response(new ResponseOptions({
         status: 401
       }));
       connection.mockError(response as any as Error);
@@ -285,7 +285,7 @@ describe('TimeTraxHttpService', () => {
       service.put('http://test.dr.who/companions/42', { id: '42', name: 'Amy Pond' })
         .subscribe(() => { }, (e) => { err = e; });
 
-      let response = new Response(new ResponseOptions({
+      const response = new Response(new ResponseOptions({
         status: 400,
         body: {
           reason: 'I do not like to do things for you'
