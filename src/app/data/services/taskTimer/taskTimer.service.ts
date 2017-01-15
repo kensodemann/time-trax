@@ -45,7 +45,7 @@ export class TaskTimerService {
     }
 
     return this.taskTimers.flatMap(timers => {
-      let timersToStop: Array<Observable<any>> = _.chain(timers)
+      const timersToStop: Array<Observable<any>> = _.chain(timers)
         .filter('isActive')
         .map(t => this.stop(t))
         .value();

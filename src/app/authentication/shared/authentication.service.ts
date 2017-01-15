@@ -13,7 +13,7 @@ export class AuthenticationService {
   constructor(private http: Http, private authenticationTokenService: AuthenticationTokenService) {}
 
   login(userId: string, password: string): Observable<boolean> {
-    let credentials = {
+    const credentials = {
       username: userId,
       password: password
     };

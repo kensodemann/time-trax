@@ -40,7 +40,7 @@ describe('MessageDialogService', () => {
 
   describe('error dialog', () => {
     it('opens the dialog', () => {
-      let vcr = { name: 'I am a view component ref' };
+      const vcr = { name: 'I am a view component ref' };
       service.error('title', 'message', vcr);
       expect(dialog.Component).toEqual(ErrorDialogComponent);
       expect(dialog.config.viewContainerRef).toEqual(vcr);

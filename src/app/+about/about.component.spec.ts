@@ -45,7 +45,7 @@ describe('Component: About', () => {
 
   describe('on initialization', () => {
     it('gets the version information', () => {
-      let versionServiceStub = fixture.debugElement.injector.get(VersionService);
+      const versionServiceStub = fixture.debugElement.injector.get(VersionService);
 
       spyOn(versionServiceStub, 'get').and.returnValue(Observable.of({}));
       app.ngOnInit();
@@ -53,7 +53,7 @@ describe('Component: About', () => {
     });
 
     it('assigns the returned information for binding', () => {
-      let versionServiceStub = fixture.debugElement.injector.get(VersionService);
+      const versionServiceStub = fixture.debugElement.injector.get(VersionService);
 
       spyOn(versionServiceStub, 'get').and.returnValue(Observable.of({
         client: 'Critical Ability (3.1.4)',
@@ -69,15 +69,15 @@ describe('Component: About', () => {
     });
 
     it('shows an error if there is one', () => {
-      let versionServiceStub = fixture.debugElement.injector.get(VersionService);
-      let errorMessage = fixture.debugElement.injector.get(ErrorMessageService);
+      const versionServiceStub = fixture.debugElement.injector.get(VersionService);
+      const errorMessage = fixture.debugElement.injector.get(ErrorMessageService);
 
-      let opt = new ResponseOptions({
+      const opt = new ResponseOptions({
         status: 400,
         statusText: 'Not OK',
         body: {}
       });
-      let res = new Response(opt);
+      const res = new Response(opt);
 
       spyOn(versionServiceStub, 'get').and.returnValue(Observable.throw(res));
       spyOn(errorMessage, 'show');

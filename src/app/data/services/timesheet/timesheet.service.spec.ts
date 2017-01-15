@@ -9,14 +9,13 @@ import { environment } from '../../../../environments/environment';
 
 describe('TimesheetService', () => {
   let service;
-
   let mockBackend;
 
   beforeEach(() => {
-    let opt = new BaseRequestOptions();
+    const opt = new BaseRequestOptions();
     mockBackend = new MockBackend();
-    let http = new Http(mockBackend, opt);
-    let dates = new DateService();
+    const http = new Http(mockBackend, opt);
+    const dates = new DateService();
 
     service = new TimesheetService(http, dates);
   });
@@ -140,7 +139,7 @@ describe('TimesheetService', () => {
       service.getCurrent().subscribe(
         (res) => { result = res; }
       );
-      let response = new Response(new ResponseOptions({
+      const response = new Response(new ResponseOptions({
         status: 404
       }));
       connection.mockError(response as any as Error);
@@ -159,7 +158,7 @@ describe('TimesheetService', () => {
         (res) => { result = res; },
         (e) => { err = e; }
       );
-      let response = new Response(new ResponseOptions({
+      const response = new Response(new ResponseOptions({
         status: 400
       }));
       connection.mockError(response as any as Error);

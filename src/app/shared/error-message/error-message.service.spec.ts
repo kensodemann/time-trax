@@ -26,53 +26,53 @@ describe('ErrorMessageService', () => {
 
   describe('getMessage', () => {
     it('returns the reason from the body if there is one', () => {
-      let opt = new ResponseOptions({
+      const opt = new ResponseOptions({
         body: JSON.stringify({
           reason: 'Because you suck eggs'
         }),
         status: 400,
         statusText: 'Errors Gone Wild!'
       });
-      let res = new Response(opt);
+      const res = new Response(opt);
       expect(service.getMessage(res)).toEqual('Because you suck eggs');
     });
 
     it('returns the statusText if there is no reason in the body', () => {
-      let opt = new ResponseOptions({
+      const opt = new ResponseOptions({
         body: JSON.stringify({
           fooBar: 'Because you suck eggs'
         }),
         status: 400,
         statusText: 'Errors Gone Wild!'
       });
-      let res = new Response(opt);
+      const res = new Response(opt);
       expect(service.getMessage(res)).toEqual('Errors Gone Wild!');
     });
 
     it('returns "Unknown Error" if there is no reason and no statusText', () => {
-      let opt = new ResponseOptions({
+      const opt = new ResponseOptions({
         status: 400,
         body: {}
       });
-      let res = new Response(opt);
+      const res = new Response(opt);
       expect(service.getMessage(res)).toEqual('Unknown Error');
     });
   });
 
   describe('show', () => {
     it('shows the error in a message dialog', () => {
-      let vcr = {
+      const vcr = {
         name: 'I am a view container ref (fake)'
       };
 
-      let opt = new ResponseOptions({
+      const opt = new ResponseOptions({
         body: JSON.stringify({
           reason: 'Because you suck eggs'
         }),
         status: 400,
         statusText: 'Errors Gone Wild!'
       });
-      let res = new Response(opt);
+      const res = new Response(opt);
 
       spyOn(dialog, 'error');
 
@@ -81,18 +81,18 @@ describe('ErrorMessageService', () => {
     });
 
     it('returns the Observable of the message dialog', () => {
-      let vcr = {
+      const vcr = {
         name: 'I am a view container ref (fake)'
       };
 
-      let opt = new ResponseOptions({
+      const opt = new ResponseOptions({
         body: JSON.stringify({
           reason: 'Because you suck eggs'
         }),
         status: 400,
         statusText: 'Errors Gone Wild!'
       });
-      let res = new Response(opt);
+      const res = new Response(opt);
 
       spyOn(dialog, 'error').and.returnValue(Observable.of('Toast'));
 

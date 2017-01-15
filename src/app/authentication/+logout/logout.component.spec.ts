@@ -31,16 +31,16 @@ describe('Component: Logout', () => {
   });
 
   it('should create the component', async(() => {
-    let fixture = TestBed.createComponent(LogoutComponent);
-    let app = fixture.debugElement.componentInstance;
+    const fixture = TestBed.createComponent(LogoutComponent);
+    const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));
 
   describe('logout', () => {
     it('calls the logout function', () => {
-      let fixture = TestBed.createComponent(LogoutComponent);
-      let app = fixture.debugElement.componentInstance;
-      let auth = fixture.debugElement.injector.get(AuthenticationService);
+      const fixture = TestBed.createComponent(LogoutComponent);
+      const app = fixture.debugElement.componentInstance;
+      const auth = fixture.debugElement.injector.get(AuthenticationService);
 
       spyOn(auth, 'logout');
 
@@ -49,9 +49,9 @@ describe('Component: Logout', () => {
     });
 
     it('navigates to the login page', () => {
-      let fixture = TestBed.createComponent(LogoutComponent);
-      let app = fixture.debugElement.componentInstance;
-      let router = fixture.debugElement.injector.get(Router);
+      const fixture = TestBed.createComponent(LogoutComponent);
+      const app = fixture.debugElement.componentInstance;
+      const router = fixture.debugElement.injector.get(Router);
 
       spyOn(router, 'navigate');
 
@@ -63,9 +63,9 @@ describe('Component: Logout', () => {
 
   describe('stay', () => {
     it('navigates to the current timesheet', () => {
-      let fixture = TestBed.createComponent(LogoutComponent);
-      let app = fixture.debugElement.componentInstance;
-      let router = fixture.debugElement.injector.get(Router);
+      const fixture = TestBed.createComponent(LogoutComponent);
+      const app = fixture.debugElement.componentInstance;
+      const router = fixture.debugElement.injector.get(Router);
 
       spyOn(router, 'navigate');
 

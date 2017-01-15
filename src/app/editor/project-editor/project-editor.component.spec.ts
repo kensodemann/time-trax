@@ -100,7 +100,7 @@ describe('ProjectEditorComponent', () => {
     });
 
     it('closes the dialog, returning nothing', () => {
-      let dialog = fixture.debugElement.injector.get(MdDialogRef);
+      const dialog = fixture.debugElement.injector.get(MdDialogRef);
       spyOn(dialog, 'close');
       component.cancel();
       expect(dialog.close).toHaveBeenCalledTimes(1);
@@ -136,8 +136,8 @@ describe('ProjectEditorComponent', () => {
     });
 
     it('closes the dialog once the save completes, returning the result of the save', () => {
-      let dialog = fixture.debugElement.injector.get(MdDialogRef);
-      let newPrj = new Project();
+      const dialog = fixture.debugElement.injector.get(MdDialogRef);
+      const newPrj = new Project();
       newPrj.status = 'I was just saved';
       spyOn(dataService, 'save').and.returnValue(Observable.of(newPrj));
       spyOn(dialog, 'close');

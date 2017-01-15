@@ -50,16 +50,16 @@ describe('Component: Projects', () => {
   });
 
   it('should create the component', async(() => {
-    let fixture = TestBed.createComponent(ProjectsComponent);
-    let app = fixture.debugElement.componentInstance;
+    const fixture = TestBed.createComponent(ProjectsComponent);
+    const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));
 
   describe('initialization', () => {
     it('gets all of the projects', () => {
-      let fixture = TestBed.createComponent(ProjectsComponent);
-      let app = fixture.debugElement.componentInstance;
-      let dataService = fixture.debugElement.injector.get(ProjectService);
+      const fixture = TestBed.createComponent(ProjectsComponent);
+      const app = fixture.debugElement.componentInstance;
+      const dataService = fixture.debugElement.injector.get(ProjectService);
 
       spyOn(dataService, 'getAll').and.returnValue(Observable.empty());
       app.ngOnInit();
@@ -67,9 +67,9 @@ describe('Component: Projects', () => {
     });
 
     it('assigns the fetched projects', () => {
-      let fixture = TestBed.createComponent(ProjectsComponent);
-      let app = fixture.debugElement.componentInstance;
-      let dataService = fixture.debugElement.injector.get(ProjectService);
+      const fixture = TestBed.createComponent(ProjectsComponent);
+      const app = fixture.debugElement.componentInstance;
+      const dataService = fixture.debugElement.injector.get(ProjectService);
 
       spyOn(dataService, 'getAll').and.returnValue(Observable.of([{
         _id: '42',
@@ -94,17 +94,17 @@ describe('Component: Projects', () => {
     });
 
     it('shows the error if there is one', () => {
-      let fixture = TestBed.createComponent(ProjectsComponent);
-      let app = fixture.debugElement.componentInstance;
-      let dataService = fixture.debugElement.injector.get(ProjectService);
-      let errorMessage = fixture.debugElement.injector.get(ErrorMessageService);
+      const fixture = TestBed.createComponent(ProjectsComponent);
+      const app = fixture.debugElement.componentInstance;
+      const dataService = fixture.debugElement.injector.get(ProjectService);
+      const errorMessage = fixture.debugElement.injector.get(ErrorMessageService);
 
-      let opt = new ResponseOptions({
+      const opt = new ResponseOptions({
         status: 400,
         statusText: 'Not OK',
         body: {}
       });
-      let res = new Response(opt);
+      const res = new Response(opt);
 
       spyOn(dataService, 'getAll').and.returnValue(Observable.throw(res));
       spyOn(errorMessage, 'show');
@@ -117,9 +117,9 @@ describe('Component: Projects', () => {
   describe('filtering projects', () => {
     let app;
     beforeEach(() => {
-      let fixture = TestBed.createComponent(ProjectsComponent);
+      const fixture = TestBed.createComponent(ProjectsComponent);
       app = fixture.debugElement.componentInstance;
-      let dataService = fixture.debugElement.injector.get(ProjectService);
+      const dataService = fixture.debugElement.injector.get(ProjectService);
 
       spyOn(dataService, 'getAll').and.returnValue(Observable.of([{
         _id: '42',
@@ -332,10 +332,10 @@ describe('Component: Projects', () => {
     let app;
     let projectEditor;
     beforeEach(() => {
-      let fixture = TestBed.createComponent(ProjectsComponent);
+      const fixture = TestBed.createComponent(ProjectsComponent);
       app = fixture.debugElement.componentInstance;
       projectEditor = fixture.debugElement.injector.get(ProjectEditorService);
-      let dataService = fixture.debugElement.injector.get(ProjectService);
+      const dataService = fixture.debugElement.injector.get(ProjectService);
 
       spyOn(dataService, 'getAll').and.returnValue(Observable.of([{
         _id: '42',
@@ -382,10 +382,10 @@ describe('Component: Projects', () => {
     let app;
     let projectEditor;
     beforeEach(() => {
-      let fixture = TestBed.createComponent(ProjectsComponent);
+      const fixture = TestBed.createComponent(ProjectsComponent);
       app = fixture.debugElement.componentInstance;
       projectEditor = fixture.debugElement.injector.get(ProjectEditorService);
-      let dataService = fixture.debugElement.injector.get(ProjectService);
+      const dataService = fixture.debugElement.injector.get(ProjectService);
 
       spyOn(dataService, 'getAll').and.returnValue(Observable.of([{
         _id: '42',
@@ -432,6 +432,6 @@ describe('Component: Projects', () => {
         sbvbTaskId: 'COMP101'
       });
       expect(app.projects.length).toEqual(2);
-    })
+    });
   });
 });
