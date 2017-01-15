@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
+import { DataService } from '../data-service.interface';
 import { TaskTimer } from '../../models/taskTimer';
 import { environment } from '../../../../environments/environment';
 
@@ -12,13 +13,19 @@ import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/map';
 
 @Injectable()
-export class TaskTimerService {
+export class TaskTimerService implements DataService<TaskTimer> {
   private taskTimers: Observable<Array<TaskTimer>>;
   private timesheetId: string;
 
   constructor(private http: Http) { }
 
-  getAllForTimesheet(timesheetId: string): Observable<Array<TaskTimer>> {
+  getAll(params: any): Observable<Array<TaskTimer>> {
+    const timesheetId = params && params.timesheetId;
+
+    if (!timesheetId) {
+      throw new Error('TaskTimerService.getAll() must be called with a parameter object specifying the timesheetId');
+    }
+
     if (this.timesheetId !== timesheetId) {
       this.timesheetId = timesheetId;
       this.taskTimers = this.http.get(`${environment.dataService}/timesheets/${timesheetId}/taskTimers`)
