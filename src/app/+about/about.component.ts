@@ -8,7 +8,7 @@ import { ErrorMessageService } from '../shared/error-message/error-message.servi
 import * as moment from 'moment';
 
 @Component({
-  selector: 'app-about',
+  selector: 'trx-about',
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.scss']
 })

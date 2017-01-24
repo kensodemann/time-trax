@@ -5,7 +5,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { ProjectService } from './project/project.service';
 import { StageService } from './stage/stage.service';
 import { TimesheetService } from './timesheet/timesheet.service';
-import { TaskTimerService } from './taskTimer/taskTimer.service';
+import { TaskTimerService } from './task-timer/task-timer.service';
 import { VersionService } from './version/version.service';
 
 @NgModule({

@@ -1,27 +1,10 @@
 md-card {
-  width: 100%;
-  height: 100%;
-
-  margin-top: 15px;
+  height: 150px;
+  margin: 15px;
 }
 
 .header {
-  margin-bottom: 10px;
-
-  .row {
-    display: table;
+  md-input-container {
     width: 100%;
-
-    .col {
-      display: table-cell;
-
-      &.col-right {
-        text-align: right;
-      }
-
-      md-input-container {
-        width: 100%;
-      }
-    }
   }
 }

@@ -4,7 +4,7 @@ import { Http, Response, ResponseOptions, RequestMethod, BaseRequestOptions } fr
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { Observable } from 'rxjs/Observable';
 
-import { TaskTimerService } from './taskTimer.service';
+import { TaskTimerService } from './task-timer.service';
 import { environment } from '../../../../environments/environment';
 
 describe('TaskTimerService', () => {

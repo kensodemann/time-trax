@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import { DataService } from '../data-service.interface';
-import { TaskTimer } from '../../models/taskTimer';
+import { TaskTimer } from '../../models/task-timer';
 import { environment } from '../../../../environments/environment';
 
 import * as _ from 'lodash';

@@ -10,7 +10,7 @@ import { ErrorMessageService } from '../shared/error-message/error-message.servi
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'app-projects',
+  selector: 'trx-projects',
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.scss']
 })
