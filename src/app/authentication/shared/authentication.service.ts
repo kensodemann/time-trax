@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { environment } from '../../../environments/environment';
-import { AuthenticationTokenService } from '../../shared/authentication-token/authentication-token.service';
+import { AuthenticationTokenService } from '../../core/authentication-token/authentication-token.service';
 import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/do';

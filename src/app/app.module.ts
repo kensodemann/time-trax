@@ -4,6 +4,7 @@ import { MaterialModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
+import { CoreModule } from './core/core.module';
 import { routing } from './app.routing';
 import { SharedModule } from './shared/shared.module';
 
@@ -19,6 +20,8 @@ import 'hammerjs';
       prefix: 'time-trax'
     }),
     MaterialModule.forRoot(),
+
+    CoreModule,
     SharedModule,
     routing
   ],
