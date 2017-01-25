@@ -1,6 +1,10 @@
 import { Http, RequestMethod, Response, ResponseOptions, BaseRequestOptions } from '@angular/http';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { MockBackend, MockConnection } from '@angular/http/testing';
+import { Observable } from 'rxjs/Observable';
+
+import 'rxjs/add/observable/interval';
+
 import { AuthenticationTokenService } from '../../core/authentication-token/authentication-token.service';
 import { AuthenticationService } from './authentication.service';
 import { environment } from '../../../environments/environment';
@@ -122,6 +126,42 @@ describe('Authentication Service', () => {
       spyOn(authenticationTokenService, 'clear');
       service.logout();
       expect(authenticationTokenService.clear).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('token refresh', () => {
+    it('schedules a refresh every 20 minutes', () => {
+      spyOn(Observable, 'interval').and.returnValue(Observable.empty());
+      service.scheduleTokenRefresh();
+      expect(Observable.interval).toHaveBeenCalledTimes(1);
+      expect(Observable.interval).toHaveBeenCalledWith(20 * 60 * 1000);
+    });
+
+    it('calls the fresh login token endpoint', () => {
+      let connection: MockConnection;
+      mockBackend.connections.subscribe(c => connection = c);
+      spyOn(Observable, 'interval').and.returnValue(Observable.of(null));
+      service.scheduleTokenRefresh();
+      expect(connection.request.url).toEqual(`${environment.dataService}/freshLoginToken`);
+      expect(connection.request.method).toEqual(RequestMethod.Get);
+    });
+
+    it('sets a new token', () => {
+      let connection: MockConnection;
+      mockBackend.connections.subscribe(c => connection = c);
+      spyOn(authenticationTokenService, 'set');
+      spyOn(Observable, 'interval').and.returnValue(Observable.of(null));
+      service.scheduleTokenRefresh();
+      expect(connection.request.url).toEqual(`${environment.dataService}/freshLoginToken`);
+      expect(connection.request.method).toEqual(RequestMethod.Get);
+      connection.mockRespond(new Response(new ResponseOptions({
+        status: 200,
+        body: {
+          token: 'IAmFreshToken'
+        }
+      })));
+      expect(authenticationTokenService.set).toHaveBeenCalledTimes(1);
+      expect(authenticationTokenService.set).toHaveBeenCalledWith('IAmFreshToken');
     });
   });
 });

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@angular/material';
 
+import { AuthenticationModule } from './authentication/authentication.module';
 import { DateModule } from './date/date.module';
 import { ErrorMessageModule } from './error-message/error-message.module';
 import { MessageDialogModule } from './message-dialog/message-dialog.module';
@@ -17,6 +18,7 @@ import { ProjectTitlePipe } from './pipes/project-title.pipe';
     FlexLayoutModule,
     MaterialModule,
 
+    AuthenticationModule,
     DateModule,
     ErrorMessageModule,
     MessageDialogModule,

@@ -1,7 +1,8 @@
-import { AuthenticationService } from '../shared/authentication.service';
-import { MdSnackBar, MdSnackBarRef } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
+import { MdSnackBar, MdSnackBarRef } from '@angular/material';
 import { Router } from '@angular/router';
+
+import { AuthenticationService } from '../../shared/authentication/authentication.service';
 
 @Component({
   selector: 'trx-login',
