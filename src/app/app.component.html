@@ -1,6 +1,6 @@
 <md-sidenav-container fullscreen>
   <md-sidenav #sidenav mode="over" class="trx-sidenav">
-    <md-nav-list>
+    <md-nav-list (click)="sidenav.close()">
       <a md-list-item [routerLink]="['/timesheet/current']">
         <md-icon md-list-icon>schedule</md-icon>
         <span md-line>Current Week</span>
