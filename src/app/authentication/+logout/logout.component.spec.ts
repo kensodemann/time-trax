@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { LogoutComponent } from './logout.component';
 
-import { AuthenticationService } from '../shared/authentication.service';
+import { AuthenticationService } from '../../shared/authentication/authentication.service';
 
 describe('Component: Logout', () => {
   beforeEach(() => {
