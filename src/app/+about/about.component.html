@@ -13,19 +13,10 @@
 </div>
 
 <div class="content">
-  <div class="about-information center">
-    <dl>
-      <dt>Version</dt>
-      <dd>{{version?.client}}</dd>
-
-      <dt>Release Date</dt>
-      <dd>{{version?.releaseDate.format('LL')}}</dd>
-
-      <dt>Server Version</dt>
-      <dd>{{version?.server}}</dd>
-
-      <dt>Copyright</dt>
-      <dd>&copy; {{copyright}}</dd>
-    </dl>
+  <div fxLayout="column" fxLayoutAlign="start center">
+    <div fxflex>{{version?.client}}</div>
+    <div fxflex>Released {{version?.releaseDate.format('LL')}}</div>
+    <div fxflex>Server Version - {{version?.server}}</div>
+    <div fxflex>Copyright &copy; {{copyright}}</div>
   </div>
 </div>
