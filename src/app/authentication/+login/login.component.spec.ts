@@ -2,7 +2,7 @@ import { TestBed, async } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { LoginComponent } from './login.component';
-import { AuthenticationService } from '../../shared/authentication/authentication.service';
+import { AuthenticationService } from '../../shared/services/authentication/authentication.service';
 
 import { MaterialModule, MdSnackBar, MdSnackBarConfig } from '@angular/material';
 

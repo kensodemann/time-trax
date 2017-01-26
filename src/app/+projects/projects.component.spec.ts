@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 
-import { ErrorMessageService } from '../shared/error-message/error-message.service';
+import { ErrorMessageService } from '../shared/services/error-message/error-message.service';
 import { Project } from '../data/models/project';
 import { ProjectService } from '../data/services/project/project.service';
 import { ProjectEditorService } from '../editor/project-editor/project-editor.service';

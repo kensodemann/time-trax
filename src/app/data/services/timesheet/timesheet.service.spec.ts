@@ -4,7 +4,7 @@ import { Http, Response, ResponseOptions, RequestMethod, BaseRequestOptions } fr
 import { MockBackend, MockConnection } from '@angular/http/testing';
 
 import { TimesheetService } from './timesheet.service';
-import { DateService } from '../../../shared/date/date.service';
+import { DateService } from '../../../shared/services/date/date.service';
 import { environment } from '../../../../environments/environment';
 
 describe('TimesheetService', () => {

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 
-import { MessageDialogService } from '../shared/message-dialog/message-dialog.service';
+import { MessageDialogService } from '../shared/services/message-dialog/message-dialog.service';
 
 @Component({
   selector: 'trx-time-report',

@@ -2,7 +2,7 @@ import { ViewContainerRef } from '@angular/core';
 import { TestBed, async } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
 
-import { MessageDialogService } from '../shared/message-dialog/message-dialog.service';
+import { MessageDialogService } from '../shared/services/message-dialog/message-dialog.service';
 import { TimeReportComponent } from './time-report.component';
 
 class MessageDialogStub {

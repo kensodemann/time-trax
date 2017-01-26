@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import { DataService } from '../data-service.interface';
-import { DateService } from '../../../shared/date/date.service';
+import { DateService } from '../../../shared/services/date/date.service';
 import { Timesheet } from '../../models/timesheet';
 import { environment } from '../../../../environments/environment';
 

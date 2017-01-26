@@ -3,7 +3,7 @@
 import { RequestMethod, BaseRequestOptions, Response, ResponseOptions } from '@angular/http';
 import { Router } from '@angular/router';
 import { MockBackend, MockConnection } from '@angular/http/testing';
-import { AuthenticationTokenService } from '../../core/authentication-token/authentication-token.service';
+import { AuthenticationTokenService } from '../../../core/authentication-token/authentication-token.service';
 import { TimeTraxHttpService } from './time-trax-http.service';
 
 describe('TimeTraxHttpService', () => {

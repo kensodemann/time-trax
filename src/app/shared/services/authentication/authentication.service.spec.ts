@@ -5,9 +5,9 @@ import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/observable/interval';
 
-import { AuthenticationTokenService } from '../../core/authentication-token/authentication-token.service';
+import { AuthenticationTokenService } from '../../../core/authentication-token/authentication-token.service';
 import { AuthenticationService } from './authentication.service';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 
 describe('Authentication Service', () => {
   let authenticationTokenService;
