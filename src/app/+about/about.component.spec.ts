@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 
 import * as moment from 'moment';
 
-import { ErrorMessageService } from '../shared/error-message/error-message.service';
+import { ErrorMessageService } from '../shared/services/error-message/error-message.service';
 import { Version } from '../data/models/version';
 import { VersionService } from '../data/services/version/version.service';
 import { AboutComponent } from './about.component';

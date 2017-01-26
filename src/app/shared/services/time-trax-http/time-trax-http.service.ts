@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ConnectionBackend, Headers, Http, RequestOptions, RequestOptionsArgs, Response } from '@angular/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { AuthenticationTokenService } from '../../core/authentication-token/authentication-token.service';
+import { AuthenticationTokenService } from '../../../core/authentication-token/authentication-token.service';
 
 import 'rxjs/add/observable/empty';
 import 'rxjs/add/observable/throw';

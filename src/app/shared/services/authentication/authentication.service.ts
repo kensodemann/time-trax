@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { environment } from '../../../environments/environment';
-import { AuthenticationTokenService } from '../../core/authentication-token/authentication-token.service';
+import { environment } from '../../../../environments/environment';
+import { AuthenticationTokenService } from '../../../core/authentication-token/authentication-token.service';
 
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/do';

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AuthenticationService } from './shared/authentication/authentication.service';
+import { AuthenticationService } from './shared/services/authentication/authentication.service';
 
 @Component({
   selector: 'trx-root',

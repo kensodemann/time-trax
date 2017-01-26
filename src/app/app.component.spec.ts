@@ -5,7 +5,7 @@ import { MaterialModule } from '@angular/material';
 import { RouterLinkStubDirective, RouterOutletStubComponent } from '../../testing/router-stubs';
 
 import { AppComponent } from './app.component';
-import { AuthenticationService } from './shared/authentication/authentication.service';
+import { AuthenticationService } from './shared/services/authentication/authentication.service';
 
 class AuthenticationServiceStub {
   scheduleTokenRefresh() { }

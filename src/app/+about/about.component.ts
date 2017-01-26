@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { Version } from '../data/models/version';
 import { VersionService } from '../data/services/version/version.service';
-import { ErrorMessageService } from '../shared/error-message/error-message.service';
+import { ErrorMessageService } from '../shared/services/error-message/error-message.service';
 
 import * as moment from 'moment';
 

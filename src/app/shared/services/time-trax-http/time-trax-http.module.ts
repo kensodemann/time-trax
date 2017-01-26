@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
 import { Router } from '@angular/router';
 
-import { AuthenticationTokenService } from '../../core/authentication-token/authentication-token.service';
+import { AuthenticationTokenService } from '../../../core/authentication-token/authentication-token.service';
 import { TimeTraxHttpService } from './time-trax-http.service';
 
 export function timeTraxHttpServiceFactory(xhrBackend: XHRBackend, requestOptions: RequestOptions,
