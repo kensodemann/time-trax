@@ -1,4 +1,4 @@
-export interface Timesheet {
+export class Timesheet {
   _id: string;
   endDate: string;
   userRid: string;
