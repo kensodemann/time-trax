@@ -101,6 +101,10 @@ describe('TimesheetService', () => {
       jasmine.clock().mockDate(new Date(2016, 11, 21));
     });
 
+    afterEach(() => {
+      jasmine.clock().uninstall();
+    });
+
     it('gets the timesheet for the current week ending date', () => {
       let connection: MockConnection;
       mockBackend.connections.subscribe(c => connection = c);
@@ -118,52 +122,17 @@ describe('TimesheetService', () => {
       service.getCurrent().subscribe((res) => { result = res; });
       connection.mockRespond(new Response(new ResponseOptions({
         status: 200,
-        body: {
+        body: [{
           _id: '42',
           endDate: '2016-12-24',
           userRid: 'me'
-        }
+        }]
       })));
       expect(result).toEqual({
         _id: '42',
         endDate: '2016-12-24',
         userRid: 'me'
       });
-    });
-
-    it('returns a newly created timesheet if one did not exist for the current week', () => {
-      let connection: MockConnection;
-      mockBackend.connections.subscribe(c => connection = c);
-
-      let result;
-      service.getCurrent().subscribe(
-        (res) => { result = res; }
-      );
-      const response = new Response(new ResponseOptions({
-        status: 404
-      }));
-      connection.mockError(response as any as Error);
-      expect(result).toEqual({
-        endDate: '2016-12-24'
-      });
-    });
-
-    it('re-throws non-404 errors', () => {
-      let connection: MockConnection;
-      mockBackend.connections.subscribe(c => connection = c);
-
-      let result;
-      let err;
-      service.getCurrent().subscribe(
-        (res) => { result = res; },
-        (e) => { err = e; }
-      );
-      const response = new Response(new ResponseOptions({
-        status: 400
-      }));
-      connection.mockError(response as any as Error);
-      expect(result).toBeUndefined();
-      expect(err.status).toEqual(400);
     });
   });
 
