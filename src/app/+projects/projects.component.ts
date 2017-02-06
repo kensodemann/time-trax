@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { Project } from '../data/models/project';
 import { ProjectService } from '../data/services/project/project.service';
-import { ProjectEditorService } from '../editor/project-editor/project-editor.service';
+import { ProjectEditorService } from '../editors/project-editor/project-editor.service';
 import { ErrorMessageService } from '../shared/services/error-message/error-message.service';
 
 import * as _ from 'lodash';
@@ -53,20 +53,8 @@ export class ProjectsComponent implements OnInit {
     let matchesTokens = true;
     const tokens = this.projectFilter ? this.projectFilter.split(' ') : [];
 
-    tokens.forEach(token => matchesTokens = matchesTokens && this.containsToken(p, token));
+    tokens.forEach(token => matchesTokens = matchesTokens && p.contains(token));
 
     return matchesTokens;
   }
-
-  private containsToken(p: Project, token: string): boolean {
-    const str = `${this.prepareForSearch(p.name)} ${this.prepareForSearch(p.jiraTaskId)} ${this.prepareForSearch(p.sbvbTaskId)}`;
-    const t = this.prepareForSearch(token);
-
-    return str.includes(t);
-  }
-
-  private prepareForSearch(str: string): string {
-    return str ? str.toLowerCase() : '';
-  }
-
 }

@@ -13,6 +13,8 @@ import { TimesheetReportService } from './services/timesheet-report/timesheet-re
 
 import { HoursMinutesPipe } from './pipes/hours-minutes.pipe';
 import { ProjectTitlePipe } from './pipes/project-title.pipe';
+import { ValidTimeDirective } from './validators/valid-time.directive';
+import { MillisecondsPipe } from './pipes/milliseconds.pipe';
 
 @NgModule({
   exports: [
@@ -31,8 +33,13 @@ import { ProjectTitlePipe } from './pipes/project-title.pipe';
   ],
   declarations: [
     HoursMinutesPipe,
-    ProjectTitlePipe
+    ProjectTitlePipe,
+    ValidTimeDirective,
+    MillisecondsPipe
   ],
-  providers: [TimesheetReportService]
+  providers: [
+    TimesheetReportService,
+    HoursMinutesPipe
+  ]
 })
 export class SharedModule { }

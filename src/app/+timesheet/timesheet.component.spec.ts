@@ -1,4 +1,5 @@
 import { TestBed, async } from '@angular/core/testing';
+import { ViewContainerRef } from '@angular/core';
 import { MaterialModule } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 
@@ -11,6 +12,7 @@ import { TaskTimer } from '../data/models/task-timer';
 import { Timesheet } from '../data/models/timesheet';
 import { TaskTimerService } from '../data/services/task-timer/task-timer.service';
 import { TimesheetService } from '../data/services/timesheet/timesheet.service';
+import { TaskTimerEditorService } from '../editors/task-timer-editor/task-timer-editor.service';
 import { HoursMinutesPipe } from '../shared/pipes/hours-minutes.pipe';
 import { ProjectTitlePipe } from '../shared/pipes/project-title.pipe';
 import { DateService } from '../shared/services/date/date.service';
@@ -24,6 +26,12 @@ class TimesheetServiceStub {
 class TaskTimerServiceStub {
   getAll(params: any): Observable<Array<TaskTimer>> { return Observable.empty(); }
 };
+
+class TaskTimerEditorStub {
+  open(taskTimer: TaskTimer, viewContainerRef: ViewContainerRef): Observable<any> {
+    return Observable.empty();
+  }
+}
 
 const testTaskTimers = [{
   _id: 1,
@@ -81,6 +89,7 @@ describe('Component: Timesheet', () => {
       ],
       providers: [
         { provide: TaskTimerService, useClass: TaskTimerServiceStub },
+        { provide: TaskTimerEditorService, useClass: TaskTimerEditorStub },
         { provide: TimesheetService, useClass: TimesheetServiceStub },
         DateService,
         TimesheetReportService
@@ -197,6 +206,52 @@ describe('Component: Timesheet', () => {
         expect(app.days[5].taskTimers.length).toEqual(0, 'Friday');
         expect(app.days[6].taskTimers.length).toEqual(0, 'Saturday');
       });
+    });
+  });
+
+  describe('addTaskTimer - new timesheet', () => {
+    let app;
+    let editor;
+    beforeEach(() => {
+      const fixture = TestBed.createComponent(TimesheetComponent);
+      app = fixture.debugElement.componentInstance;
+      const timesheetService = fixture.debugElement.injector.get(TimesheetService);
+      editor = fixture.debugElement.injector.get(TaskTimerEditorService);
+      spyOn(timesheetService, 'getCurrent').and.returnValue(Observable.of(undefined));
+      spyOn(timesheetService, 'save').and.returnValue(Observable.of({ _id: '42731138314159', endDate: '2017-02-04', userRid: 'me' }));
+      jasmine.clock().mockDate(new Date(2017, 1, 2));
+      app.ngOnInit();
+    });
+
+    afterEach(() => {
+      jasmine.clock().uninstall();
+    });
+
+    it('opens the task timer editor', () => {
+      spyOn(editor, 'open');
+      app.addTaskTimer(new Date(2017, 1, 5));
+      expect(editor.open).toHaveBeenCalledTimes(1);
+      expect(editor.open.calls.argsFor(0)[0]).toEqual(new TaskTimer('42731138314159', '2017-02-05'));
+    });
+  });
+
+  describe('addTaskTimer - existing timesheet', () => {
+    let app;
+    let editor;
+    beforeEach(() => {
+      const fixture = TestBed.createComponent(TimesheetComponent);
+      app = fixture.debugElement.componentInstance;
+      const timesheetService = fixture.debugElement.injector.get(TimesheetService);
+      editor = fixture.debugElement.injector.get(TaskTimerEditorService);
+      spyOn(timesheetService, 'getCurrent').and.returnValue(Observable.of({ _id: '11383141594273', endDate: '2017-02-04' }));
+      app.ngOnInit();
+    });
+
+    it('opens the task timer editor', () => {
+      spyOn(editor, 'open');
+      app.addTaskTimer(new Date(2017, 1, 5));
+      expect(editor.open).toHaveBeenCalledTimes(1);
+      expect(editor.open.calls.argsFor(0)[0]).toEqual(new TaskTimer('11383141594273', '2017-02-05'));
     });
   });
 });

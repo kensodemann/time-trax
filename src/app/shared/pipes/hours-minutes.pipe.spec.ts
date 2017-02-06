@@ -4,7 +4,7 @@ import { TestBed, async } from '@angular/core/testing';
 import { HoursMinutesPipe } from './hours-minutes.pipe';
 
 describe('HoursMinutesPipe', () => {
-  it('create an instance', () => {
+  it('exists', () => {
     const pipe = new HoursMinutesPipe();
     expect(pipe).toBeTruthy();
   });

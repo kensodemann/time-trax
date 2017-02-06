@@ -18,7 +18,12 @@ export class ProjectService implements DataService<Project> {
 
   getAll(): Observable<Array<Project>> {
     return this.http.get(this.url)
-      .map(res => res.json());
+      .map((res) => {
+        const data = res.json();
+        const projects: Array<Project> = [];
+        data.forEach(p => projects.push(new Project(p)));
+        return projects;
+      });
   }
 
   get(id: string): Observable<Project> {
@@ -27,7 +32,7 @@ export class ProjectService implements DataService<Project> {
     }
 
     return this.http.get(`${this.url}/${id}`)
-      .map(res => res.json());
+      .map(res => new Project(res.json()));
   }
 
   save(project: Project): Observable<Project> {

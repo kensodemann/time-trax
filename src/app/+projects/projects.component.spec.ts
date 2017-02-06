@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import { ErrorMessageService } from '../shared/services/error-message/error-message.service';
 import { Project } from '../data/models/project';
 import { ProjectService } from '../data/services/project/project.service';
-import { ProjectEditorService } from '../editor/project-editor/project-editor.service';
+import { ProjectEditorService } from '../editors/project-editor/project-editor.service';
 import { ProjectsComponent } from './projects.component';
 
 import 'rxjs/add/observable/empty';
@@ -121,210 +121,210 @@ describe('Component: Projects', () => {
       app = fixture.debugElement.componentInstance;
       const dataService = fixture.debugElement.injector.get(ProjectService);
 
-      spyOn(dataService, 'getAll').and.returnValue(Observable.of([{
+      spyOn(dataService, 'getAll').and.returnValue(Observable.of([new Project({
         _id: '42',
         name: 'Deep Thought',
         jiraTaskId: 'DA-101',
         sbvbTaskId: 'RFP14295',
         status: 'inactive'
-      }, {
+      }), new Project({
         _id: '1138',
         name: 'Big Brother by Another Mother',
         jiraTaskId: 'THX-101',
         sbvbTaskId: 'IFP0005935',
         status: 'active'
-      }, {
+      }), new Project({
         _id: '314159',
         name: 'Big Fat Pie Eater',
         jiraTaskId: 'THX-121',
         sbvbTaskId: 'IFP0005935',
         status: 'active'
-      }, {
+      }), new Project({
         _id: '73',
         name: 'Geeks are for Us',
         jiraTaskId: 'BB-1152',
         sbvbTaskId: 'PL0259935',
         status: 'active'
-      }, {
+      }), new Project({
         _id: '4273',
         name: 'Ultimate Answer for Geeks and Nerds',
         jiraTaskId: 'BB-8943',
         sbvbTaskId: 'WO0035003',
         status: 'inactive'
-      }, {
+      }), new Project({
         _id: '89953',
         name: 'Just some random task',
         sbvbTaskId: 'PL002959035',
         status: 'inactive'
-      }, {
+      }), new Project({
         _id: '1152',
         name: 'Some other Random task',
         sbvbTaskId: 'RFP14295',
         status: 'active'
-      }]));
+      })]));
       app.ngOnInit();
     });
 
     it('returns all active projects by default', () => {
-      expect(app.filteredProjects()).toEqual([{
+      expect(app.filteredProjects()).toEqual([new Project({
         _id: '1138',
         name: 'Big Brother by Another Mother',
         jiraTaskId: 'THX-101',
         sbvbTaskId: 'IFP0005935',
         status: 'active'
-      }, {
+      }), new Project({
         _id: '314159',
         name: 'Big Fat Pie Eater',
         jiraTaskId: 'THX-121',
         sbvbTaskId: 'IFP0005935',
         status: 'active'
-      }, {
+      }), new Project({
         _id: '73',
         name: 'Geeks are for Us',
         jiraTaskId: 'BB-1152',
         sbvbTaskId: 'PL0259935',
         status: 'active'
-      }, {
+      }), new Project({
         _id: '1152',
         name: 'Some other Random task',
         sbvbTaskId: 'RFP14295',
         status: 'active'
-      }]);
+      })]);
     });
 
     it('includes inactive projects when the flag is set', () => {
       app.showClosedProjects = true;
-      expect(app.filteredProjects()).toEqual([{
+      expect(app.filteredProjects()).toEqual([new Project({
         _id: '42',
         name: 'Deep Thought',
         jiraTaskId: 'DA-101',
         sbvbTaskId: 'RFP14295',
         status: 'inactive'
-      }, {
+      }), new Project({
         _id: '1138',
         name: 'Big Brother by Another Mother',
         jiraTaskId: 'THX-101',
         sbvbTaskId: 'IFP0005935',
         status: 'active'
-      }, {
+      }), new Project({
         _id: '314159',
         name: 'Big Fat Pie Eater',
         jiraTaskId: 'THX-121',
         sbvbTaskId: 'IFP0005935',
         status: 'active'
-      }, {
+      }), new Project({
         _id: '73',
         name: 'Geeks are for Us',
         jiraTaskId: 'BB-1152',
         sbvbTaskId: 'PL0259935',
         status: 'active'
-      }, {
+      }), new Project({
         _id: '4273',
         name: 'Ultimate Answer for Geeks and Nerds',
         jiraTaskId: 'BB-8943',
         sbvbTaskId: 'WO0035003',
         status: 'inactive'
-      }, {
+      }), new Project({
         _id: '89953',
         name: 'Just some random task',
         sbvbTaskId: 'PL002959035',
         status: 'inactive'
-      }, {
+      }), new Project({
         _id: '1152',
         name: 'Some other Random task',
         sbvbTaskId: 'RFP14295',
         status: 'active'
-      }]);
+      })]);
     });
 
     it('filters based on name', () => {
       app.projectFilter = 'Bi';
-      expect(app.filteredProjects()).toEqual([{
+      expect(app.filteredProjects()).toEqual([new Project({
         _id: '1138',
         name: 'Big Brother by Another Mother',
         jiraTaskId: 'THX-101',
         sbvbTaskId: 'IFP0005935',
         status: 'active'
-      }, {
+      }), new Project({
         _id: '314159',
         name: 'Big Fat Pie Eater',
         jiraTaskId: 'THX-121',
         sbvbTaskId: 'IFP0005935',
         status: 'active'
-      }]);
+      })]);
     });
 
     it('filters based on JIRA Task ID', () => {
       app.projectFilter = '1152';
-      expect(app.filteredProjects()).toEqual([{
+      expect(app.filteredProjects()).toEqual([new Project({
         _id: '73',
         name: 'Geeks are for Us',
         jiraTaskId: 'BB-1152',
         sbvbTaskId: 'PL0259935',
         status: 'active'
-      }]);
+      })]);
     });
 
     it('filters based on SBVB Task ID', () => {
       app.projectFilter = '35';
-      expect(app.filteredProjects()).toEqual([{
+      expect(app.filteredProjects()).toEqual([new Project({
         _id: '1138',
         name: 'Big Brother by Another Mother',
         jiraTaskId: 'THX-101',
         sbvbTaskId: 'IFP0005935',
         status: 'active'
-      }, {
+      }), new Project({
         _id: '314159',
         name: 'Big Fat Pie Eater',
         jiraTaskId: 'THX-121',
         sbvbTaskId: 'IFP0005935',
         status: 'active'
-      }, {
+      }), new Project({
         _id: '73',
         name: 'Geeks are for Us',
         jiraTaskId: 'BB-1152',
         sbvbTaskId: 'PL0259935',
         status: 'active'
-      }]);
+      })]);
     });
 
     it('limits by the filter text without regard to case', () => {
       app.projectFilter = 'bIg';
-      expect(app.filteredProjects()).toEqual([{
+      expect(app.filteredProjects()).toEqual([new Project({
         _id: '1138',
         name: 'Big Brother by Another Mother',
         jiraTaskId: 'THX-101',
         sbvbTaskId: 'IFP0005935',
         status: 'active'
-      }, {
+      }), new Project({
         _id: '314159',
         name: 'Big Fat Pie Eater',
         jiraTaskId: 'THX-121',
         sbvbTaskId: 'IFP0005935',
         status: 'active'
-      }]);
+      })]);
     });
 
     it('does not require the filter words to be together in the name', () => {
       app.projectFilter = 'Bi other';
-      expect(app.filteredProjects()).toEqual([{
+      expect(app.filteredProjects()).toEqual([new Project({
         _id: '1138',
         name: 'Big Brother by Another Mother',
         jiraTaskId: 'THX-101',
         sbvbTaskId: 'IFP0005935',
         status: 'active'
-      }]);
+      })]);
     });
 
     it('does not require the filter words to be in the same property', () => {
       app.projectFilter = '121 bIg';
-      expect(app.filteredProjects()).toEqual([{
+      expect(app.filteredProjects()).toEqual([new Project({
         _id: '314159',
         name: 'Big Fat Pie Eater',
         jiraTaskId: 'THX-121',
         sbvbTaskId: 'IFP0005935',
         status: 'active'
-      }]);
+      })]);
     });
   });
 
@@ -337,15 +337,15 @@ describe('Component: Projects', () => {
       projectEditor = fixture.debugElement.injector.get(ProjectEditorService);
       const dataService = fixture.debugElement.injector.get(ProjectService);
 
-      spyOn(dataService, 'getAll').and.returnValue(Observable.of([{
+      spyOn(dataService, 'getAll').and.returnValue(Observable.of([new Project({
         _id: '42',
         name: 'Deep Thought',
         status: 'active'
-      }, {
+      }), new Project({
         _id: '1138',
         name: 'Big Brother by Another Mother',
         status: 'active'
-      }]));
+      })]));
       app.ngOnInit();
     });
 
@@ -357,18 +357,18 @@ describe('Component: Projects', () => {
     });
 
     it('adds thenew project to the list if one was created', () => {
-      spyOn(projectEditor, 'open').and.returnValue(Observable.of({
+      spyOn(projectEditor, 'open').and.returnValue(Observable.of(new Project({
+        _id: '314159',
+        name: 'Cherry Pi',
+        status: 'active'
+      })));
+      app.newProject();
+      expect(app.projects.length).toEqual(3);
+      expect(app.projects[2]).toEqual(new Project({
         _id: '314159',
         name: 'Cherry Pi',
         status: 'active'
       }));
-      app.newProject();
-      expect(app.projects.length).toEqual(3);
-      expect(app.projects[2]).toEqual({
-        _id: '314159',
-        name: 'Cherry Pi',
-        status: 'active'
-      });
     });
 
     it('does not add to the list if the editor was canceled', () => {

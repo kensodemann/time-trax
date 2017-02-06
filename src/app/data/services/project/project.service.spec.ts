@@ -42,13 +42,13 @@ describe('ProjectService', () => {
           name: 'Thad Harvey Xaviar'
         }]
       })));
-      expect(result).toEqual([{
+      expect(result).toEqual([new Project({
         _id: '42',
         name: 'Deep Thought'
-      }, {
+      }), new Project({
         _id: '1138',
         name: 'Thad Harvey Xaviar'
-      }]);
+      })]);
     });
   });
 
@@ -68,10 +68,10 @@ describe('ProjectService', () => {
           name: 'Deep Geeky Thoughts About Total Control'
         }
       })));
-      expect(result).toEqual({
+      expect(result).toEqual(new Project({
         _id: '42731138',
         name: 'Deep Geeky Thoughts About Total Control'
-      });
+      }));
     });
 
     it('throws an exception if called without an id', function() {

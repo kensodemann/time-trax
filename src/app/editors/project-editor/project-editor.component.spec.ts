@@ -9,6 +9,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { Project } from '../../data/models/project';
 import { DataService } from '../../data/services/data-service.interface';
+import { ProjectService } from '../../data/services/project/project.service';
 import { ProjectEditorComponent } from './project-editor.component';
 
 class DialogRefStub {
@@ -22,12 +23,10 @@ class ProjectServiceStub implements DataService<Project> {
 
 describe('ProjectEditorComponent', () => {
   let component: ProjectEditorComponent;
-  let dataService: ProjectServiceStub;
   let fixture: ComponentFixture<ProjectEditorComponent>;
+  let dataService: ProjectService;
 
   beforeEach(async(() => {
-    dataService = new ProjectServiceStub();
-
     TestBed.configureTestingModule({
       declarations: [ProjectEditorComponent],
       imports: [
@@ -35,7 +34,8 @@ describe('ProjectEditorComponent', () => {
         MaterialModule
       ],
       providers: [
-        { provide: MdDialogRef, useClass: DialogRefStub }
+        { provide: MdDialogRef, useClass: DialogRefStub },
+        { provide: ProjectService, useClass: ProjectServiceStub }
       ]
     }).compileComponents();
   }));
@@ -43,6 +43,7 @@ describe('ProjectEditorComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ProjectEditorComponent);
     component = fixture.componentInstance;
+    dataService = fixture.debugElement.injector.get(ProjectService);
     fixture.detectChanges();
   });
 
@@ -57,14 +58,14 @@ describe('ProjectEditorComponent', () => {
     });
 
     it('sets the title and button label properly if the project is new', () => {
-      component.initialize(prj, dataService);
+      component.initialize(prj);
       expect(component.title).toEqual('New Project');
       expect(component.buttonLabel).toEqual('Create');
     });
 
     it('sets the title and button label properly if editing an existing project', () => {
       prj._id = '1993405994035';
-      component.initialize(prj, dataService);
+      component.initialize(prj);
       expect(component.title).toEqual('Modify Project');
       expect(component.buttonLabel).toEqual('Done');
     });
@@ -74,7 +75,7 @@ describe('ProjectEditorComponent', () => {
       prj.name = 'time-trax';
       prj.jiraTaskId = 'TT-101';
       prj.sbvbTaskId = 'RFP11499504';
-      component.initialize(prj, dataService);
+      component.initialize(prj);
       expect(component.name).toEqual('time-trax');
       expect(component.jiraTaskId).toEqual('TT-101');
       expect(component.sbvbTaskId).toEqual('RFP11499504');
@@ -83,20 +84,20 @@ describe('ProjectEditorComponent', () => {
 
     it('sets isActive true if the status is active', () => {
       prj.status = 'active';
-      component.initialize(prj, dataService);
+      component.initialize(prj);
       expect(component.isActive).toEqual(true);
     });
 
     it('sets isActive false if the status is inactive', () => {
       prj.status = 'inactive';
-      component.initialize(prj, dataService);
+      component.initialize(prj);
       expect(component.isActive).toEqual(false);
     });
   });
 
   describe('cancel', () => {
     beforeEach(() => {
-      component.initialize(new Project(), dataService);
+      component.initialize(new Project());
     });
 
     it('closes the dialog, returning nothing', () => {
@@ -106,14 +107,13 @@ describe('ProjectEditorComponent', () => {
       expect(dialog.close).toHaveBeenCalledTimes(1);
       expect(dialog.close).toHaveBeenCalledWith();
     });
-
   });
 
   describe('save', () => {
     let prj: Project;
     beforeEach(() => {
       prj = new Project();
-      component.initialize(prj, dataService);
+      component.initialize(prj);
       component.name = 'time-trax';
       component.jiraTaskId = 'TT-101';
       component.sbvbTaskId = 'RFP11499504';
@@ -149,7 +149,7 @@ describe('ProjectEditorComponent', () => {
 
   describe('canSave', () => {
     beforeEach(() => {
-      component.initialize(new Project(), dataService);
+      component.initialize(new Project());
     });
 
     it('is true if the name and sbvbTaskId have values', () => {

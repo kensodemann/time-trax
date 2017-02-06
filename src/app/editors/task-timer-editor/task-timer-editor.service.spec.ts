@@ -3,27 +3,21 @@
 import { MdDialogConfig, MdDialogRef } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 
-import { Project } from '../../data/models/project';
-import { ProjectEditorComponent } from './project-editor.component';
-import { ProjectEditorService } from './project-editor.service';
-
-class DataServiceStub {
-  save(project: Project): Observable<Project> {
-    return Observable.empty();
-  }
-};
+import { TaskTimer } from '../../data/models/task-timer';
+import { TaskTimerEditorComponent } from './task-timer-editor.component';
+import { TaskTimerEditorService } from './task-timer-editor.service';
 
 class DialogStub {
   Component: any;
-  componentInstance: ProjectEditorComponent;
+  componentInstance: TaskTimerEditorComponent;
   config: MdDialogConfig;
-  ref: MdDialogRef<ProjectEditorComponent>;
+  ref: MdDialogRef<TaskTimerEditorComponent>;
 
   constructor() {
-    this.ref = new MdDialogRef<ProjectEditorComponent>(null);
+    this.ref = new MdDialogRef<TaskTimerEditorComponent>(null, null);
   }
 
-  open(Component: any, config: MdDialogConfig): MdDialogRef<ProjectEditorComponent> {
+  open(Component: any, config: MdDialogConfig): MdDialogRef<TaskTimerEditorComponent> {
     this.Component = Component;
     this.config = config;
 
@@ -33,14 +27,12 @@ class DialogStub {
   }
 };
 
-describe('ProjectEditorService', () => {
+describe('TaskTimerEditorService', () => {
   let dialog;
-  let dataService;
-  let service: ProjectEditorService;
+  let service: TaskTimerEditorService;
   beforeEach(() => {
     dialog = new DialogStub();
-    dataService = new DataServiceStub();
-    service = new ProjectEditorService(dialog, dataService);
+    service = new TaskTimerEditorService(dialog);
   });
 
   it('exists', () => {
@@ -48,10 +40,9 @@ describe('ProjectEditorService', () => {
   });
 
   describe('open', () => {
-    let prj: Project;
+    let tt: TaskTimer;
     beforeEach(() => {
-      prj = new Project();
-      prj.name = 'I am a test project';
+      tt = new TaskTimer('42', '2017-01-16');
     });
 
     it('opens the dialog', () => {
@@ -71,29 +62,29 @@ describe('ProjectEditorService', () => {
         remove: null,
         detach: null
       };
-      service.open(prj, vcr);
-      expect(dialog.Component).toEqual(ProjectEditorComponent);
+      service.open(tt, vcr);
+      expect(dialog.Component).toEqual(TaskTimerEditorComponent);
       expect(dialog.config.viewContainerRef).toEqual(vcr);
     });
 
     it('sets the title and button label for a new project', () => {
-      prj._id = undefined;
-      service.open(prj, null);
-      expect(dialog.componentInstance.title).toEqual('New Project');
+      tt._id = undefined;
+      service.open(tt, null);
+      expect(dialog.componentInstance.title).toEqual('New Task');
       expect(dialog.componentInstance.buttonLabel).toEqual('Create');
     });
 
     it('sets the title and button label for editing an existing project', () => {
-      prj._id = '11384273314159';
-      service.open(prj, null);
-      expect(dialog.componentInstance.title).toEqual('Modify Project');
+      tt._id = '11384273314159';
+      service.open(tt, null);
+      expect(dialog.componentInstance.title).toEqual('Modify Task');
       expect(dialog.componentInstance.buttonLabel).toEqual('Done');
     });
 
     it('returns the after closed observable', () => {
       spyOn(dialog.ref, 'afterClosed').and.returnValue(Observable.of('toast'));
       let result: string;
-      service.open(prj, null).subscribe(res => result = res);
+      service.open(tt, null).subscribe(res => result = res);
       expect(result).toEqual('toast');
     });
   });
