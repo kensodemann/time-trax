@@ -9,12 +9,12 @@
       </div>
     </div>
 
-    <div class="no-detail" *ngIf="day.timeLogs.length === 0">
+    <div class="no-detail" *ngIf="day.taskTimers.length === 0">
       No Time Entries
     </div>
 
-    <div class="detail" *ngIf="day.timeLogs.length > 0">
-      <div *ngFor="let timeLog of day.timeLogs">
+    <div class="detail" *ngIf="day.taskTimers.length > 0">
+      <div *ngFor="let timeLog of day.taskTimers">
         <trx-task-timer [timeLog]="timeLog"></trx-task-timer>
       </div>
     </div>

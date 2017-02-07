@@ -9,6 +9,8 @@ import { ErrorMessageModule } from './services/error-message/error-message.modul
 import { MessageDialogModule } from './services/message-dialog/message-dialog.module';
 import { TimeTraxHttpModule } from './services/time-trax-http/time-trax-http.module';
 
+import { TimesheetReportService } from './services/timesheet-report/timesheet-report.service';
+
 import { HoursMinutesPipe } from './pipes/hours-minutes.pipe';
 import { ProjectTitlePipe } from './pipes/project-title.pipe';
 
@@ -30,6 +32,7 @@ import { ProjectTitlePipe } from './pipes/project-title.pipe';
   declarations: [
     HoursMinutesPipe,
     ProjectTitlePipe
-  ]
+  ],
+  providers: [TimesheetReportService]
 })
 export class SharedModule { }

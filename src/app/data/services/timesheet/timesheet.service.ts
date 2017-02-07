@@ -32,16 +32,7 @@ export class TimesheetService implements DataService<Timesheet> {
   getCurrent(): Observable<Timesheet> {
     const endDate = this.dates.weekEndDate(new Date());
     return this.http.get(this.url + `?endDate=${endDate}`)
-      .map(res => res.json())
-      .catch((e) => {
-        if (e.status === 404) {
-          return Observable.of({
-            endDate: endDate
-          });
-        } else {
-          return Observable.throw(e);
-        }
-      });
+      .map(res => res.json()[0]);
   }
 
   save(timesheet: Timesheet): Observable<Timesheet> {
