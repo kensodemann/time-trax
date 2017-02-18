@@ -20,7 +20,7 @@ describe('App: TimeTrax', () => {
         RouterOutletStubComponent
       ],
       imports: [
-        MaterialModule.forRoot()
+        MaterialModule
       ],
       providers: [
         { provide: AuthenticationService, useClass: AuthenticationServiceStub },

@@ -16,7 +16,7 @@ describe('TaskTimerComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        MaterialModule.forRoot()
+        MaterialModule
       ],
       declarations: [
         HoursMinutesPipe,

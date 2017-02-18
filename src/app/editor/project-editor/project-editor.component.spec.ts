@@ -32,7 +32,7 @@ describe('ProjectEditorComponent', () => {
       declarations: [ProjectEditorComponent],
       imports: [
         FormsModule,
-        MaterialModule.forRoot()
+        MaterialModule
       ],
       providers: [
         { provide: MdDialogRef, useClass: DialogRefStub }

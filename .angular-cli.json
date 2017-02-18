@@ -21,8 +21,8 @@
         "styles.scss"
       ],
       "scripts": [],
+      "environmentSource": "environments/environment.ts",
       "environments": {
-        "source": "environments/environment.ts",
         "c9": "environments/environment.c9.ts",
         "dev": "environments/environment.ts",
         "prod": "environments/environment.prod.ts"
@@ -39,6 +39,16 @@
       "config": "./karma.conf.js"
     }
   },
+  "lint": [
+    {
+      "files": "src/**/*.ts",
+      "project": "src/tsconfig.json"
+    },
+    {
+      "files": "e2e/**/*.ts",
+      "project": "e2e/tsconfig.json"
+    }
+  ],
   "defaults": {
     "styleExt": "scss",
     "prefixInterfaces": false,

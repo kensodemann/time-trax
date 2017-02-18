@@ -17,7 +17,7 @@ describe('MessageDialogComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ErrorDialogComponent],
       imports: [
-        MaterialModule.forRoot()
+        MaterialModule
       ],
       providers: [
         { provide: MdDialogRef, useClass: DialogRefStub }
