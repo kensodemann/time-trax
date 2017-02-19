@@ -15,11 +15,11 @@ import 'hammerjs';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    FlexLayoutModule.forRoot(),
+    FlexLayoutModule,
     LocalStorageModule.withConfig({
       prefix: 'time-trax'
     }),
-    MaterialModule.forRoot(),
+    MaterialModule,
 
     CoreModule,
     SharedModule,

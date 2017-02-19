@@ -26,7 +26,12 @@ Before running the tests make sure you are serving the app via `ng serve`.
 
 ## Deploying to Github Pages
 
-Run `ng github-pages:deploy` to deploy to Github Pages.
+Build, then deploy:
+
+- `ng build --prod --base-href "https://kensodemann.github.io/time-trax/"`
+- `ngh --message='chore: deploy version x.y.z'`
+
+For more information, see [angular-cli-ghpages](https://github.com/angular-buch/angular-cli-ghpages) 
 
 ## Further help
 
