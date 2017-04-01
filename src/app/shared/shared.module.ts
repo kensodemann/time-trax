@@ -29,17 +29,19 @@ import { MillisecondsPipe } from './pipes/milliseconds.pipe';
     TimeTraxHttpModule,
 
     HoursMinutesPipe,
+    MillisecondsPipe,
     ProjectTitlePipe
   ],
   declarations: [
     HoursMinutesPipe,
+    MillisecondsPipe,
     ProjectTitlePipe,
-    ValidTimeDirective,
-    MillisecondsPipe
+    ValidTimeDirective
   ],
   providers: [
     TimesheetReportService,
-    HoursMinutesPipe
+    HoursMinutesPipe,
+    MillisecondsPipe
   ]
 })
 export class SharedModule { }
