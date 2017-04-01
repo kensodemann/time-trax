@@ -3,6 +3,7 @@ import { MdDialogRef } from '@angular/material';
 
 import { Project } from '../../data/models/project';
 import { DataService } from '../../data/services/data-service.interface';
+import { ProjectService } from '../../data/services/project/project.service';
 
 @Component({
   selector: 'trx-project-editor',
@@ -18,13 +19,11 @@ export class ProjectEditorComponent {
   sbvbTaskId: string;
   isActive: boolean;
 
-  private dataService: DataService<Project>;
   private project: Project;
 
-  constructor(private dialog: MdDialogRef<ProjectEditorComponent>) { }
+  constructor(private dialog: MdDialogRef<ProjectEditorComponent>, private dataService: ProjectService) { }
 
-  initialize(project: Project, dataService: DataService<Project>) {
-    this.dataService = dataService;
+  initialize(project: Project) {
     this.copyProject(project);
     this.setTitles(project);
   }

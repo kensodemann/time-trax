@@ -1,0 +1,51 @@
+<div class="editor task-timer-editor" [formGroup]="editorForm">
+  <h1 md-dialog-title>{{title}}</h1>
+
+  <md-dialog-content>
+    <div>
+      <md-input-container>
+        <input id="project" mdInput placeholder="Project" formControlName="project" [mdAutocomplete]="autoPrj" (blur)="lookupProject()"
+          required/>
+      </md-input-container>
+      <div *ngIf="errors.project" class='error-msg'>
+        {{ errors.project }}
+      </div>
+
+      <md-autocomplete #autoPrj="mdAutocomplete" [displayWith]="displayName">
+        <md-option *ngFor="let project of filteredProjects | async" [value]="project">
+          {{ project.name }}
+        </md-option>
+      </md-autocomplete>
+    </div>
+
+    <div>
+      <md-input-container>
+        <input id="stage" mdInput placeholder="Stage" formControlName="stage" [mdAutocomplete]="autoStage" (blur)="lookupStage()"
+          required />
+      </md-input-container>
+      <div *ngIf="errors.stage" class='error-msg'>
+        {{ errors.stage }}
+      </div>
+
+      <md-autocomplete #autoStage="mdAutocomplete" [displayWith]="displayName">
+        <md-option *ngFor="let stage of filteredStages | async" [value]="stage">
+          {{ stage.name }}
+        </md-option>
+      </md-autocomplete>
+    </div>
+
+    <div>
+      <md-input-container>
+        <input id="hours" mdInput name="hours" placeholder="Hours" formControlName="hours" />
+      </md-input-container>
+    </div>
+    <div *ngIf="errors.hours" class='error-msg'>
+      {{ errors.hours }}
+    </div>
+  </md-dialog-content>
+
+  <md-dialog-actions>
+    <button md-button color="accent" (click)="cancel()">Cancel</button>
+    <button md-raised-button color="primary" (click)="save()" [disabled]="!canSave()">{{buttonLabel}}</button>
+  </md-dialog-actions>
+</div>

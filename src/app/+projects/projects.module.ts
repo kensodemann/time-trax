@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 
 import { routing } from './projects.routing';
 import { DataModule } from '../data/data.module';
-import { ProjectEditorModule} from '../editor/project-editor/project-editor.module';
+import { ProjectEditorModule} from '../editors/project-editor/project-editor.module';
 import { SharedModule } from '../shared/shared.module';
 import { ProjectsComponent } from './projects.component';
 

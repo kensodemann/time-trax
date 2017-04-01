@@ -1,7 +1,8 @@
+import * as moment from 'moment';
 import { Project } from './project';
 import { Stage } from './stage';
 
-export interface TaskTimer {
+export class TaskTimer {
   _id: string;
   timesheetRid: string;
   workDate: string;
@@ -10,4 +11,9 @@ export interface TaskTimer {
   milliseconds?: number;
   isActive?: boolean;
   startTime?: number;
+
+  constructor(timesheetId: string, workDate: any) {
+    this.timesheetRid = timesheetId;
+    this.workDate = moment(workDate).format('YYYY-MM-DD');
+  }
 }

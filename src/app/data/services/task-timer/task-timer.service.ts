@@ -35,6 +35,12 @@ export class TaskTimerService implements DataService<TaskTimer> {
     return this.taskTimers;
   }
 
+  save(taskTimer: TaskTimer): Observable<TaskTimer> {
+    const url = `${environment.dataService}/timesheets/${taskTimer.timesheetRid}/taskTimers` + (taskTimer._id ? `/${taskTimer._id}` : '');
+    return this.http.post(url, taskTimer)
+      .map(res => res.json());
+  }
+
   start(timer: TaskTimer): Observable<TaskTimer> {
     return this.stopRunningTimers()
       .flatMap(x => this.http.post(`${environment.dataService}/timesheets/${timer.timesheetRid}/taskTimers/${timer._id}/start`, timer)

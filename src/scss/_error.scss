@@ -1,3 +1,6 @@
+$warn: map-get($theme, warn);
+
 .error-msg {
-  color: #f44336;
+  color: mat-color($warn);
+  font-size: small;
 }

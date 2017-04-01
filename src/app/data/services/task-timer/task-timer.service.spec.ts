@@ -4,6 +4,7 @@ import { Http, Response, ResponseOptions, RequestMethod, BaseRequestOptions } fr
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { Observable } from 'rxjs/Observable';
 
+import { TaskTimer } from '../../models/task-timer';
 import { TaskTimerService } from './task-timer.service';
 import { environment } from '../../../../environments/environment';
 
@@ -131,6 +132,134 @@ describe('TaskTimerService', () => {
       expect(connectionCount).toEqual(2);
       expect(connection.request.url).toEqual(`${environment.dataService}/timesheets/7342/taskTimers`);
       expect(connection.request.method).toEqual(RequestMethod.Get);
+    });
+  });
+
+  describe('save', () => {
+    it('posts new task timers', () => {
+      let connection: MockConnection;
+      mockBackend.connections.subscribe(c => connection = c);
+
+      const tt = new TaskTimer('314159', '2017-03-19');
+      tt.project = {
+        _id: '42',
+        name: 'Butthead',
+        jiraTaskId: 'BB-2203',
+        sbvbTaskId: 'RFP004995'
+      };
+      tt.stage = { _id: '5', stageNumber: 6, name: 'Documentation' };
+      tt.milliseconds = 8857753;
+
+      let result;
+      service.save(tt).subscribe((res) => { result = res; });
+
+      expect(connection.request.url).toEqual(`${environment.dataService}/timesheets/314159/taskTimers`);
+      expect(connection.request.method).toEqual(RequestMethod.Post);
+      expect(JSON.parse(connection.request.getBody())).toEqual({
+        timesheetRid: '314159',
+        workDate: '2017-03-19',
+        project: {
+          _id: '42',
+          name: 'Butthead',
+          jiraTaskId: 'BB-2203',
+          sbvbTaskId: 'RFP004995'
+        },
+        stage: { _id: '5', stageNumber: 6, name: 'Documentation' },
+        milliseconds: 8857753
+      });
+      connection.mockRespond(new Response(new ResponseOptions({
+        status: 200,
+        body: {
+          _id: '113842314159',
+          timesheetRid: '314159',
+          workDate: '2017-03-19',
+          project: {
+            _id: '42',
+            name: 'Butthead',
+            jiraTaskId: 'BB-2203',
+            sbvbTaskId: 'RFP004995'
+          },
+          stage: { _id: '5', stageNumber: 6, name: 'Documentation' },
+          milliseconds: 8857753
+        }
+      })));
+      expect(result).toEqual({
+        _id: '113842314159',
+        timesheetRid: '314159',
+        workDate: '2017-03-19',
+        project: {
+          _id: '42',
+          name: 'Butthead',
+          jiraTaskId: 'BB-2203',
+          sbvbTaskId: 'RFP004995'
+        },
+        stage: { _id: '5', stageNumber: 6, name: 'Documentation' },
+        milliseconds: 8857753
+      });
+    });
+
+    it('posts existing task timer', () => {
+      let connection: MockConnection;
+      mockBackend.connections.subscribe(c => connection = c);
+
+      const tt = new TaskTimer('314159', '2017-03-19');
+      tt._id = '11383141594273';
+      tt.project = {
+        _id: '42',
+        name: 'Butthead',
+        jiraTaskId: 'BB-2203',
+        sbvbTaskId: 'RFP004995'
+      };
+      tt.stage = { _id: '5', stageNumber: 6, name: 'Documentation' };
+      tt.milliseconds = 8857753;
+
+      let result;
+      service.save(tt).subscribe((res) => { result = res; });
+
+      expect(connection.request.url).toEqual(`${environment.dataService}/timesheets/314159/taskTimers/11383141594273`);
+      expect(connection.request.method).toEqual(RequestMethod.Post);
+      expect(JSON.parse(connection.request.getBody())).toEqual({
+        _id: '11383141594273',
+        timesheetRid: '314159',
+        workDate: '2017-03-19',
+        project: {
+          _id: '42',
+          name: 'Butthead',
+          jiraTaskId: 'BB-2203',
+          sbvbTaskId: 'RFP004995'
+        },
+        stage: { _id: '5', stageNumber: 6, name: 'Documentation' },
+        milliseconds: 8857753
+      });
+      connection.mockRespond(new Response(new ResponseOptions({
+        status: 200,
+        body: {
+          _id: '11383141594273',
+          timesheetRid: '314159',
+          workDate: '2017-03-19',
+          project: {
+            _id: '42',
+            name: 'Butthead',
+            jiraTaskId: 'BB-2203',
+            sbvbTaskId: 'RFP004995'
+          },
+          stage: { _id: '5', stageNumber: 6, name: 'Documentation' },
+          milliseconds: 8857753
+        }
+      })));
+      expect(result).toEqual({
+        _id: '11383141594273',
+        timesheetRid: '314159',
+        workDate: '2017-03-19',
+        project: {
+          _id: '42',
+          name: 'Butthead',
+          jiraTaskId: 'BB-2203',
+          sbvbTaskId: 'RFP004995'
+        },
+        stage: { _id: '5', stageNumber: 6, name: 'Documentation' },
+        milliseconds: 8857753
+      });
     });
   });
 
