@@ -4,6 +4,7 @@ import { Http, Response, ResponseOptions, RequestMethod, BaseRequestOptions } fr
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { Observable } from 'rxjs/Observable';
 
+import { Project } from '../../models/project';
 import { TaskTimer } from '../../models/task-timer';
 import { TaskTimerService } from './task-timer.service';
 import { environment } from '../../../../environments/environment';
@@ -67,19 +68,19 @@ describe('TaskTimerService', () => {
           workDate: '2016-12-01'
         }]
       })));
-      expect(result).toEqual([{
+      expect(result).toEqual([new TaskTimer({
         _id: '42',
         timesheetRid: '1138',
         workDate: '2016-11-30'
-      }, {
+      }), new TaskTimer({
         _id: '73',
         timesheetRid: '1138',
         workDate: '2016-12-01'
-      }, {
+      }), new TaskTimer({
         _id: '134159',
         timesheetRid: '1138',
         workDate: '2016-12-01'
-      }]);
+      })]);
     });
 
     it('caches the timers', () => {
@@ -114,19 +115,19 @@ describe('TaskTimerService', () => {
       }
 
       expect(connectionCount).toEqual(1);
-      expect(result).toEqual([{
+      expect(result).toEqual([new TaskTimer({
         _id: '42',
         timesheetRid: '1138',
         workDate: '2016-11-30'
-      }, {
+      }), new TaskTimer({
         _id: '73',
         timesheetRid: '1138',
         workDate: '2016-12-01'
-      }, {
+      }), new TaskTimer({
         _id: '134159',
         timesheetRid: '1138',
         workDate: '2016-12-01'
-      }]);
+      })]);
 
       service.getAll({ timesheetId: '7342' });
       expect(connectionCount).toEqual(2);
@@ -140,15 +141,18 @@ describe('TaskTimerService', () => {
       let connection: MockConnection;
       mockBackend.connections.subscribe(c => connection = c);
 
-      const tt = new TaskTimer('314159', '2017-03-19');
-      tt.project = {
-        _id: '42',
-        name: 'Butthead',
-        jiraTaskId: 'BB-2203',
-        sbvbTaskId: 'RFP004995'
-      };
-      tt.stage = { _id: '5', stageNumber: 6, name: 'Documentation' };
-      tt.milliseconds = 8857753;
+      const tt = new TaskTimer({
+        timesheetRid: '314159',
+        workDate: '2017-03-19',
+        project: {
+          _id: '42',
+          name: 'Butthead',
+          jiraTaskId: 'BB-2203',
+          sbvbTaskId: 'RFP004995'
+        },
+        stage: { _id: '5', stageNumber: 6, name: 'Documentation' },
+        milliseconds: 8857753
+      });
 
       let result;
       service.save(tt).subscribe((res) => { result = res; });
@@ -183,7 +187,7 @@ describe('TaskTimerService', () => {
           milliseconds: 8857753
         }
       })));
-      expect(result).toEqual({
+      expect(result).toEqual(new TaskTimer({
         _id: '113842314159',
         timesheetRid: '314159',
         workDate: '2017-03-19',
@@ -195,23 +199,26 @@ describe('TaskTimerService', () => {
         },
         stage: { _id: '5', stageNumber: 6, name: 'Documentation' },
         milliseconds: 8857753
-      });
+      }));
     });
 
     it('posts existing task timer', () => {
       let connection: MockConnection;
       mockBackend.connections.subscribe(c => connection = c);
 
-      const tt = new TaskTimer('314159', '2017-03-19');
-      tt._id = '11383141594273';
-      tt.project = {
-        _id: '42',
-        name: 'Butthead',
-        jiraTaskId: 'BB-2203',
-        sbvbTaskId: 'RFP004995'
-      };
-      tt.stage = { _id: '5', stageNumber: 6, name: 'Documentation' };
-      tt.milliseconds = 8857753;
+      const tt = new TaskTimer({
+        _id: '11383141594273',
+        timesheetRid: '314159',
+        workDate: '2017-03-19',
+        project: {
+          _id: '42',
+          name: 'Butthead',
+          jiraTaskId: 'BB-2203',
+          sbvbTaskId: 'RFP004995'
+        },
+        stage: { _id: '5', stageNumber: 6, name: 'Documentation' },
+        milliseconds: 8857753
+      });
 
       let result;
       service.save(tt).subscribe((res) => { result = res; });
@@ -247,7 +254,7 @@ describe('TaskTimerService', () => {
           milliseconds: 8857753
         }
       })));
-      expect(result).toEqual({
+      expect(result).toEqual(new TaskTimer({
         _id: '11383141594273',
         timesheetRid: '314159',
         workDate: '2017-03-19',
@@ -259,7 +266,7 @@ describe('TaskTimerService', () => {
         },
         stage: { _id: '5', stageNumber: 6, name: 'Documentation' },
         milliseconds: 8857753
-      });
+      }));
     });
   });
 
@@ -326,12 +333,12 @@ describe('TaskTimerService', () => {
           isActive: true
         }
       })));
-      expect(result).toEqual({
+      expect(result).toEqual(new TaskTimer({
         _id: '42',
         timesheetRid: '1138',
         startTime: 1194950,
         isActive: true
-      });
+      }));
     });
 
     it('stops other started timers before starting the timer', () => {
@@ -418,12 +425,12 @@ describe('TaskTimerService', () => {
           isActive: true
         }
       })));
-      expect(result).toEqual({
+      expect(result).toEqual(new TaskTimer({
         _id: '42',
         timesheetRid: '1138',
         startTime: 1194950,
         isActive: true
-      });
+      }));
     });
   });
 
@@ -458,12 +465,12 @@ describe('TaskTimerService', () => {
           isActive: false
         }
       })));
-      expect(result).toEqual({
+      expect(result).toEqual(new TaskTimer({
         _id: '42',
         timesheetRid: '1138',
         milliseconds: 199503,
         isActive: false
-      });
+      }));
     });
   });
 });

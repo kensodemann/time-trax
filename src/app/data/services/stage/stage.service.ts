@@ -17,7 +17,12 @@ export class StageService implements DataService<Stage> {
   getAll(): Observable<Array<Stage>> {
     if (!this.stages) {
       this.stages = this.http.get(`${environment.dataService}/stages`)
-        .map(res => res.json());
+        .map((res) => {
+          const stages: Array<Stage> = [];
+          const data = res.json();
+          data.forEach(stage => stages.push(new Stage(stage)));
+          return stages;
+        });
     }
 
     return this.stages;

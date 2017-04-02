@@ -12,8 +12,25 @@ export class TaskTimer {
   isActive?: boolean;
   startTime?: number;
 
-  constructor(timesheetId: string, workDate: any) {
-    this.timesheetRid = timesheetId;
-    this.workDate = moment(workDate).format('YYYY-MM-DD');
+  constructor(obj?: any) {
+    if (obj) {
+      this._id = obj._id;
+      this.timesheetRid = obj.timesheetRid;
+      this.milliseconds = obj.milliseconds;
+      this.isActive = obj.isActive;
+      this.startTime = obj.startTime;
+
+      if (obj.workDate) {
+        this.workDate = moment(obj.workDate).format('YYYY-MM-DD');
+      }
+
+      if (obj.stage) {
+        this.stage = new Stage(obj.stage);
+      }
+
+      if (obj.project) {
+        this.project = new Project(obj.project);
+      }
+    }
   }
 }

@@ -29,7 +29,12 @@ export class TaskTimerService implements DataService<TaskTimer> {
     if (this.timesheetId !== timesheetId) {
       this.timesheetId = timesheetId;
       this.taskTimers = this.http.get(`${environment.dataService}/timesheets/${timesheetId}/taskTimers`)
-        .map(res => res.json());
+        .map((res) => {
+          const taskTimers: Array<TaskTimer> = [];
+          const data = res.json();
+          data.forEach(tt => taskTimers.push(new TaskTimer(tt)));
+          return taskTimers;
+        });
     }
 
     return this.taskTimers;
@@ -38,18 +43,18 @@ export class TaskTimerService implements DataService<TaskTimer> {
   save(taskTimer: TaskTimer): Observable<TaskTimer> {
     const url = `${environment.dataService}/timesheets/${taskTimer.timesheetRid}/taskTimers` + (taskTimer._id ? `/${taskTimer._id}` : '');
     return this.http.post(url, taskTimer)
-      .map(res => res.json());
+      .map(res => new TaskTimer(res.json()));
   }
 
   start(timer: TaskTimer): Observable<TaskTimer> {
     return this.stopRunningTimers()
       .flatMap(x => this.http.post(`${environment.dataService}/timesheets/${timer.timesheetRid}/taskTimers/${timer._id}/start`, timer)
-        .map(res => res.json()));
+        .map(res => new TaskTimer(res.json())));
   }
 
   stop(timer: TaskTimer): Observable<TaskTimer> {
     return this.http.post(`${environment.dataService}/timesheets/${timer.timesheetRid}/taskTimers/${timer._id}/stop`, timer)
-      .map(res => res.json());
+      .map(res => new TaskTimer(res.json()));
   }
 
   stopRunningTimers(): Observable<any> {

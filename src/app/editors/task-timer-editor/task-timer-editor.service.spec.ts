@@ -42,7 +42,7 @@ describe('TaskTimerEditorService', () => {
   describe('open', () => {
     let tt: TaskTimer;
     beforeEach(() => {
-      tt = new TaskTimer('42', '2017-01-16');
+      tt = new TaskTimer({ timesheetRid: '42', workDate: '2017-01-16' });
     });
 
     it('opens the dialog', () => {
