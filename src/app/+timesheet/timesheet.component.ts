@@ -48,6 +48,10 @@ export class TimesheetComponent implements OnInit {
   }
 
   addTaskTimer(d: Date) {
-    this.editor.open(new TaskTimer(this.timesheet._id, d), this.viewContainerRef);
+    this.editor.open(new TaskTimer(this.timesheet._id, d), this.viewContainerRef).subscribe((res) => {
+      if (res) {
+        this.report.addTimer(this.days, res);
+      }
+    });
   }
 }
