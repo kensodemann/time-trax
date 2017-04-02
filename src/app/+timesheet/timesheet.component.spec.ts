@@ -228,7 +228,7 @@ describe('Component: Timesheet', () => {
     });
 
     it('opens the task timer editor', () => {
-      spyOn(editor, 'open');
+      spyOn(editor, 'open').and.returnValue(Observable.empty());
       app.addTaskTimer(new Date(2017, 1, 5));
       expect(editor.open).toHaveBeenCalledTimes(1);
       expect(editor.open.calls.argsFor(0)[0]).toEqual(new TaskTimer('42731138314159', '2017-02-05'));
@@ -238,20 +238,37 @@ describe('Component: Timesheet', () => {
   describe('addTaskTimer - existing timesheet', () => {
     let app;
     let editor;
+    let timesheetReportService;
     beforeEach(() => {
       const fixture = TestBed.createComponent(TimesheetComponent);
       app = fixture.debugElement.componentInstance;
       const timesheetService = fixture.debugElement.injector.get(TimesheetService);
       editor = fixture.debugElement.injector.get(TaskTimerEditorService);
       spyOn(timesheetService, 'getCurrent').and.returnValue(Observable.of({ _id: '11383141594273', endDate: '2017-02-04' }));
+      timesheetReportService = fixture.debugElement.injector.get(TimesheetReportService);
       app.ngOnInit();
     });
 
     it('opens the task timer editor', () => {
-      spyOn(editor, 'open');
+      spyOn(editor, 'open').and.returnValue(Observable.empty());
       app.addTaskTimer(new Date(2017, 1, 5));
       expect(editor.open).toHaveBeenCalledTimes(1);
       expect(editor.open.calls.argsFor(0)[0]).toEqual(new TaskTimer('11383141594273', '2017-02-05'));
+    });
+
+    it('adds the task timer to the loaded timesheet structure', () => {
+      const newTimer = new TaskTimer('11383141594273', '2017-02-03');
+      spyOn(editor, 'open').and.returnValue(Observable.of(newTimer));
+      spyOn(timesheetReportService, 'addTimer');
+      app.addTaskTimer(new Date(2017, 1, 3));
+      expect(timesheetReportService.addTimer).toHaveBeenCalledTimes(1);
+    });
+
+    it('does not add a task timer if none is returned', () => {
+      spyOn(editor, 'open').and.returnValue(Observable.of(null));
+      spyOn(timesheetReportService, 'addTimer');
+      app.addTaskTimer(new Date(2017, 1, 3));
+      expect(timesheetReportService.addTimer).not.toHaveBeenCalled();
     });
   });
 });

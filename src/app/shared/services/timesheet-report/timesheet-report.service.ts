@@ -19,6 +19,19 @@ export class TimesheetReportService {
     return week;
   }
 
+  addTimer(days: Array<DailyTimeLog>, timer: TaskTimer): void {
+    const day = this.day(days, timer.workDate);
+    if (!day) {
+      throw (new Error('timesheet-report service: attempt to add timer not in timesheet date range'));
+    }
+    day.taskTimers.push(timer);
+  }
+
+  private day(days: Array<DailyTimeLog>, dt: any) {
+    const ms = moment(dt).valueOf();
+    return _.find(days, day => day.date.getTime() === ms);
+  }
+
   private generateWeek(endDate: any): Array<DailyTimeLog> {
     const m = moment(endDate);
     const week: Array<DailyTimeLog> = [];
