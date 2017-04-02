@@ -9,9 +9,9 @@
 
       <div class="actions" fxFlex fxShow="false" fxShow.sm fxShow.xs>
         <div class="actions">
-          <md-icon class="clickable">mode_edit</md-icon>
-          <md-icon class="clickable">delete_forever</md-icon>
-          <md-icon class="clickable">{{timeLog?.isActive ? 'pause_circle_outline' : 'play_circle_outline'}}</md-icon>
+          <md-icon class="clickable" (click)="edit.emit(null)">mode_edit</md-icon>
+          <md-icon class="clickable" (click)="delete.emit(null)">delete_forever</md-icon>
+          <md-icon class="clickable" (click)="toggle.emit(null)">{{timeLog?.isActive ? 'pause_circle_outline' : 'play_circle_outline'}}</md-icon>
         </div>
       </div>
     </div>
@@ -37,9 +37,9 @@
 
   <div fxFlex="10" fxHide="false" fxHide.sm fxHide.xs>
     <div class="actions">
-      <md-icon class="clickable">mode_edit</md-icon>
-      <md-icon class="clickable">delete_forever</md-icon>
-      <md-icon class="clickable">{{timeLog?.isActive ? 'pause_circle_outline' : 'play_circle_outline'}}</md-icon>
+      <md-icon class="clickable" (click)="edit.emit(null)">mode_edit</md-icon>
+      <md-icon class="clickable" (click)="delete.emit(null)">delete_forever</md-icon>
+      <md-icon class="clickable" (click)="toggle.emit(null)">{{timeLog?.isActive ? 'pause_circle_outline' : 'play_circle_outline'}}</md-icon>
     </div>
   </div>
 

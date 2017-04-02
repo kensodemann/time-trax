@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { TaskTimer } from '../../data/models/task-timer';
 
@@ -9,6 +9,9 @@ import { TaskTimer } from '../../data/models/task-timer';
 })
 export class TaskTimerComponent implements OnInit {
   @Input() timeLog: TaskTimer;
+  @Output() delete: EventEmitter<any> = new EventEmitter();
+  @Output() edit: EventEmitter<any> = new EventEmitter();
+  @Output() toggle: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 

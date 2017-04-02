@@ -33,47 +33,7 @@ class TaskTimerEditorStub {
   }
 }
 
-const testTaskTimers = [{
-  _id: 1,
-  timesheetRid: '11383141594273',
-  workDate: '2017-02-03'
-}, {
-  _id: 1,
-  timesheetRid: '11383141594273',
-  workDate: '2017-02-01'
-}, {
-  _id: 1,
-  timesheetRid: '11383141594273',
-  workDate: '2017-02-02'
-}, {
-  _id: 1,
-  timesheetRid: '11383141594273',
-  workDate: '2017-01-30'
-}, {
-  _id: 1,
-  timesheetRid: '11383141594273',
-  workDate: '2017-01-31'
-}, {
-  _id: 1,
-  timesheetRid: '11383141594273',
-  workDate: '2017-01-31'
-}, {
-  _id: 1,
-  timesheetRid: '11383141594273',
-  workDate: '2017-02-03'
-}, {
-  _id: 1,
-  timesheetRid: '11383141594273',
-  workDate: '2017-02-03'
-}, {
-  _id: 1,
-  timesheetRid: '11383141594273',
-  workDate: '2017-02-01'
-}, {
-  _id: 1,
-  timesheetRid: '11383141594273',
-  workDate: '2017-02-01'
-}];
+let testTaskTimers;
 
 describe('Component: Timesheet', () => {
   beforeEach(() => {
@@ -96,6 +56,8 @@ describe('Component: Timesheet', () => {
       ]
     });
   });
+
+  beforeEach(initializeTestData);
 
   it('builds', async(() => {
     const fixture = TestBed.createComponent(TimesheetComponent);
@@ -280,4 +242,118 @@ describe('Component: Timesheet', () => {
       expect(timesheetReportService.addTimer).not.toHaveBeenCalled();
     });
   });
+
+  describe('editTaskTimer', () => {
+    let app;
+    let editor;
+    beforeEach(() => {
+      const fixture = TestBed.createComponent(TimesheetComponent);
+      app = fixture.debugElement.componentInstance;
+      const timesheetService = fixture.debugElement.injector.get(TimesheetService);
+      editor = fixture.debugElement.injector.get(TaskTimerEditorService);
+      spyOn(timesheetService, 'getCurrent').and.returnValue(Observable.of({ _id: '11383141594273', endDate: '2017-02-04' }));
+      const taskTimerService = fixture.debugElement.injector.get(TaskTimerService);
+      spyOn(taskTimerService, 'getAll').and.returnValue(Observable.of(testTaskTimers));
+      app.ngOnInit();
+    });
+
+    it('opens the task timer editor, passing the timer', () => {
+      spyOn(editor, 'open').and.returnValue(Observable.empty());
+      app.editTaskTimer(app.days[3].taskTimers[1]);
+      expect(editor.open).toHaveBeenCalledTimes(1);
+      expect(editor.open.calls.argsFor(0)[0]).toEqual({
+        _id: 903,
+        timesheetRid: '11383141594273',
+        workDate: '2017-02-01'
+      });
+    });
+
+    it('updates the task timer with the returned data', () => {
+      spyOn(editor, 'open').and.returnValue(Observable.of({
+        _id: 903,
+        timesheetRid: '11383141594273',
+        workDate: '2017-02-01',
+        project: {
+          _id: 42,
+          name: 'Douglas'
+        },
+        stage: {
+          _id: '1138',
+          stageNumber: 4,
+          name: 'Coding'
+        },
+        milliseconds: 1000
+      }));
+      app.editTaskTimer(app.days[3].taskTimers[1]);
+      expect(app.days[3].taskTimers[1]).toEqual({
+        _id: 903,
+        timesheetRid: '11383141594273',
+        workDate: '2017-02-01',
+        project: {
+          _id: 42,
+          name: 'Douglas'
+        },
+        stage: {
+          _id: '1138',
+          stageNumber: 4,
+          name: 'Coding'
+        },
+        milliseconds: 1000
+      });
+    });
+
+    it('does not update the task timer if nothing is returned', () => {
+      spyOn(editor, 'open').and.returnValue(Observable.of(null));
+      app.editTaskTimer(app.days[3].taskTimers[1]);
+      expect(app.days[3].taskTimers[1]).toEqual({
+        _id: 903,
+        timesheetRid: '11383141594273',
+        workDate: '2017-02-01'
+      });
+    });
+  });
+
+  function initializeTestData() {
+    testTaskTimers = [{
+      _id: 1,
+      timesheetRid: '11383141594273',
+      workDate: '2017-02-03'
+    }, {
+      _id: 112,
+      timesheetRid: '11383141594273',
+      workDate: '2017-02-01'
+    }, {
+      _id: 123,
+      timesheetRid: '11383141594273',
+      workDate: '2017-02-02'
+    }, {
+      _id: 134,
+      timesheetRid: '11383141594273',
+      workDate: '2017-01-30'
+    }, {
+      _id: 156,
+      timesheetRid: '11383141594273',
+      workDate: '2017-01-31'
+    }, {
+      _id: 174,
+      timesheetRid: '11383141594273',
+      workDate: '2017-01-31'
+    }, {
+      _id: 189,
+      timesheetRid: '11383141594273',
+      workDate: '2017-02-03'
+    }, {
+      _id: 201,
+      timesheetRid: '11383141594273',
+      workDate: '2017-02-03'
+    }, {
+      _id: 903,
+      timesheetRid: '11383141594273',
+      workDate: '2017-02-01'
+    }, {
+      _id: 9873,
+      timesheetRid: '11383141594273',
+      workDate: '2017-02-01'
+    }];
+  }
 });

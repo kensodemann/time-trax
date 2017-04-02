@@ -57,4 +57,14 @@ export class TimesheetComponent implements OnInit {
       }
     });
   }
+
+  editTaskTimer(timer: TaskTimer): void {
+    this.editor.open(timer, this.viewContainerRef).subscribe((res) => {
+      if (res) {
+        timer.project = res.project;
+        timer.stage = res.stage;
+        timer.milliseconds = res.milliseconds;
+      }
+    });
+  }
 }
