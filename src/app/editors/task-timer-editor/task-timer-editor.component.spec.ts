@@ -4,7 +4,6 @@ import { DebugElement } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule, MdDialogRef } from '@angular/material';
 import { By } from '@angular/platform-browser';
-import { dispatchEvent } from '@angular/platform-browser/testing/browser_util';
 import { Observable } from 'rxjs/Observable';
 
 import { Project } from '../../data/models/project';
@@ -232,7 +231,7 @@ describe('TaskTimerEditorComponent', () => {
         projects = res;
       });
       input.value = 'sa';
-      dispatchEvent(input, 'input');
+      input.dispatchEvent(new Event('input'));
       expect(component.editorForm.controls['project'].value).toEqual('sa');
       expect(projects).toEqual([{
         _id: '42',
@@ -253,8 +252,8 @@ describe('TaskTimerEditorComponent', () => {
       fixture.detectChanges();
       tick();
       input.value = 'te';
-      dispatchEvent(input, 'input');
-      dispatchEvent(input, 'blur');
+      input.dispatchEvent(new Event('input'));
+      input.dispatchEvent(new Event('blur'));
       expect(component.editorForm.controls['project'].value).toEqual({
         _id: '1138',
         status: 'active',
@@ -268,8 +267,8 @@ describe('TaskTimerEditorComponent', () => {
       fixture.detectChanges();
       tick();
       input.value = 'spike';
-      dispatchEvent(input, 'input');
-      dispatchEvent(input, 'blur');
+      input.dispatchEvent(new Event('input'));
+      input.dispatchEvent(new Event('blur'));
       expect(component.editorForm.controls['project'].value).toEqual('');
     }));
 
@@ -278,17 +277,17 @@ describe('TaskTimerEditorComponent', () => {
       tick();
       expect(component.errors['project']).toEqual('');
       input.value = 'te';
-      dispatchEvent(input, 'input');
+      input.dispatchEvent(new Event('input'));
       expect(component.errors['project']).toEqual('');
-      dispatchEvent(input, 'blur');
+      input.dispatchEvent(new Event('blur'));
       expect(component.errors['project']).toEqual('');
       input.value = '';
-      dispatchEvent(input, 'input');
+      input.dispatchEvent(new Event('input'));
       expect(component.errors['project']).toEqual('Project is required.');
       input.value = 'spike';
-      dispatchEvent(input, 'input');
+      input.dispatchEvent(new Event('input'));
       expect(component.errors['project']).toEqual('');
-      dispatchEvent(input, 'blur');
+      input.dispatchEvent(new Event('blur'));
       expect(component.errors['project']).toEqual('Project is required.');
     }));
   });
@@ -332,7 +331,7 @@ describe('TaskTimerEditorComponent', () => {
         stages = res;
       });
       input.value = 're';
-      dispatchEvent(input, 'input');
+      input.dispatchEvent(new Event('input'));
       expect(component.editorForm.controls['stage'].value).toEqual('re');
       expect(stages).toEqual([
         { _id: '3', stageNumber: 15, name: 'Code Review' },
@@ -345,8 +344,8 @@ describe('TaskTimerEditorComponent', () => {
       fixture.detectChanges();
       tick();
       input.value = 're';
-      dispatchEvent(input, 'input');
-      dispatchEvent(input, 'blur');
+      input.dispatchEvent(new Event('input'));
+      input.dispatchEvent(new Event('blur'));
       expect(component.editorForm.controls['stage'].value).toEqual({ _id: '3', stageNumber: 15, name: 'Code Review' });
     }));
 
@@ -354,8 +353,8 @@ describe('TaskTimerEditorComponent', () => {
       fixture.detectChanges();
       tick();
       input.value = 'spike';
-      dispatchEvent(input, 'input');
-      dispatchEvent(input, 'blur');
+      input.dispatchEvent(new Event('input'));
+      input.dispatchEvent(new Event('blur'));
       expect(component.editorForm.controls['stage'].value).toEqual('');
     }));
 
@@ -364,17 +363,17 @@ describe('TaskTimerEditorComponent', () => {
       tick();
       expect(component.errors['stage']).toEqual('');
       input.value = 're';
-      dispatchEvent(input, 'input');
+      input.dispatchEvent(new Event('input'));
       expect(component.errors['stage']).toEqual('');
-      dispatchEvent(input, 'blur');
+      input.dispatchEvent(new Event('blur'));
       expect(component.errors['stage']).toEqual('');
       input.value = '';
-      dispatchEvent(input, 'input');
+      input.dispatchEvent(new Event('input'));
       expect(component.errors['stage']).toEqual('Stage is required.');
       input.value = 'spike';
-      dispatchEvent(input, 'input');
+      input.dispatchEvent(new Event('input'));
       expect(component.errors['stage']).toEqual('');
-      dispatchEvent(input, 'blur');
+      input.dispatchEvent(new Event('blur'));
       expect(component.errors['stage']).toEqual('Stage is required.');
     }));
   });
@@ -390,22 +389,22 @@ describe('TaskTimerEditorComponent', () => {
       tick();
       expect(component.errors['hours']).toEqual('');
       input.value = '1';
-      dispatchEvent(input, 'input');
+      input.dispatchEvent(new Event('input'));
       expect(component.errors['hours']).toEqual('');
       input.value = '1:';
-      dispatchEvent(input, 'input');
+      input.dispatchEvent(new Event('input'));
       expect(component.errors['hours']).toEqual('Valid formats are h.xx and h:mm.');
       input.value = '1:4';
-      dispatchEvent(input, 'input');
+      input.dispatchEvent(new Event('input'));
       expect(component.errors['hours']).toEqual('Valid formats are h.xx and h:mm.');
       input.value = '1:45';
-      dispatchEvent(input, 'input');
+     input.dispatchEvent(new Event('input'));
       expect(component.errors['hours']).toEqual('');
       input.value = '1.75';
-      dispatchEvent(input, 'input');
+      input.dispatchEvent(new Event('input'));
       expect(component.errors['hours']).toEqual('');
       input.value = 'bogus';
-      dispatchEvent(input, 'input');
+      input.dispatchEvent(new Event('input'));
       expect(component.errors['hours']).toEqual('Valid formats are h.xx and h:mm.');
     }));
   });
@@ -509,12 +508,12 @@ describe('TaskTimerEditorComponent', () => {
       fixture.detectChanges();
       tick();
       input.value = 'spike';
-      dispatchEvent(input, 'input');
-      dispatchEvent(input, 'blur');
+      input.dispatchEvent(new Event('input'));
+      input.dispatchEvent(new Event('blur'));
       expect(component.canSave()).toBeFalsy();
       input.value = 'te';
-      dispatchEvent(input, 'input');
-      dispatchEvent(input, 'blur');
+      input.dispatchEvent(new Event('input'));
+      input.dispatchEvent(new Event('blur'));
       expect(component.canSave()).toBeTruthy();
     }));
 
@@ -523,12 +522,12 @@ describe('TaskTimerEditorComponent', () => {
       fixture.detectChanges();
       tick();
       input.value = 'spike';
-      dispatchEvent(input, 'input');
-      dispatchEvent(input, 'blur');
+      input.dispatchEvent(new Event('input'));
+      input.dispatchEvent(new Event('blur'));
       expect(component.canSave()).toBeFalsy();
       input.value = 're';
-      dispatchEvent(input, 'input');
-      dispatchEvent(input, 'blur');
+      input.dispatchEvent(new Event('input'));
+      input.dispatchEvent(new Event('blur'));
       expect(component.canSave()).toBeTruthy();
     }));
 
@@ -537,12 +536,12 @@ describe('TaskTimerEditorComponent', () => {
       fixture.detectChanges();
       tick();
       input.value = '1:75';
-      dispatchEvent(input, 'input');
-      dispatchEvent(input, 'blur');
+      input.dispatchEvent(new Event('input'));
+      input.dispatchEvent(new Event('blur'));
       expect(component.canSave()).toBeFalsy();
       input.value = '1:15';
-      dispatchEvent(input, 'input');
-      dispatchEvent(input, 'blur');
+      input.dispatchEvent(new Event('input'));
+      input.dispatchEvent(new Event('blur'));
       expect(component.canSave()).toBeTruthy();
     }));
   });
@@ -571,15 +570,15 @@ describe('TaskTimerEditorComponent', () => {
       tick();
       let input = fixture.debugElement.query(By.css('#project')).nativeElement;
       input.value = 'lisa';
-      dispatchEvent(input, 'input');
-      dispatchEvent(input, 'blur');
+      input.dispatchEvent(new Event('input'));
+      input.dispatchEvent(new Event('blur'));
       input = fixture.debugElement.query(By.css('#stage')).nativeElement;
       input.value = 'proj';
-      dispatchEvent(input, 'input');
-      dispatchEvent(input, 'blur');
+      input.dispatchEvent(new Event('input'));
+      input.dispatchEvent(new Event('blur'));
       input = fixture.debugElement.query(By.css('#hours')).nativeElement;
       input.value = '2:30';
-      dispatchEvent(input, 'input');
+      input.dispatchEvent(new Event('input'));
 
       const expected = new TaskTimer({
         timesheetRid: '1138314594273',

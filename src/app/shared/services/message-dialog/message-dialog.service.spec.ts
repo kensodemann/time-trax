@@ -13,7 +13,7 @@ class DialogStub {
   ref: MdDialogRef<ErrorDialogComponent>;
 
   constructor() {
-    this.ref = new MdDialogRef<ErrorDialogComponent>(null);
+    this.ref = new MdDialogRef<ErrorDialogComponent>(null, null);
   }
 
   open(Component: any, config: MdDialogConfig): MdDialogRef<ErrorDialogComponent> {
