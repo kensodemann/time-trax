@@ -1,6 +1,7 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, async } from '@angular/core/testing';
+import { Project } from '../../data/models/project';
 import { ProjectTitlePipe } from './project-title.pipe';
 
 describe('ProjectTitlePipe', () => {
@@ -21,21 +22,21 @@ describe('ProjectTitlePipe', () => {
 
   it('transforms a project with an SBVB and JIRA task', () => {
     const pipe = new ProjectTitlePipe();
-    expect(pipe.transform({
+    expect(pipe.transform(new Project({
       _id: '42',
       sbvbTaskId: 'COMP004954',
       jiraTaskId: 'WPM-2994',
       name: 'test project'
-    })).toEqual('COMP004954 [WPM-2994]');
+    }))).toEqual('COMP004954 [WPM-2994]');
   });
 
   it('transforms a project with just an SBVB task', () => {
     const pipe = new ProjectTitlePipe();
-    expect(pipe.transform({
+    expect(pipe.transform(new Project({
       _id: '42',
       sbvbTaskId: 'COMP004954',
       jiraTaskId: undefined,
       name: 'test project'
-    })).toEqual('COMP004954');
+    }))).toEqual('COMP004954');
   });
 });
