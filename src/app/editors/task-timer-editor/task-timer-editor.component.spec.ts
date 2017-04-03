@@ -70,46 +70,53 @@ describe('TaskTimerEditorComponent', () => {
   });
 
   describe('initialization', () => {
-    let tt: TaskTimer;
-    beforeEach(() => {
-      tt = new TaskTimer('1138314594273', '2017-02-11');
-    });
-
     it('sets the title and button label properly if the task is new', () => {
+      const tt = new TaskTimer({
+        timesheetRid: '1138314594273',
+        workDate: '2017-02-11'
+      });
       component.initialize(tt);
       expect(component.title).toEqual('New Task');
       expect(component.buttonLabel).toEqual('Create');
     });
 
     it('sets the title and button label properly if editing an existing task', () => {
-      tt._id = '1993405994035';
+      const tt = new TaskTimer({
+        _id: '1993405994035',
+        timesheetRid: '1138314594273',
+        workDate: '2017-02-11'
+      });
       component.initialize(tt);
       expect(component.title).toEqual('Modify Task');
       expect(component.buttonLabel).toEqual('Done');
     });
 
     it('copies the basic project data to the controller for editing', () => {
-      tt._id = '1993405994035';
-      tt.stage = { _id: '5', stageNumber: 6, name: 'Documentation' };
-      tt.project = {
-        _id: '86',
-        status: 'active',
-        name: 'Peter',
-        jiraTaskId: 'MIT-123',
-        sbvbTaskId: 'COMP000293'
-      };
-      tt.milliseconds = 5580000;
-      tt.isActive = true;
+      const tt = new TaskTimer({
+        _id: '1993405994035',
+        timesheetRid: '1138314594273',
+        workDate: '2017-02-11',
+        project: {
+          _id: '86',
+          status: 'active',
+          name: 'Peter',
+          jiraTaskId: 'MIT-123',
+          sbvbTaskId: 'COMP000293'
+        },
+        stage: { _id: '5', stageNumber: 6, name: 'Documentation' },
+        milliseconds: 5580000,
+        isActive: true
+      });
       component.initialize(tt);
       component.ngOnInit();
-      expect(component.editorForm.controls['project'].value).toEqual({
+      expect(component.editorForm.controls['project'].value).toEqual(new Project({
         _id: '86',
         status: 'active',
         name: 'Peter',
         jiraTaskId: 'MIT-123',
         sbvbTaskId: 'COMP000293'
-      });
-      expect(component.editorForm.controls['stage'].value).toEqual({ _id: '5', stageNumber: 6, name: 'Documentation' });
+      }));
+      expect(component.editorForm.controls['stage'].value).toEqual(new Stage({ _id: '5', stageNumber: 6, name: 'Documentation' }));
       expect(component.editorForm.controls['hours'].value).toEqual('1:33');
     });
   });
@@ -120,7 +127,7 @@ describe('TaskTimerEditorComponent', () => {
     beforeEach(() => {
       projectDataService = fixture.debugElement.injector.get(ProjectService);
       stageDataService = fixture.debugElement.injector.get(StageService);
-      component.initialize(new TaskTimer(null, null));
+      component.initialize(new TaskTimer());
     });
 
     it('gets all projects', () => {
@@ -405,7 +412,7 @@ describe('TaskTimerEditorComponent', () => {
 
   describe('cancel', () => {
     beforeEach(() => {
-      const tt = new TaskTimer('1138314594273', '2017-02-11');
+      const tt = new TaskTimer();
       component.initialize(tt);
     });
 
@@ -468,23 +475,26 @@ describe('TaskTimerEditorComponent', () => {
         { _id: '6', stageNumber: 11, name: 'Release Integration' },
         { _id: '7', stageNumber: 2, name: 'Functional Specification' }
       ]));
-      const tt = new TaskTimer('1138314594273', '2017-02-11');
-      tt._id = '31415973420';
-      tt.project = {
-        _id: '86',
-        status: 'active',
-        name: 'Peter',
-        jiraTaskId: 'MIT-123',
-        sbvbTaskId: 'COMP000293'
-      };
-      tt.stage = { _id: '6', stageNumber: 11, name: 'Release Integration' };
-      tt.milliseconds = 12994854;
+      const tt = new TaskTimer({
+        _id: '31415973420',
+        timesheetRid: '1138314594273',
+        workDate: '2017-02-11',
+        project: {
+          _id: '86',
+          status: 'active',
+          name: 'Peter',
+          jiraTaskId: 'MIT-123',
+          sbvbTaskId: 'COMP000293'
+        },
+        stage: { _id: '6', stageNumber: 11, name: 'Release Integration' },
+        milliseconds: 12994854
+      });
       component.initialize(tt);
       component.ngOnInit();
     });
 
     it('returns false when first editing a new task timer', () => {
-      const tt = new TaskTimer('1138314594273', '2017-02-11');
+      const tt = new TaskTimer();
       component.initialize(tt);
       component.ngOnInit();
       expect(component.canSave()).toBeFalsy();
@@ -540,18 +550,18 @@ describe('TaskTimerEditorComponent', () => {
   describe('save', () => {
     beforeEach(() => {
       const projectDataService = fixture.debugElement.injector.get(ProjectService);
-      spyOn(projectDataService, 'getAll').and.returnValue(Observable.of([{
+      spyOn(projectDataService, 'getAll').and.returnValue(Observable.of([new Project({
         _id: '42',
         status: 'active',
         name: 'Lisa',
         jiraTaskId: 'HT-349',
         sbvbTaskId: 'RFP0100495'
-      }]));
+      })]));
       const stageDataService = fixture.debugElement.injector.get(StageService);
       spyOn(stageDataService, 'getAll').and.returnValue(Observable.of([
-        { _id: '1', stageNumber: 10, name: 'Project Management' }
+        new Stage({ _id: '1', stageNumber: 10, name: 'Project Management' })
       ]));
-      const tt = new TaskTimer('1138314594273', '2017-02-11');
+      const tt = new TaskTimer({ timesheetRid: '1138314594273', workDate: '2017-02-11' });
       component.initialize(tt);
       component.ngOnInit();
     });
@@ -571,16 +581,19 @@ describe('TaskTimerEditorComponent', () => {
       input.value = '2:30';
       dispatchEvent(input, 'input');
 
-      const expected = new TaskTimer('1138314594273', '2017-02-11');
-      expected.project = {
-        _id: '42',
-        status: 'active',
-        name: 'Lisa',
-        jiraTaskId: 'HT-349',
-        sbvbTaskId: 'RFP0100495'
-      };
-      expected.stage = { _id: '1', stageNumber: 10, name: 'Project Management' };
-      expected.milliseconds = 9000000;
+      const expected = new TaskTimer({
+        timesheetRid: '1138314594273',
+        workDate: '2017-02-11',
+        project: {
+          _id: '42',
+          status: 'active',
+          name: 'Lisa',
+          jiraTaskId: 'HT-349',
+          sbvbTaskId: 'RFP0100495'
+        },
+        stage: { _id: '1', stageNumber: 10, name: 'Project Management' },
+        milliseconds: 9000000
+      });
 
       const dataService = fixture.debugElement.injector.get(TaskTimerService);
       spyOn(dataService, 'save').and.returnValue(Observable.empty());
@@ -591,7 +604,7 @@ describe('TaskTimerEditorComponent', () => {
 
     it('closes the dialog once the save completes, returning the result of the save', () => {
       const dialog = fixture.debugElement.injector.get(MdDialogRef);
-      const newTaskTimer = new TaskTimer('1129835', '2015-01-15');
+      const newTaskTimer = new TaskTimer({ timesheetRid: '1129835', workDate: '2015-01-15' });
       const dataService = fixture.debugElement.injector.get(TaskTimerService);
       spyOn(dataService, 'save').and.returnValue(Observable.of(newTaskTimer));
       spyOn(dialog, 'close');

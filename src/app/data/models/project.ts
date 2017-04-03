@@ -5,13 +5,13 @@ export class Project {
   sbvbTaskId: string;
   status?: string;
 
-  constructor(project?: any) {
-    if (project) {
-      this._id = project._id;
-      this.name = project.name;
-      this.jiraTaskId = project.jiraTaskId;
-      this.sbvbTaskId = project.sbvbTaskId;
-      this.status = project.status;
+  constructor(obj?: any) {
+    if (obj) {
+      this._id = obj._id;
+      this.name = obj.name;
+      this.jiraTaskId = obj.jiraTaskId;
+      this.sbvbTaskId = obj.sbvbTaskId;
+      this.status = obj.status;
     } else {
       this.status = 'active';
     }

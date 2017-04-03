@@ -3,6 +3,7 @@
 import { Http, Response, ResponseOptions, RequestMethod, BaseRequestOptions } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 
+import { Timesheet } from '../../models/timesheet';
 import { TimesheetService } from './timesheet.service';
 import { DateService } from '../../../shared/services/date/date.service';
 import { environment } from '../../../../environments/environment';
@@ -52,15 +53,15 @@ describe('TimesheetService', () => {
           userRid: 'me'
         }]
       })));
-      expect(result).toEqual([{
+      expect(result).toEqual([new Timesheet({
         _id: '42',
         endDate: '2016-11-30',
         userRid: 'me'
-      }, {
+      }), new Timesheet({
         _id: '314',
         endDate: '2016-12-06',
         userRid: 'me'
-      }]);
+      })]);
     });
   });
 
@@ -88,11 +89,11 @@ describe('TimesheetService', () => {
           userRid: 'me'
         }
       })));
-      expect(result).toEqual({
+      expect(result).toEqual(new Timesheet({
         _id: '42',
         endDate: '2016-11-30',
         userRid: 'me'
-      });
+      }));
     });
   });
 
@@ -128,11 +129,24 @@ describe('TimesheetService', () => {
           userRid: 'me'
         }]
       })));
-      expect(result).toEqual({
+      expect(result).toEqual(new Timesheet({
         _id: '42',
         endDate: '2016-12-24',
         userRid: 'me'
-      });
+      }));
+    });
+
+    it('returns undefined if there is no current timesheet', () => {
+      let connection: MockConnection;
+      mockBackend.connections.subscribe(c => connection = c);
+
+      let result;
+      service.getCurrent().subscribe((res) => { result = res; });
+      connection.mockRespond(new Response(new ResponseOptions({
+        status: 200,
+        body: []
+      })));
+      expect(result).toBeUndefined();
     });
   });
 
@@ -188,11 +202,11 @@ describe('TimesheetService', () => {
           userRid: 'me'
         }
       })));
-      expect(result).toEqual({
+      expect(result).toEqual(new Timesheet({
         _id: '73',
         endDate: '2016-12-24',
         userRid: 'me'
-      });
+      }));
     });
   });
 });

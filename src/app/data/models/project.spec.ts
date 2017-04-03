@@ -17,6 +17,23 @@ describe('Project', () => {
     expect(project.status).toEqual('active');
   });
 
+  it('copies data when constructed from an object', () => {
+    const project = new Project({
+      _id: '42',
+      name: 'Ford Prefect',
+      jiraTaskId: 'ZBX-1932',
+      sbvbTaskId: 'RFP114995',
+      status: 'inactive',
+      bogus: 'you should not see me'
+    });
+    expect(project._id).toEqual('42');
+    expect(project.name).toEqual('Ford Prefect');
+    expect(project.jiraTaskId).toEqual('ZBX-1932');
+    expect(project.sbvbTaskId).toEqual('RFP114995');
+    expect(project.status).toEqual('inactive');
+    expect((project as any).bogus).toBeUndefined();
+  });
+
   describe('contains', () => {
     let project;
     beforeEach(() => {

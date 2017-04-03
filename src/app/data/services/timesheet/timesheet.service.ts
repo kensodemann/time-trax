@@ -21,24 +21,32 @@ export class TimesheetService implements DataService<Timesheet> {
 
   getAll(): Observable<Array<Timesheet>> {
     return this.http.get(this.url)
-      .map(res => res.json());
+      .map((res) => {
+        const timesheets: Array<Timesheet> = [];
+        const data = res.json();
+        data.forEach(ts => timesheets.push(new Timesheet(ts)));
+        return timesheets;
+      });
   }
 
   get(id: string): Observable<Timesheet> {
     return this.http.get(this.url + `/${id}`)
-      .map(res => res.json());
+      .map(res => new Timesheet(res.json()));
   }
 
   getCurrent(): Observable<Timesheet> {
     const endDate = this.dates.weekEndDate(new Date());
     return this.http.get(this.url + `?endDate=${endDate}`)
-      .map(res => res.json()[0]);
+      .map(res => {
+        const data = res.json()[0];
+        return data && new Timesheet(data);
+      });
   }
 
   save(timesheet: Timesheet): Observable<Timesheet> {
     const url = this.url + (timesheet._id ? `/${timesheet._id}` : '');
 
     return this.http.post(url, timesheet)
-      .map(res => res.json());
+      .map(res => new Timesheet(res.json()));
   }
 }

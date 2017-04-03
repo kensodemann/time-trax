@@ -231,7 +231,10 @@ describe('Component: Timesheet', () => {
       spyOn(editor, 'open').and.returnValue(Observable.empty());
       app.addTaskTimer(new Date(2017, 1, 5));
       expect(editor.open).toHaveBeenCalledTimes(1);
-      expect(editor.open.calls.argsFor(0)[0]).toEqual(new TaskTimer('42731138314159', '2017-02-05'));
+      expect(editor.open.calls.argsFor(0)[0]).toEqual(new TaskTimer({
+        timesheetRid: '42731138314159',
+        workDate: '2017-02-05'
+      }));
     });
   });
 
@@ -253,11 +256,17 @@ describe('Component: Timesheet', () => {
       spyOn(editor, 'open').and.returnValue(Observable.empty());
       app.addTaskTimer(new Date(2017, 1, 5));
       expect(editor.open).toHaveBeenCalledTimes(1);
-      expect(editor.open.calls.argsFor(0)[0]).toEqual(new TaskTimer('11383141594273', '2017-02-05'));
+      expect(editor.open.calls.argsFor(0)[0]).toEqual(new TaskTimer({
+        timesheetRid: '11383141594273',
+        workDate: '2017-02-05'
+      }));
     });
 
     it('adds the task timer to the loaded timesheet structure', () => {
-      const newTimer = new TaskTimer('11383141594273', '2017-02-03');
+      const newTimer = new TaskTimer({
+        timesheetRid: '11383141594273',
+        workDate: '2017-02-03'
+      });
       spyOn(editor, 'open').and.returnValue(Observable.of(newTimer));
       spyOn(timesheetReportService, 'addTimer');
       app.addTaskTimer(new Date(2017, 1, 3));

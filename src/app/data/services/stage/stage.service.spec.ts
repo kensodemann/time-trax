@@ -1,6 +1,7 @@
 import { Http, Response, ResponseOptions, RequestMethod, BaseRequestOptions } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 
+import { Stage } from '../../models/stage';
 import { StageService } from './stage.service';
 import { environment } from '../../../../environments/environment';
 
@@ -45,19 +46,19 @@ describe('StageService', () => {
           name: 'Eat Pie'
         }]
       })));
-      expect(result).toEqual([{
+      expect(result).toEqual([new Stage({
         _id: '42',
         stageNumber: 1,
         name: 'Deep Thought'
-      }, {
+      }), new Stage({
         _id: '1138',
         stageNumber: 2,
         name: 'Drackonian Crackdown'
-      }, {
+      }), new Stage({
         _id: '314159',
         stageNumber: 3,
         name: 'Eat Pie'
-      }]);
+      })]);
     });
 
     it('caches the result so stages are not fetched more than once', () => {
@@ -93,19 +94,19 @@ describe('StageService', () => {
       }
 
       expect(connectionCount).toEqual(1);
-      expect(result).toEqual([{
+      expect(result).toEqual([new Stage({
         _id: '42',
         stageNumber: 1,
         name: 'Deep Thought'
-      }, {
+      }), new Stage({
         _id: '1138',
         stageNumber: 2,
         name: 'Drackonian Crackdown'
-      }, {
+      }), new Stage({
         _id: '314159',
         stageNumber: 3,
         name: 'Eat Pie'
-      }]);
+      })]);
     });
   });
 });
