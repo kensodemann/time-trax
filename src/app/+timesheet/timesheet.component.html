@@ -15,7 +15,7 @@
 
     <div class="detail" *ngIf="day.taskTimers.length > 0">
       <div *ngFor="let timeLog of day.taskTimers">
-        <trx-task-timer [timeLog]="timeLog"></trx-task-timer>
+        <trx-task-timer [timeLog]="timeLog" (edit)="editTaskTimer(timeLog)"></trx-task-timer>
       </div>
     </div>
   </section>
