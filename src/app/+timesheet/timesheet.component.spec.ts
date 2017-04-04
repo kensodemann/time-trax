@@ -25,6 +25,8 @@ class TimesheetServiceStub {
 
 class TaskTimerServiceStub {
   getAll(params: any): Observable<Array<TaskTimer>> { return Observable.empty(); }
+  start(timer: TaskTimer): Observable<TaskTimer> { return Observable.empty(); }
+  stop(timer: TaskTimer): Observable<TaskTimer> { return Observable.empty(); }
 };
 
 class TaskTimerEditorStub {
@@ -171,6 +173,32 @@ describe('Component: Timesheet', () => {
     });
   });
 
+  describe('task timer refresh', () => {
+    let app;
+    let taskTimerService;
+    beforeEach(() => {
+      const fixture = TestBed.createComponent(TimesheetComponent);
+      app = fixture.debugElement.componentInstance;
+      const timesheetService = fixture.debugElement.injector.get(TimesheetService);
+      taskTimerService = fixture.debugElement.injector.get(TaskTimerService);
+      spyOn(timesheetService, 'getCurrent').and.returnValue(Observable.of({ _id: '11383141594273', endDate: '2017-02-04' }));
+    });
+
+    it('is scheduled on init to run every 15 seconds', () => {
+      spyOn(Observable, 'interval').and.returnValue(Observable.empty());
+      app.ngOnInit();
+      expect(Observable.interval).toHaveBeenCalledTimes(1);
+      expect(Observable.interval).toHaveBeenCalledWith(15000);
+    });
+
+    it('refreshes the task timer data', () => {
+      spyOn(Observable, 'interval').and.returnValue(Observable.of(null));
+      spyOn(taskTimerService, 'getAll').and.returnValue(Observable.of(testTaskTimers));
+      app.ngOnInit();
+      expect(taskTimerService.getAll).toHaveBeenCalledTimes(2);
+    });
+  });
+
   describe('addTaskTimer - new timesheet', () => {
     let app;
     let editor;
@@ -309,6 +337,108 @@ describe('Component: Timesheet', () => {
         _id: 903,
         timesheetRid: '11383141594273',
         workDate: '2017-02-01'
+      });
+    });
+  });
+
+  describe('toggleTaskTimer', () => {
+    let app;
+    let editor;
+    let taskTimerService;
+    beforeEach(() => {
+      const fixture = TestBed.createComponent(TimesheetComponent);
+      app = fixture.debugElement.componentInstance;
+      const timesheetService = fixture.debugElement.injector.get(TimesheetService);
+      editor = fixture.debugElement.injector.get(TaskTimerEditorService);
+      spyOn(timesheetService, 'getCurrent').and.returnValue(Observable.of({ _id: '11383141594273', endDate: '2017-02-04' }));
+      taskTimerService = fixture.debugElement.injector.get(TaskTimerService);
+      spyOn(taskTimerService, 'getAll').and.returnValue(Observable.of(testTaskTimers));
+      app.ngOnInit();
+    });
+
+    describe('when the timer is active', () => {
+      beforeEach(() => {
+        app.days[3].taskTimers[1].isActive = true;
+        app.days[3].taskTimers[1].milliseconds = 1000;
+        app.days[3].taskTimers[1].startTime = 1234;
+      });
+
+      it('calls stop', () => {
+        spyOn(taskTimerService, 'stop').and.returnValue(Observable.empty());
+        app.toggleTaskTimer(app.days[3].taskTimers[1]);
+        expect(taskTimerService.stop).toHaveBeenCalledTimes(1);
+        expect(taskTimerService.stop).toHaveBeenCalledWith(app.days[3].taskTimers[1]);
+      });
+
+      it('copies the start/stop properties back to the timer', () => {
+        spyOn(taskTimerService, 'stop').and.returnValue(Observable.of(new TaskTimer({
+          _id: 903,
+          timesheetRid: '11383141594273',
+          workDate: '2017-02-01',
+          isActive: false,
+          milliseconds: 99385
+        })));
+        app.toggleTaskTimer(app.days[3].taskTimers[1]);
+        expect(app.days[3].taskTimers[1].isActive).toEqual(false);
+        expect(app.days[3].taskTimers[1].milliseconds).toEqual(99385);
+        expect(app.days[3].taskTimers[1].startTime).toBeUndefined();
+      });
+    });
+
+    describe('when the timer is inactive', () => {
+      beforeEach(() => {
+        app.days[3].taskTimers[1].isActive = false;
+        app.days[3].taskTimers[1].milliseconds = 4200;
+      });
+
+      it('calls stop on any timer that is currently active', () => {
+        app.days[4].taskTimers[0].isActive = true;
+        app.days[5].taskTimers[2].isActive = true;
+        spyOn(taskTimerService, 'start').and.returnValue(Observable.empty());
+        spyOn(taskTimerService, 'stop').and.returnValue(Observable.empty());
+        app.toggleTaskTimer(app.days[3].taskTimers[1]);
+        expect(taskTimerService.stop).toHaveBeenCalledTimes(2);
+      });
+
+      it('copies the start/stop properties back to the stopped timers', () => {
+        app.days[5].taskTimers[2].isActive = true;
+        app.days[5].taskTimers[2].startTime = 188483995;
+        app.days[5].taskTimers[2]._currentTime = 193853943;
+        spyOn(taskTimerService, 'start').and.returnValue(Observable.empty());
+        spyOn(taskTimerService, 'stop').and.returnValue(Observable.of(new TaskTimer({
+          _id: 201,
+          timesheetRid: '11383141594273',
+          workDate: '2017-02-03',
+          isActive: false,
+          milliseconds: 4212,
+        })));
+        app.toggleTaskTimer(app.days[3].taskTimers[1]);
+        expect(taskTimerService.stop).toHaveBeenCalledTimes(1);
+        expect(app.days[5].taskTimers[2].isActive).toEqual(false);
+        expect(app.days[5].taskTimers[2].startTime).toBeUndefined();
+        expect(app.days[5].taskTimers[2]._currentTime).toBeUndefined();
+      });
+
+      it('calls start', () => {
+        spyOn(taskTimerService, 'start').and.returnValue(Observable.empty());
+        app.toggleTaskTimer(app.days[3].taskTimers[1]);
+        expect(taskTimerService.start).toHaveBeenCalledTimes(1);
+        expect(taskTimerService.start).toHaveBeenCalledWith(app.days[3].taskTimers[1]);
+      });
+
+      it('copies the start/stop properties back to the timer', () => {
+        spyOn(taskTimerService, 'start').and.returnValue(Observable.of(new TaskTimer({
+          _id: 903,
+          timesheetRid: '11383141594273',
+          workDate: '2017-02-01',
+          isActive: true,
+          milliseconds: 4212,
+          startTime: 3049
+        })));
+        app.toggleTaskTimer(app.days[3].taskTimers[1]);
+        expect(app.days[3].taskTimers[1].isActive).toEqual(true);
+        expect(app.days[3].taskTimers[1].milliseconds).toEqual(4212);
+        expect(app.days[3].taskTimers[1].startTime).toEqual(3049);
       });
     });
   });

@@ -9,7 +9,7 @@ import { HoursMinutesPipe } from '../../shared/pipes/hours-minutes.pipe';
 import { ProjectTitlePipe } from '../../shared/pipes/project-title.pipe';
 import { TaskTimerComponent } from './task-timer.component';
 
-describe('TaskTimerComponent', () => {
+describe('Component: TaskTimer', () => {
   let component: TaskTimerComponent;
   let fixture: ComponentFixture<TaskTimerComponent>;
 

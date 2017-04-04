@@ -47,28 +47,12 @@ export class TaskTimerService implements DataService<TaskTimer> {
   }
 
   start(timer: TaskTimer): Observable<TaskTimer> {
-    return this.stopRunningTimers()
-      .flatMap(x => this.http.post(`${environment.dataService}/timesheets/${timer.timesheetRid}/taskTimers/${timer._id}/start`, timer)
-        .map(res => new TaskTimer(res.json())));
+    return this.http.post(`${environment.dataService}/timesheets/${timer.timesheetRid}/taskTimers/${timer._id}/start`, timer)
+      .map(res => new TaskTimer(res.json()));
   }
 
   stop(timer: TaskTimer): Observable<TaskTimer> {
     return this.http.post(`${environment.dataService}/timesheets/${timer.timesheetRid}/taskTimers/${timer._id}/stop`, timer)
       .map(res => new TaskTimer(res.json()));
-  }
-
-  stopRunningTimers(): Observable<any> {
-    if (!this.taskTimers) {
-      return Observable.throw(new Error('No Timers Fetched Yet'));
-    }
-
-    return this.taskTimers.flatMap(timers => {
-      const timersToStop: Array<Observable<any>> = _.chain(timers)
-        .filter('isActive')
-        .map(t => this.stop(t))
-        .value();
-
-      return timersToStop.length > 0 ? Observable.forkJoin(timersToStop) : Observable.of(null);
-    });
   }
 }

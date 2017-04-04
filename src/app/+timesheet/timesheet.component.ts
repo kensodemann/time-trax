@@ -1,4 +1,6 @@
-import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
 import { TaskTimer } from '../data/models/task-timer';
 import { Timesheet } from '../data/models/timesheet';
@@ -14,10 +16,11 @@ import { TimesheetReportService } from '../shared/services/timesheet-report/time
   templateUrl: './timesheet.component.html',
   styleUrls: ['./timesheet.component.scss']
 })
-export class TimesheetComponent implements OnInit {
+export class TimesheetComponent implements OnInit, OnDestroy {
   days: Array<DailyTimeLog>;
 
   private timesheet: Timesheet;
+  private refreshInterval: Subscription;
 
   constructor(
     private dateService: DateService,
@@ -31,9 +34,7 @@ export class TimesheetComponent implements OnInit {
     this.timesheetData.getCurrent().subscribe(ts => {
       if (ts) {
         this.timesheet = ts;
-        this.taskTimerData.getAll({ timesheetId: ts._id }).subscribe(tt => {
-          this.days = this.report.dailyTasks(ts, tt);
-        });
+        this.refresh();
       } else {
         this.timesheetData.save({
           _id: undefined,
@@ -45,6 +46,14 @@ export class TimesheetComponent implements OnInit {
         });
       }
     });
+
+    this.refreshInterval = Observable.interval(15000).subscribe(res => this.refresh());
+  }
+
+  ngOnDestroy() {
+    if (this.refreshInterval && !this.refreshInterval.closed) {
+      this.refreshInterval.unsubscribe();
+    }
   }
 
   addTaskTimer(d: Date) {
@@ -66,5 +75,51 @@ export class TimesheetComponent implements OnInit {
         timer.milliseconds = res.milliseconds;
       }
     });
+  }
+
+  deleteTaskTimer(timer: TaskTimer): void { console.log('this will delete'); }
+
+  toggleTaskTimer(timer: TaskTimer): void {
+    if (timer.isActive) {
+      this.stopTimer(timer);
+    } else {
+      this.stopRunningTimers();
+      this.startTimer(timer);
+    }
+  }
+
+  private refresh() {
+    this.taskTimerData.getAll({ timesheetId: this.timesheet._id }).subscribe(tt => {
+      this.days = this.report.dailyTasks(this.timesheet, tt);
+    });
+  }
+
+  private startTimer(timer: TaskTimer): void {
+    this.taskTimerData.start(timer).subscribe(res => this.updateRunParameters(timer, res));
+  }
+
+  private stopRunningTimers(): void {
+    if (this.days) {
+      this.days.forEach(day => {
+        day.taskTimers.forEach(timer => {
+          if (timer.isActive) {
+            this.stopTimer(timer);
+          }
+        });
+      });
+    }
+  }
+
+  private stopTimer(timer: TaskTimer): void {
+    this.taskTimerData.stop(timer).subscribe(res => this.updateRunParameters(timer, res));
+  }
+
+  private updateRunParameters(timer: TaskTimer, httpResult: any): void {
+    if (httpResult) {
+      timer.isActive = httpResult.isActive;
+      timer.milliseconds = httpResult.milliseconds;
+      timer.startTime = httpResult.startTime;
+      timer._currentTime = httpResult._currentTime;
+    }
   }
 }
