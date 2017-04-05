@@ -1,4 +1,8 @@
- // export for convenience.
+/* tslint:disable:directive-selector */
+/* tslint:disable:component-selector */
+/* tslint:disable:use-host-property-decorator */
+/* tslint:disable:no-input-rename */
+// export for convenience.
 export { ActivatedRoute, Router, RouterLink, RouterOutlet} from '@angular/router';
 
 import { Component, Directive, Injectable, Input } from '@angular/core';

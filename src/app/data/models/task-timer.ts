@@ -11,6 +11,7 @@ export class TaskTimer {
   milliseconds?: number;
   isActive?: boolean;
   startTime?: number;
+  _currentTime?: number;
 
   constructor(obj?: any) {
     if (obj) {
@@ -19,6 +20,7 @@ export class TaskTimer {
       this.milliseconds = obj.milliseconds;
       this.isActive = obj.isActive;
       this.startTime = obj.startTime;
+      this._currentTime = obj._currentTime;
 
       if (obj.workDate) {
         this.workDate = moment(obj.workDate).format('YYYY-MM-DD');
@@ -32,5 +34,10 @@ export class TaskTimer {
         this.project = new Project(obj.project);
       }
     }
+  }
+
+  get elapsedTime(): number {
+    return (this.milliseconds || 0) +
+      (this.isActive ? (this._currentTime || this.startTime) - this.startTime : 0);
   }
 }
