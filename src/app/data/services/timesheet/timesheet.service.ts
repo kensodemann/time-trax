@@ -37,9 +37,17 @@ export class TimesheetService implements DataService<Timesheet> {
   getCurrent(): Observable<Timesheet> {
     const endDate = this.dates.weekEndDate(new Date());
     return this.http.get(this.url + `?endDate=${endDate}`)
-      .map(res => {
+      .flatMap(res => {
         const data = res.json()[0];
-        return data && new Timesheet(data);
+        if (data) {
+          return Observable.of(new Timesheet(data));
+        }
+
+        return this.save({
+          _id: undefined,
+          endDate: endDate,
+          userRid: undefined
+        });
       });
   }
 

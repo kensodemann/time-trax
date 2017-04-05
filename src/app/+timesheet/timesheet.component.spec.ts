@@ -115,62 +115,6 @@ describe('Component: Timesheet', () => {
         expect(app.days[6].taskTimers.length).toEqual(0, 'Saturday');
       });
     });
-
-    describe('when there is no current timesheet', () => {
-      let app;
-      let taskTimerService;
-      let timesheetService;
-      beforeEach(() => {
-        const fixture = TestBed.createComponent(TimesheetComponent);
-        app = fixture.debugElement.componentInstance;
-        timesheetService = fixture.debugElement.injector.get(TimesheetService);
-        taskTimerService = fixture.debugElement.injector.get(TaskTimerService);
-        spyOn(timesheetService, 'getCurrent').and.returnValue(Observable.of(undefined));
-        jasmine.clock().mockDate(new Date(2017, 1, 2));
-      });
-
-      afterEach(() => {
-        jasmine.clock().uninstall();
-      });
-
-      it('creates a new task timer', () => {
-        spyOn(timesheetService, 'save').and.returnValue(Observable.of({ _id: '42731138314159', endDate: '2017-02-04', userRid: 'me' }));
-        app.ngOnInit();
-        expect(timesheetService.save).toHaveBeenCalledTimes(1);
-        expect(timesheetService.save).toHaveBeenCalledWith({
-          _id: undefined,
-          endDate: '2017-02-04',
-          userRid: undefined
-        });
-      });
-
-      it('does not get task timers', () => {
-        spyOn(timesheetService, 'save').and.returnValue(Observable.of({ _id: '42731138314159', endDate: '2017-02-04', userRid: 'me' }));
-        spyOn(taskTimerService, 'getAll');
-        app.ngOnInit();
-        expect(taskTimerService.getAll).not.toHaveBeenCalled();
-      });
-
-      it('creates an empty schedule of daily tasks', () => {
-        spyOn(timesheetService, 'save').and.returnValue(Observable.of({ _id: '42731138314159', endDate: '2017-02-04', userRid: 'me' }));
-        app.ngOnInit();
-        expect(app.days.length).toEqual(7);
-        expect(app.days[0].date).toEqual(new Date(2017, 0, 29));
-        expect(app.days[1].date).toEqual(new Date(2017, 0, 30));
-        expect(app.days[2].date).toEqual(new Date(2017, 0, 31));
-        expect(app.days[3].date).toEqual(new Date(2017, 1, 1));
-        expect(app.days[4].date).toEqual(new Date(2017, 1, 2));
-        expect(app.days[5].date).toEqual(new Date(2017, 1, 3));
-        expect(app.days[6].date).toEqual(new Date(2017, 1, 4));
-        expect(app.days[0].taskTimers.length).toEqual(0, 'Sunday');
-        expect(app.days[1].taskTimers.length).toEqual(0, 'Monday');
-        expect(app.days[2].taskTimers.length).toEqual(0, 'Tuesday');
-        expect(app.days[3].taskTimers.length).toEqual(0, 'Wednesday');
-        expect(app.days[4].taskTimers.length).toEqual(0, 'Thursday');
-        expect(app.days[5].taskTimers.length).toEqual(0, 'Friday');
-        expect(app.days[6].taskTimers.length).toEqual(0, 'Saturday');
-      });
-    });
   });
 
   describe('task timer refresh', () => {
@@ -199,36 +143,7 @@ describe('Component: Timesheet', () => {
     });
   });
 
-  describe('addTaskTimer - new timesheet', () => {
-    let app;
-    let editor;
-    beforeEach(() => {
-      const fixture = TestBed.createComponent(TimesheetComponent);
-      app = fixture.debugElement.componentInstance;
-      const timesheetService = fixture.debugElement.injector.get(TimesheetService);
-      editor = fixture.debugElement.injector.get(TaskTimerEditorService);
-      spyOn(timesheetService, 'getCurrent').and.returnValue(Observable.of(undefined));
-      spyOn(timesheetService, 'save').and.returnValue(Observable.of({ _id: '42731138314159', endDate: '2017-02-04', userRid: 'me' }));
-      jasmine.clock().mockDate(new Date(2017, 1, 2));
-      app.ngOnInit();
-    });
-
-    afterEach(() => {
-      jasmine.clock().uninstall();
-    });
-
-    it('opens the task timer editor', () => {
-      spyOn(editor, 'open').and.returnValue(Observable.empty());
-      app.addTaskTimer(new Date(2017, 1, 5));
-      expect(editor.open).toHaveBeenCalledTimes(1);
-      expect(editor.open.calls.argsFor(0)[0]).toEqual(new TaskTimer({
-        timesheetRid: '42731138314159',
-        workDate: '2017-02-05'
-      }));
-    });
-  });
-
-  describe('addTaskTimer - existing timesheet', () => {
+  describe('addTaskTimer', () => {
     let app;
     let editor;
     let timesheetReportService;

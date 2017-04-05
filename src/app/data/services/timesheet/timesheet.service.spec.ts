@@ -136,7 +136,7 @@ describe('TimesheetService', () => {
       }));
     });
 
-    it('returns undefined if there is no current timesheet', () => {
+    it('returns a newly saved timesheet if there is no current timesheet', () => {
       let connection: MockConnection;
       mockBackend.connections.subscribe(c => connection = c);
 
@@ -146,7 +146,27 @@ describe('TimesheetService', () => {
         status: 200,
         body: []
       })));
-      expect(result).toBeUndefined();
+      expect(connection.request.url).toEqual(`${environment.dataService}/timesheets`);
+      expect(connection.request.json()).toEqual({
+        _id: undefined,
+        endDate: '2016-12-24',
+        userRid: undefined
+      });
+      expect(connection.request.method).toEqual(RequestMethod.Post);
+
+      connection.mockRespond(new Response(new ResponseOptions({
+        status: 200,
+        body: {
+           _id: '1138314158',
+          endDate: '2016-12-24',
+          userRid: 'the-dude'
+        }
+      })));
+      expect(result).toEqual(new Timesheet({
+        _id: '1138314158',
+        endDate: '2016-12-24',
+        userRid: 'the-dude'
+      }));
     });
   });
 

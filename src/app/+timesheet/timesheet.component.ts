@@ -32,19 +32,8 @@ export class TimesheetComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.timesheetData.getCurrent().subscribe(ts => {
-      if (ts) {
-        this.timesheet = ts;
-        this.refresh();
-      } else {
-        this.timesheetData.save({
-          _id: undefined,
-          endDate: this.dateService.weekEndDate(new Date()),
-          userRid: undefined
-        }).subscribe(newTs => {
-          this.timesheet = newTs;
-          this.days = this.report.dailyTasks(newTs, []);
-        });
-      }
+      this.timesheet = ts;
+      this.refresh();
     });
 
     this.refreshInterval = Observable.interval(15000).subscribe(res => this.refresh());
