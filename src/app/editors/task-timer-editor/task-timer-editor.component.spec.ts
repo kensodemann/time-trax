@@ -34,7 +34,7 @@ class StageServiceStub implements DataService<Stage> {
   getAll(): Observable<Array<Stage>> { return Observable.empty(); }
 }
 
-describe('TaskTimerEditorComponent', () => {
+describe('Component: TaskTimerEditor', () => {
   let component: TaskTimerEditorComponent;
   let fixture: ComponentFixture<TaskTimerEditorComponent>;
 
@@ -377,6 +377,7 @@ describe('TaskTimerEditorComponent', () => {
       expect(component.errors['stage']).toEqual('Stage is required.');
     }));
   });
+
   describe('changing the hours value', () => {
     let input;
     beforeEach(() => {
