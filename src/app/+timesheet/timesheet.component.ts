@@ -7,7 +7,6 @@ import { Timesheet } from '../data/models/timesheet';
 import { TaskTimerService } from '../data/services/task-timer/task-timer.service';
 import { TimesheetService } from '../data/services/timesheet/timesheet.service';
 import { TaskTimerEditorService } from '../editors/task-timer-editor/task-timer-editor.service';
-import { DateService } from '../shared/services/date/date.service';
 import { DailyTimeLog } from '../shared/services/timesheet-report/daily-time-log';
 import { TimesheetReportService } from '../shared/services/timesheet-report/timesheet-report.service';
 
@@ -23,7 +22,6 @@ export class TimesheetComponent implements OnInit, OnDestroy {
   private refreshInterval: Subscription;
 
   constructor(
-    private dateService: DateService,
     private editor: TaskTimerEditorService,
     private report: TimesheetReportService,
     private taskTimerData: TaskTimerService,
