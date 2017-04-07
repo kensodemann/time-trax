@@ -19,6 +19,7 @@ export class TimesheetComponent implements OnInit, OnDestroy {
   days: Array<DailyTimeLog>;
 
   private timesheet: Timesheet;
+  private isStoppingTimer: boolean;
   private refreshInterval: Subscription;
 
   constructor(
@@ -68,10 +69,19 @@ export class TimesheetComponent implements OnInit, OnDestroy {
 
   toggleTaskTimer(timer: TaskTimer): void {
     if (timer.isActive) {
-      this.stopTimer(timer);
+      if (!this.isStoppingTimer) {
+        this.isStoppingTimer = true;
+        this.taskTimerData.stop(timer)
+          .catch((err) => {
+            console.error(err);
+            return Observable.empty();
+          })
+          .finally(() => this.isStoppingTimer = false)
+          .subscribe(res => this.updateRunParameters(timer, res));
+      }
     } else {
       this.stopRunningTimers();
-      this.startTimer(timer);
+      this.taskTimerData.start(timer).subscribe(res => this.updateRunParameters(timer, res));
     }
   }
 
@@ -81,24 +91,16 @@ export class TimesheetComponent implements OnInit, OnDestroy {
     });
   }
 
-  private startTimer(timer: TaskTimer): void {
-    this.taskTimerData.start(timer).subscribe(res => this.updateRunParameters(timer, res));
-  }
-
   private stopRunningTimers(): void {
     if (this.days) {
       this.days.forEach(day => {
         day.taskTimers.forEach(timer => {
           if (timer.isActive) {
-            this.stopTimer(timer);
+            this.taskTimerData.stop(timer).subscribe(res => this.updateRunParameters(timer, res));
           }
         });
       });
     }
-  }
-
-  private stopTimer(timer: TaskTimer): void {
-    this.taskTimerData.stop(timer).subscribe(res => this.updateRunParameters(timer, res));
   }
 
   private updateRunParameters(timer: TaskTimer, httpResult: any): void {

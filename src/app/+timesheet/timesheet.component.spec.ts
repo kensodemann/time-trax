@@ -4,7 +4,9 @@ import { MaterialModule } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/observable/empty';
+import 'rxjs/add/observable/never';
 import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/throw';
 
 import { TaskTimerComponent } from './task-timer/task-timer.component';
 import { TimesheetComponent } from './timesheet.component';
@@ -297,6 +299,33 @@ describe('Component: Timesheet', () => {
         expect(app.days[3].taskTimers[1].isActive).toEqual(false);
         expect(app.days[3].taskTimers[1].milliseconds).toEqual(99385);
         expect(app.days[3].taskTimers[1].startTime).toBeUndefined();
+      });
+
+      it('does not call stop if it is already stopping', () => {
+        spyOn(taskTimerService, 'stop').and.returnValue(Observable.never());
+        app.toggleTaskTimer(app.days[3].taskTimers[1]);
+        app.toggleTaskTimer(app.days[3].taskTimers[1]);
+        expect(taskTimerService.stop).toHaveBeenCalledTimes(1);
+      });
+
+      it('allows calling of stop after original stop is complete', () => {
+        spyOn(taskTimerService, 'stop').and.returnValue(Observable.of(new TaskTimer({
+          _id: 903,
+          timesheetRid: '11383141594273',
+          workDate: '2017-02-01',
+          isActive: true,
+          milliseconds: 99385
+        })));
+        app.toggleTaskTimer(app.days[3].taskTimers[1]);
+        app.toggleTaskTimer(app.days[3].taskTimers[1]);
+        expect(taskTimerService.stop).toHaveBeenCalledTimes(2);
+      });
+
+      it('allows calling of stop after original stop throws', () => {
+        spyOn(taskTimerService, 'stop').and.returnValue(Observable.throw(new Error()));
+        app.toggleTaskTimer(app.days[3].taskTimers[1]);
+        app.toggleTaskTimer(app.days[3].taskTimers[1]);
+        expect(taskTimerService.stop).toHaveBeenCalledTimes(2);
       });
     });
 
