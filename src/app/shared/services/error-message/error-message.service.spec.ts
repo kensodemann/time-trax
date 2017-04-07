@@ -6,8 +6,8 @@ import { Observable } from 'rxjs/Observable';
 
 import { ErrorMessageService } from './error-message.service';
 
-class MessageDialogStub {
-  error(title: string, message: string, viewContainerRef: ViewContainerRef): Observable<any> {
+class ErrorDialogStub {
+  open(title: string, message: string, viewContainerRef: ViewContainerRef): Observable<any> {
     return Observable.empty();
   }
 }
@@ -16,7 +16,7 @@ describe('ErrorMessageService', () => {
   let dialog;
   let service;
   beforeEach(() => {
-    dialog = new MessageDialogStub();
+    dialog = new ErrorDialogStub();
     service = new ErrorMessageService(dialog);
   });
 
@@ -74,10 +74,10 @@ describe('ErrorMessageService', () => {
       });
       const res = new Response(opt);
 
-      spyOn(dialog, 'error');
+      spyOn(dialog, 'open');
 
       service.show(res, vcr);
-      expect(dialog.error).toHaveBeenCalledTimes(1);
+      expect(dialog.open).toHaveBeenCalledTimes(1);
     });
 
     it('returns the Observable of the message dialog', () => {
@@ -94,7 +94,7 @@ describe('ErrorMessageService', () => {
       });
       const res = new Response(opt);
 
-      spyOn(dialog, 'error').and.returnValue(Observable.of('Toast'));
+      spyOn(dialog, 'open').and.returnValue(Observable.of('Toast'));
 
       let result: string;
       service.show(res, vcr).subscribe(r => result = r);

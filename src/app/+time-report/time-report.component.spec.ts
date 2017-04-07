@@ -2,11 +2,11 @@ import { ViewContainerRef } from '@angular/core';
 import { TestBed, async } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
 
-import { MessageDialogService } from '../shared/services/message-dialog/message-dialog.service';
+import { ErrorDialogService } from '../shared/services/error-dialog/error-dialog.service';
 import { TimeReportComponent } from './time-report.component';
 
-class MessageDialogStub {
-  error(title: string, message: string, viewContainerRef: ViewContainerRef): Observable<any> {
+class ErrorDialogStub {
+  open(title: string, message: string, viewContainerRef: ViewContainerRef): Observable<any> {
     return Observable.empty();
   }
 }
@@ -18,7 +18,7 @@ describe('Component: Time Report', () => {
         TimeReportComponent
       ],
       providers: [
-        { provide: MessageDialogService, useClass: MessageDialogStub }
+        { provide: ErrorDialogService, useClass: ErrorDialogStub }
       ]
     });
   });
