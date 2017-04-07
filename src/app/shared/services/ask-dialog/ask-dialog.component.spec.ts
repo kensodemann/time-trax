@@ -1,20 +1,17 @@
-/* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 import { MaterialModule, MdDialogRef } from '@angular/material';
 
-import { ErrorDialogComponent } from './error-dialog.component';
+import { AskDialogComponent } from './ask-dialog.component';
 
 class DialogRefStub { };
 
-describe('Component: ErrorDialog', () => {
-  let component: ErrorDialogComponent;
-  let fixture: ComponentFixture<ErrorDialogComponent>;
+describe('AskDialogComponent', () => {
+  let component: AskDialogComponent;
+  let fixture: ComponentFixture<AskDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ErrorDialogComponent],
+      declarations: [AskDialogComponent],
       imports: [
         MaterialModule
       ],
@@ -25,7 +22,7 @@ describe('Component: ErrorDialog', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ErrorDialogComponent);
+    fixture = TestBed.createComponent(AskDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

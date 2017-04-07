@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@angular/material';
 
+import { AskDialogModule } from './services/ask-dialog/ask-dialog.module';
 import { AuthenticationModule } from './services/authentication/authentication.module';
 import { DateModule } from './services/date/date.module';
 import { ErrorMessageModule } from './services/error-message/error-message.module';
@@ -22,6 +23,7 @@ import { MillisecondsPipe } from './pipes/milliseconds.pipe';
     FlexLayoutModule,
     MaterialModule,
 
+    AskDialogModule,
     AuthenticationModule,
     DateModule,
     ErrorMessageModule,
