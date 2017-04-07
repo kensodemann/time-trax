@@ -1,0 +1,13 @@
+<md-dialog-content>
+  <div class="icon">
+    <md-icon color="primary">help_outline</md-icon>
+  </div>
+  <div class="message">
+    <div class="title">{{title}}</div>
+    <div>{{message}}</div>
+  </div>
+</md-dialog-content>
+<md-dialog-actions>
+  <button md-button aria-label="Yes" color="primary" (click)="dialog.close(true)">Yes</button>
+  <button md-button aria-label="No" color="default" (click)="dialog.close(false)">No</button>
+</md-dialog-actions>
