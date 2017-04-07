@@ -3,8 +3,8 @@
 import { MdDialogConfig, MdDialogRef } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 
-import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
-import { MessageDialogService } from './message-dialog.service';
+import { ErrorDialogComponent } from './error-dialog.component';
+import { ErrorDialogService } from './error-dialog.service';
 
 class DialogStub {
   Component: any;
@@ -26,40 +26,40 @@ class DialogStub {
   }
 };
 
-describe('MessageDialogService', () => {
+describe('Service: Error Dialog', () => {
   let dialog;
-  let service;
+  let errorDialog;
   beforeEach(() => {
     dialog = new DialogStub();
-    service = new MessageDialogService(dialog);
+    errorDialog = new ErrorDialogService(dialog);
   });
 
   it('exists', () => {
-    expect(service).toBeTruthy();
+    expect(errorDialog).toBeTruthy();
   });
 
-  describe('error dialog', () => {
+  describe('open', () => {
     it('opens the dialog', () => {
       const vcr = { name: 'I am a view component ref' };
-      service.error('title', 'message', vcr);
+      errorDialog.open('title', 'message', vcr);
       expect(dialog.Component).toEqual(ErrorDialogComponent);
       expect(dialog.config.viewContainerRef).toEqual(vcr);
     });
 
     it('sets the title', () => {
-      service.error('title', 'message', null);
+      errorDialog.open('title', 'message', null);
       expect(dialog.componentInstance.title).toEqual('title');
     });
 
     it('sets the message', () => {
-      service.error('title', 'message', null);
+      errorDialog.open('title', 'message', null);
       expect(dialog.componentInstance.message).toEqual('message');
     });
 
     it('returns the after closed observable', () => {
       spyOn(dialog.ref, 'afterClosed').and.returnValue(Observable.of('toast'));
       let result: string;
-      service.error('title', 'message', null).subscribe(res => result = res);
+      errorDialog.open('title', 'message', null).subscribe(res => result = res);
       expect(result).toEqual('toast');
     });
   });

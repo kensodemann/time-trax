@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 
-import { MessageDialogService } from '../shared/services/message-dialog/message-dialog.service';
+import { ErrorDialogService } from '../shared/services/error-dialog/error-dialog.service';
 
 @Component({
   selector: 'trx-time-report',
@@ -9,12 +9,12 @@ import { MessageDialogService } from '../shared/services/message-dialog/message-
 })
 export class TimeReportComponent implements OnInit {
 
-  constructor(private viewContainerRef: ViewContainerRef, private messageDialog: MessageDialogService) { }
+  constructor(private viewContainerRef: ViewContainerRef, private errorDialog: ErrorDialogService) { }
 
   ngOnInit() { }
 
   showDialog() {
-    this.messageDialog.error('Error',
+    this.errorDialog.open('Error',
       // 'This is how it will look with a short message',
       'I really really hope this works. This is a long message. Longer than most will probablby be. I just want to see' +
       ' what happens when there is really long crap like this. Hopefully this will wrap and scroll and whatnot. I am also' +

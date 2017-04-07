@@ -6,7 +6,7 @@ import { MaterialModule } from '@angular/material';
 import { AuthenticationModule } from './services/authentication/authentication.module';
 import { DateModule } from './services/date/date.module';
 import { ErrorMessageModule } from './services/error-message/error-message.module';
-import { MessageDialogModule } from './services/message-dialog/message-dialog.module';
+import { ErrorDialogModule } from './services/error-dialog/error-dialog.module';
 import { TimeTraxHttpModule } from './services/time-trax-http/time-trax-http.module';
 
 import { TimesheetReportService } from './services/timesheet-report/timesheet-report.service';
@@ -25,7 +25,7 @@ import { MillisecondsPipe } from './pipes/milliseconds.pipe';
     AuthenticationModule,
     DateModule,
     ErrorMessageModule,
-    MessageDialogModule,
+    ErrorDialogModule,
     TimeTraxHttpModule,
 
     HoursMinutesPipe,

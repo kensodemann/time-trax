@@ -9,7 +9,7 @@ import { ErrorDialogComponent } from './error-dialog.component';
 
 class DialogRefStub { };
 
-describe('MessageDialogComponent', () => {
+describe('Component: ErrorDialog', () => {
   let component: ErrorDialogComponent;
   let fixture: ComponentFixture<ErrorDialogComponent>;
 

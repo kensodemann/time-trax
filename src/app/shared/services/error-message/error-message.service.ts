@@ -2,12 +2,12 @@ import { Injectable, ViewContainerRef } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { MessageDialogService } from '../message-dialog/message-dialog.service';
+import { ErrorDialogService } from '../error-dialog/error-dialog.service';
 
 @Injectable()
 export class ErrorMessageService {
 
-  constructor(private dialog: MessageDialogService) { }
+  constructor(private dialog: ErrorDialogService) { }
 
   getMessage(res: Response): string {
     const body = res.json();
@@ -16,7 +16,7 @@ export class ErrorMessageService {
 
   show(res: Response, viewContainerRef: ViewContainerRef): Observable<any> {
     const message = this.getMessage(res);
-    return this.dialog.error('Error', message, viewContainerRef);
+    return this.dialog.open('Error', message, viewContainerRef);
   }
 
 }
