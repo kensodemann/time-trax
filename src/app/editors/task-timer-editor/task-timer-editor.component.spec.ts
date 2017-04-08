@@ -2,8 +2,9 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule, MdDialogRef } from '@angular/material';
+import { MdAutocompleteModule, MdDialogModule, MdInputModule, MdDialogRef } from '@angular/material';
 import { By } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Observable } from 'rxjs/Observable';
 
 import { Project } from '../../data/models/project';
@@ -34,7 +35,7 @@ class StageServiceStub implements DataService<Stage> {
   getAll(): Observable<Array<Stage>> { return Observable.empty(); }
 }
 
-describe('Component: TaskTimerEditor', () => {
+describe('TaskTimerEditorComponent', () => {
   let component: TaskTimerEditorComponent;
   let fixture: ComponentFixture<TaskTimerEditorComponent>;
 
@@ -42,13 +43,17 @@ describe('Component: TaskTimerEditor', () => {
     TestBed.configureTestingModule({
       imports: [
         FormsModule,
-        MaterialModule,
+        MdAutocompleteModule,
+        MdDialogModule.forRoot(),
+        MdInputModule,
+        NoopAnimationsModule,
         ReactiveFormsModule
       ],
       declarations: [TaskTimerEditorComponent],
       providers: [
         HoursMinutesPipe,
         MillisecondsPipe,
+        // MdDialogRef,
         { provide: MdDialogRef, useClass: DialogRefStub },
         { provide: ProjectService, useClass: ProjectServiceStub },
         { provide: StageService, useClass: StageServiceStub },
@@ -143,7 +148,6 @@ describe('Component: TaskTimerEditor', () => {
   });
 
   describe('changing the project value', () => {
-    let input;
     beforeEach(() => {
       const projectDataService = fixture.debugElement.injector.get(ProjectService);
       spyOn(projectDataService, 'getAll').and.returnValue(Observable.of([{
@@ -184,7 +188,6 @@ describe('Component: TaskTimerEditor', () => {
         sbvbTaskId: 'COMP00029594'
       }]));
       component.ngOnInit();
-      input = fixture.debugElement.query(By.css('#project')).nativeElement;
     });
 
     it('filters to all projects before any change', () => {
@@ -223,16 +226,12 @@ describe('Component: TaskTimerEditor', () => {
       }]);
     });
 
-    it('returns projects matching on name', fakeAsync(() => {
-      fixture.detectChanges();
-      tick();
+    it('returns projects matching on name', () => {
       let projects;
       component.filteredProjects.subscribe((res) => {
         projects = res;
       });
-      input.value = 'sa';
-      input.dispatchEvent(new Event('input'));
-      expect(component.editorForm.controls['project'].value).toEqual('sa');
+      component.editorForm.controls['project'].setValue('sa');
       expect(projects).toEqual([{
         _id: '42',
         status: 'active',
@@ -246,14 +245,11 @@ describe('Component: TaskTimerEditor', () => {
         jiraTaskId: 'HT-350',
         sbvbTaskId: 'RFP0100495'
       }]);
-    }));
+    });
 
-    it('sets the project to the first matching project on blur', fakeAsync(() => {
-      fixture.detectChanges();
-      tick();
-      input.value = 'te';
-      input.dispatchEvent(new Event('input'));
-      input.dispatchEvent(new Event('blur'));
+    it('sets the project to the first matching project on blur', () => {
+      component.editorForm.controls['project'].setValue('te');
+      component.lookupProject();
       expect(component.editorForm.controls['project'].value).toEqual({
         _id: '1138',
         status: 'active',
@@ -261,39 +257,29 @@ describe('Component: TaskTimerEditor', () => {
         jiraTaskId: 'HT-351',
         sbvbTaskId: 'IFP0003025'
       });
-    }));
+    });
 
-    it('sets the project to empty on blur if the entered data is a string and no stages match', fakeAsync(() => {
-      fixture.detectChanges();
-      tick();
-      input.value = 'spike';
-      input.dispatchEvent(new Event('input'));
-      input.dispatchEvent(new Event('blur'));
+    it('sets the project to empty on blur if the entered data is a string and no stages match', () => {
+      component.editorForm.controls['project'].setValue('spike');
+      component.lookupProject();
       expect(component.editorForm.controls['project'].value).toEqual('');
-    }));
+    });
 
-    it('sets and clears the project required validation message as appropriate', fakeAsync(() => {
-      fixture.detectChanges();
-      tick();
-      expect(component.errors['project']).toEqual('');
-      input.value = 'te';
-      input.dispatchEvent(new Event('input'));
-      expect(component.errors['project']).toEqual('');
-      input.dispatchEvent(new Event('blur'));
-      expect(component.errors['project']).toEqual('');
-      input.value = '';
-      input.dispatchEvent(new Event('input'));
-      expect(component.errors['project']).toEqual('Project is required.');
-      input.value = 'spike';
-      input.dispatchEvent(new Event('input'));
-      expect(component.errors['project']).toEqual('');
-      input.dispatchEvent(new Event('blur'));
-      expect(component.errors['project']).toEqual('Project is required.');
-    }));
+    it('sets and clears the project required validation message as appropriate', () => {
+      component.editorForm.controls['project'].setValue('');
+      expect(component.editorForm.controls['project'].errors).toEqual({ required: true });
+      component.editorForm.controls['project'].setValue('te');
+      expect(component.editorForm.controls['project'].errors).toBeNull();
+      component.lookupProject();
+      expect(component.editorForm.controls['project'].errors).toBeNull();
+      component.editorForm.controls['project'].setValue('spike');
+      expect(component.editorForm.controls['project'].errors).toBeNull();
+      component.lookupProject();
+      expect(component.editorForm.controls['project'].errors).toEqual({ required: true });
+    });
   });
 
   describe('changing the stage value', () => {
-    let input;
     beforeEach(() => {
       const stageDataService = fixture.debugElement.injector.get(StageService);
       spyOn(stageDataService, 'getAll').and.returnValue(Observable.of([
@@ -306,7 +292,6 @@ describe('Component: TaskTimerEditor', () => {
         { _id: '7', stageNumber: 2, name: 'Functional Specification' }
       ]));
       component.ngOnInit();
-      input = fixture.debugElement.query(By.css('#stage')).nativeElement;
     });
 
     it('filters stages to all stages before any change', () => {
@@ -323,59 +308,43 @@ describe('Component: TaskTimerEditor', () => {
       ]);
     });
 
-    it('filters stages based on name and entered data', fakeAsync(() => {
-      fixture.detectChanges();
-      tick();
+    it('filters stages based on name and entered data', () => {
       let stages;
       component.filteredStages.subscribe((res) => {
         stages = res;
       });
-      input.value = 're';
-      input.dispatchEvent(new Event('input'));
-      expect(component.editorForm.controls['stage'].value).toEqual('re');
+      component.editorForm.controls['stage'].setValue('re');
       expect(stages).toEqual([
         { _id: '3', stageNumber: 15, name: 'Code Review' },
         { _id: '4', stageNumber: 1, name: 'Requirements Definition' },
         { _id: '6', stageNumber: 11, name: 'Release Integration' }
       ]);
-    }));
+    });
 
-    it('sets the stage to the first matching stage on blur', fakeAsync(() => {
-      fixture.detectChanges();
-      tick();
-      input.value = 're';
-      input.dispatchEvent(new Event('input'));
-      input.dispatchEvent(new Event('blur'));
+    it('sets the stage to the first matching stage on blur', () => {
+      component.editorForm.controls['stage'].setValue('re');
+      component.lookupStage();
       expect(component.editorForm.controls['stage'].value).toEqual({ _id: '3', stageNumber: 15, name: 'Code Review' });
-    }));
+    });
 
-    it('sets the stage to empty on blur if the entered data is a string and no stages match', fakeAsync(() => {
-      fixture.detectChanges();
-      tick();
-      input.value = 'spike';
-      input.dispatchEvent(new Event('input'));
-      input.dispatchEvent(new Event('blur'));
+    it('sets the stage to empty on blur if the entered data is a string and no stages match', () => {
+      component.editorForm.controls['stage'].setValue('spike');
+      component.lookupStage();
       expect(component.editorForm.controls['stage'].value).toEqual('');
-    }));
+    });
 
-    it('sets and clears the stage required validation message as appropriate', fakeAsync(() => {
-      fixture.detectChanges();
-      tick();
-      expect(component.errors['stage']).toEqual('');
-      input.value = 're';
-      input.dispatchEvent(new Event('input'));
-      expect(component.errors['stage']).toEqual('');
-      input.dispatchEvent(new Event('blur'));
-      expect(component.errors['stage']).toEqual('');
-      input.value = '';
-      input.dispatchEvent(new Event('input'));
-      expect(component.errors['stage']).toEqual('Stage is required.');
-      input.value = 'spike';
-      input.dispatchEvent(new Event('input'));
-      expect(component.errors['stage']).toEqual('');
-      input.dispatchEvent(new Event('blur'));
-      expect(component.errors['stage']).toEqual('Stage is required.');
-    }));
+    it('sets and clears the stage required validation message as appropriate', () => {
+      component.editorForm.controls['stage'].setValue('');
+      expect(component.editorForm.controls['stage'].errors).toEqual({ required: true });
+      component.editorForm.controls['stage'].setValue('re');
+      expect(component.editorForm.controls['stage'].errors).toBeNull();
+      component.lookupStage();
+      expect(component.editorForm.controls['stage'].errors).toBeNull();
+      component.editorForm.controls['stage'].setValue('spike');
+      expect(component.editorForm.controls['stage'].errors).toBeNull();
+      component.lookupStage();
+      expect(component.editorForm.controls['stage'].errors).toEqual({ required: true });
+    });
   });
 
   describe('changing the hours value', () => {
@@ -399,7 +368,7 @@ describe('Component: TaskTimerEditor', () => {
       input.dispatchEvent(new Event('input'));
       expect(component.errors['hours']).toEqual('Valid formats are h.xx and h:mm.');
       input.value = '1:45';
-     input.dispatchEvent(new Event('input'));
+      input.dispatchEvent(new Event('input'));
       expect(component.errors['hours']).toEqual('');
       input.value = '1.75';
       input.dispatchEvent(new Event('input'));
@@ -504,33 +473,23 @@ describe('Component: TaskTimerEditor', () => {
       expect(component.canSave()).toBeTruthy();
     });
 
-    it('is false if there is no project entered', fakeAsync(() => {
-      const input = fixture.debugElement.query(By.css('#project')).nativeElement;
-      fixture.detectChanges();
-      tick();
-      input.value = 'spike';
-      input.dispatchEvent(new Event('input'));
-      input.dispatchEvent(new Event('blur'));
+    it('is false if there is no project entered', () => {
+      component.editorForm.controls['project'].setValue('spike');
+      component.lookupProject();
       expect(component.canSave()).toBeFalsy();
-      input.value = 'te';
-      input.dispatchEvent(new Event('input'));
-      input.dispatchEvent(new Event('blur'));
+      component.editorForm.controls['project'].setValue('te');
+      component.lookupProject();
       expect(component.canSave()).toBeTruthy();
-    }));
+    });
 
-    it('is false if there is no stage entred', fakeAsync(() => {
-      const input = fixture.debugElement.query(By.css('#stage')).nativeElement;
-      fixture.detectChanges();
-      tick();
-      input.value = 'spike';
-      input.dispatchEvent(new Event('input'));
-      input.dispatchEvent(new Event('blur'));
+    it('is false if there is no stage entred', () => {
+      component.editorForm.controls['stage'].setValue('spike');
+      component.lookupStage();
       expect(component.canSave()).toBeFalsy();
-      input.value = 're';
-      input.dispatchEvent(new Event('input'));
-      input.dispatchEvent(new Event('blur'));
+      component.editorForm.controls['stage'].setValue('re');
+      component.lookupStage();
       expect(component.canSave()).toBeTruthy();
-    }));
+    });
 
     it('is false if the entered time is invalid', fakeAsync(() => {
       const input = fixture.debugElement.query(By.css('#hours')).nativeElement;
@@ -569,15 +528,11 @@ describe('Component: TaskTimerEditor', () => {
     it('saves the entered data', fakeAsync(() => {
       fixture.detectChanges();
       tick();
-      let input = fixture.debugElement.query(By.css('#project')).nativeElement;
-      input.value = 'lisa';
-      input.dispatchEvent(new Event('input'));
-      input.dispatchEvent(new Event('blur'));
-      input = fixture.debugElement.query(By.css('#stage')).nativeElement;
-      input.value = 'proj';
-      input.dispatchEvent(new Event('input'));
-      input.dispatchEvent(new Event('blur'));
-      input = fixture.debugElement.query(By.css('#hours')).nativeElement;
+      component.editorForm.controls['project'].setValue('lisa');
+      component.lookupProject();
+      component.editorForm.controls['stage'].setValue('proj');
+      component.lookupStage();
+      const input = fixture.debugElement.query(By.css('#hours')).nativeElement;
       input.value = '2:30';
       input.dispatchEvent(new Event('input'));
 

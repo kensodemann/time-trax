@@ -1,92 +1,110 @@
-/* tslint:disable:no-unused-variable */
-
-import { MdDialogConfig, MdDialogRef } from '@angular/material';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
+import { Component, NgModule, ViewChild, ViewContainerRef } from '@angular/core';
+import { ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { MdDialog, MdDialogModule, MdDialogConfig, MdDialogRef, MdInputModule } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 
 import { Project } from '../../data/models/project';
 import { ProjectEditorComponent } from './project-editor.component';
 import { ProjectEditorService } from './project-editor.service';
 
-class DialogStub {
-  Component: any;
-  componentInstance: ProjectEditorComponent;
-  config: MdDialogConfig;
-  ref: MdDialogRef<ProjectEditorComponent>;
-
-  constructor() {
-    this.ref = new MdDialogRef<ProjectEditorComponent>(null, null);
-  }
-
-  open(Component: any, config: MdDialogConfig): MdDialogRef<ProjectEditorComponent> {
-    this.Component = Component;
-    this.config = config;
-
-    this.componentInstance = new Component();
-    this.ref.componentInstance = this.componentInstance;
-    return this.ref;
-  }
-};
 
 describe('ProjectEditorService', () => {
-  let dialog;
-  let service: ProjectEditorService;
   beforeEach(() => {
-    dialog = new DialogStub();
-    service = new ProjectEditorService(dialog);
+    TestBed.configureTestingModule({
+      imports: [CommonModule, FormsModule, MdDialogModule.forRoot(), MdInputModule, NoopAnimationsModule, DialogTestModule],
+      providers: [ProjectEditorService],
+    });
   });
 
-  it('exists', () => {
-    expect(service).toBeTruthy();
+  let service;
+  let testViewContainerRef: ViewContainerRef;
+  let viewContainerFixture: ComponentFixture<ChildViewContainerComponent>;
+
+  beforeEach(inject([ProjectEditorService], (s: ProjectEditorService) => { service = s; }));
+
+  beforeEach(() => {
+    viewContainerFixture = TestBed.createComponent(ChildViewContainerComponent);
+
+    viewContainerFixture.detectChanges();
+    testViewContainerRef = viewContainerFixture.componentInstance.childViewContainer;
   });
+
+  it('exists', () => { expect(service).toBeTruthy(); });
 
   describe('open', () => {
+    let dialog;
+    let dialogRef;
     let prj: Project;
     beforeEach(() => {
+      dialog = viewContainerFixture.debugElement.injector.get(MdDialog);
+      dialogRef = {
+        componentInstance: {
+          initialize: (p: Project) => { }
+        },
+        afterClosed: () => Observable.empty()
+      };
+      spyOn(dialog, 'open').and.returnValue(dialogRef);
+
       prj = new Project();
       prj.name = 'I am a test project';
     });
 
     it('opens the dialog', () => {
-      const vcr = {
-        name: 'I am a view component ref',
-        element: null,
-        injector: null,
-        parentInjector: null,
-        clear: null,
-        get: null,
-        length: null,
-        createEmbeddedView: null,
-        createComponent: null,
-        insert: null,
-        move: null,
-        indexOf: null,
-        remove: null,
-        detach: null
-      };
-      service.open(prj, vcr);
-      expect(dialog.Component).toEqual(ProjectEditorComponent);
-      expect(dialog.config.viewContainerRef).toEqual(vcr);
+      service.open(prj, testViewContainerRef);
+      expect(dialog.open).toHaveBeenCalledTimes(1);
     });
 
-    it('sets the title and button label for a new project', () => {
-      prj._id = undefined;
-      service.open(prj, null);
-      expect(dialog.componentInstance.title).toEqual('New Project');
-      expect(dialog.componentInstance.buttonLabel).toEqual('Create');
-    });
-
-    it('sets the title and button label for editing an existing project', () => {
-      prj._id = '11384273314159';
-      service.open(prj, null);
-      expect(dialog.componentInstance.title).toEqual('Modify Project');
-      expect(dialog.componentInstance.buttonLabel).toEqual('Done');
+    it('initializes the component instance', () => {
+      spyOn(dialogRef.componentInstance, 'initialize');
+      service.open(prj, testViewContainerRef);
+      expect(dialogRef.componentInstance.initialize).toHaveBeenCalledTimes(1);
+      expect(dialogRef.componentInstance.initialize).toHaveBeenCalledWith(prj);
     });
 
     it('returns the after closed observable', () => {
-      spyOn(dialog.ref, 'afterClosed').and.returnValue(Observable.of('toast'));
+      dialogRef.afterClosed = () => Observable.of('toast');
       let result: string;
       service.open(prj, null).subscribe(res => result = res);
       expect(result).toEqual('toast');
     });
   });
 });
+
+@Component({
+  selector: 'trx-view-container',
+  template: '<div></div>'
+})
+class ViewContainerComponent {
+  constructor(public viewContainerRef: ViewContainerRef) { }
+}
+
+@Component({
+  selector: 'trx-arbitrary-component',
+  template: `<trx-view-container></trx-view-container>`,
+})
+class ChildViewContainerComponent {
+  @ViewChild(ViewContainerComponent) childWithViewContainer: ViewContainerComponent;
+
+  get childViewContainer() {
+    return this.childWithViewContainer.viewContainerRef;
+  }
+}
+
+// Create a real (non-test) NgModule as a workaround for
+// https://github.com/angular/angular/issues/10760
+const TEST_DIRECTIVES = [
+  ProjectEditorComponent,
+  ChildViewContainerComponent,
+  ViewContainerComponent
+];
+
+@NgModule({
+  imports: [CommonModule, FormsModule, MdDialogModule, MdInputModule, NoopAnimationsModule],
+  exports: TEST_DIRECTIVES,
+  declarations: TEST_DIRECTIVES,
+  entryComponents: TEST_DIRECTIVES
+})
+class DialogTestModule { }

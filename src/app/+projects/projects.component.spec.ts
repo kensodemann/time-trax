@@ -31,7 +31,7 @@ class ProjectEditorStub {
   }
 }
 
-describe('Component: Projects', () => {
+describe('ProjectsComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [

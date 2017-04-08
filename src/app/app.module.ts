@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
@@ -15,6 +16,7 @@ import 'hammerjs';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FlexLayoutModule,
     LocalStorageModule.withConfig({
       prefix: 'time-trax'

@@ -20,7 +20,7 @@ class MdSnackBarStub {
   open(message: string, actionLabel: string, config: MdSnackBarConfig) { }
 };
 
-describe('Component: Login', () => {
+describe('LoginComponent', () => {
   let app;
   let fixture;
 

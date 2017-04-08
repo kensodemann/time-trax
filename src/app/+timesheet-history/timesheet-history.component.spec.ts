@@ -1,7 +1,7 @@
 import { TestBed, async } from '@angular/core/testing';
 import { TimesheetHistoryComponent } from './timesheet-history.component';
 
-describe('Component: Timesheet History', () => {
+describe('TimesheetHistoryComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
