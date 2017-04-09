@@ -40,6 +40,12 @@ export class TaskTimerService implements DataService<TaskTimer> {
     return this.taskTimers;
   }
 
+  delete(taskTimer: TaskTimer): Observable<any> {
+    const url = `${environment.dataService}/timesheets/${taskTimer.timesheetRid}/taskTimers/${taskTimer._id}`;
+    return this.http.delete(url, taskTimer)
+      .map(res => { });
+  }
+
   save(taskTimer: TaskTimer): Observable<TaskTimer> {
     const url = `${environment.dataService}/timesheets/${taskTimer.timesheetRid}/taskTimers` + (taskTimer._id ? `/${taskTimer._id}` : '');
     return this.http.post(url, taskTimer)

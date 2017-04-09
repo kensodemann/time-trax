@@ -369,4 +369,31 @@ describe('TaskTimerService', () => {
       }));
     });
   });
+
+  describe('delete', () => {
+    it('sends a request to delete the item', () => {
+      let connection: MockConnection;
+      mockBackend.connections.subscribe(c => connection = c);
+      service.delete({
+        _id: '42',
+        timesheetRid: '1138'
+      }).subscribe();
+      expect(connection.request.url).toEqual(`${environment.dataService}/timesheets/1138/taskTimers/42`);
+      expect(connection.request.method).toEqual(RequestMethod.Delete);
+    });
+
+    it('returns nothing', () => {
+      let connection: MockConnection;
+      let result;
+      mockBackend.connections.subscribe(c => connection = c);
+      service.delete({
+        _id: '42',
+        timesheetRid: '1138'
+      }).subscribe(res => result = res);
+      connection.mockRespond(new Response(new ResponseOptions({
+        status: 200
+      })));
+      expect(result).toBeUndefined();
+    });
+  });
 });

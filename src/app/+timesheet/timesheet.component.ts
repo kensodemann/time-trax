@@ -7,6 +7,7 @@ import { Timesheet } from '../data/models/timesheet';
 import { TaskTimerService } from '../data/services/task-timer/task-timer.service';
 import { TimesheetService } from '../data/services/timesheet/timesheet.service';
 import { TaskTimerEditorService } from '../editors/task-timer-editor/task-timer-editor.service';
+import { AskDialogService } from '../shared/services/ask-dialog/ask-dialog.service';
 import { DailyTimeLog } from '../shared/services/timesheet-report/daily-time-log';
 import { TimesheetReportService } from '../shared/services/timesheet-report/timesheet-report.service';
 
@@ -23,6 +24,7 @@ export class TimesheetComponent implements OnInit, OnDestroy {
   private refreshInterval: Subscription;
 
   constructor(
+    private ask: AskDialogService,
     private editor: TaskTimerEditorService,
     private report: TimesheetReportService,
     private taskTimerData: TaskTimerService,
@@ -65,7 +67,14 @@ export class TimesheetComponent implements OnInit, OnDestroy {
     });
   }
 
-  deleteTaskTimer(timer: TaskTimer): void { console.log('this will delete'); }
+  deleteTaskTimer(timer: TaskTimer): void {
+    this.ask.open('Delete Task?', 'Are you sure you want to remove this task?', this.viewContainerRef)
+      .subscribe(res => {
+        if (res) {
+          this.taskTimerData.delete(timer).subscribe(() => this.refresh());
+        }
+      });
+  }
 
   toggleTaskTimer(timer: TaskTimer): void {
     if (timer.isActive) {
