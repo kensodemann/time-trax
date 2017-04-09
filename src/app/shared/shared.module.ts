@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MaterialModule } from '@angular/material';
 
 import { AskDialogModule } from './services/ask-dialog/ask-dialog.module';
 import { AuthenticationModule } from './services/authentication/authentication.module';
@@ -21,7 +20,6 @@ import { MillisecondsPipe } from './pipes/milliseconds.pipe';
   exports: [
     CommonModule,
     FlexLayoutModule,
-    MaterialModule,
 
     AskDialogModule,
     AuthenticationModule,

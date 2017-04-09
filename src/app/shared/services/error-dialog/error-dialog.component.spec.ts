@@ -2,7 +2,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { MaterialModule, MdDialogRef } from '@angular/material';
+import { MdDialogModule, MdDialogRef, MdIconModule } from '@angular/material';
 
 import { ErrorDialogComponent } from './error-dialog.component';
 
@@ -16,7 +16,8 @@ describe('ErrorDialogComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ErrorDialogComponent],
       imports: [
-        MaterialModule
+        MdDialogModule,
+        MdIconModule
       ],
       providers: [
         { provide: MdDialogRef, useClass: DialogRefStub }

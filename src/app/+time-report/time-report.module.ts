@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { MdButtonModule } from '@angular/material';
 
 import { SharedModule } from '../shared/shared.module';
 
@@ -7,6 +8,7 @@ import { TimeReportComponent } from './time-report.component';
 
 @NgModule({
   imports: [
+    MdButtonModule,
     routing,
     SharedModule
   ],

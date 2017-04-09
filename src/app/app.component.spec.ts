@@ -1,6 +1,6 @@
 /* tslint:disable:no-unused-variable */
 import { TestBed, async } from '@angular/core/testing';
-import { MaterialModule } from '@angular/material';
+import { MdIconModule } from '@angular/material';
 
 import { RouterLinkStubDirective, RouterOutletStubComponent } from '../../testing/router-stubs';
 
@@ -20,7 +20,7 @@ describe('App: TimeTrax', () => {
         RouterOutletStubComponent
       ],
       imports: [
-        MaterialModule
+        MdIconModule
       ],
       providers: [
         { provide: AuthenticationService, useClass: AuthenticationServiceStub },

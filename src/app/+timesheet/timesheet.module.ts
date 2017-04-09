@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { MdIconModule } from '@angular/material';
 
 import { TaskTimerComponent } from './task-timer/task-timer.component';
 import { TimesheetComponent } from './timesheet.component';
@@ -10,6 +11,7 @@ import { SharedModule } from '../shared/shared.module';
 @NgModule({
   imports: [
     DataModule,
+    MdIconModule,
     routing,
     SharedModule,
     TaskTimerEditorModule

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MaterialModule } from '@angular/material';
+import { MdButtonModule, MdCheckboxModule, MdDialogModule, MdInputModule } from '@angular/material';
 
 import { DataModule } from '../../data/data.module';
 import { ProjectEditorComponent } from './project-editor.component';
@@ -10,7 +10,10 @@ import { SharedModule } from '../../shared/shared.module';
 @NgModule({
   imports: [
     FormsModule,
-    MaterialModule,
+    MdButtonModule,
+    MdCheckboxModule,
+    MdDialogModule,
+    MdInputModule,
 
     DataModule,
     SharedModule
