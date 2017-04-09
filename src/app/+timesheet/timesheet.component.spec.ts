@@ -17,8 +17,15 @@ import { TimesheetService } from '../data/services/timesheet/timesheet.service';
 import { TaskTimerEditorService } from '../editors/task-timer-editor/task-timer-editor.service';
 import { HoursMinutesPipe } from '../shared/pipes/hours-minutes.pipe';
 import { ProjectTitlePipe } from '../shared/pipes/project-title.pipe';
+import { AskDialogService } from '../shared/services/ask-dialog/ask-dialog.service';
 import { DateService } from '../shared/services/date/date.service';
 import { TimesheetReportService } from '../shared/services/timesheet-report/timesheet-report.service';
+
+class DialogStub {
+  open(title: string, message: string, viewContainerRef: ViewContainerRef): Observable<any> {
+    return Observable.empty();
+  }
+}
 
 class TimesheetServiceStub {
   getCurrent(): Observable<Timesheet> { return Observable.empty(); }
@@ -27,6 +34,7 @@ class TimesheetServiceStub {
 
 class TaskTimerServiceStub {
   getAll(params: any): Observable<Array<TaskTimer>> { return Observable.empty(); }
+  delete(timer: TaskTimer): Observable<TaskTimer> { return Observable.empty(); }
   start(timer: TaskTimer): Observable<TaskTimer> { return Observable.empty(); }
   stop(timer: TaskTimer): Observable<TaskTimer> { return Observable.empty(); }
 };
@@ -52,6 +60,7 @@ describe('TimesheetComponent', () => {
         TimesheetComponent
       ],
       providers: [
+        { provide: AskDialogService, useClass: DialogStub },
         { provide: TaskTimerService, useClass: TaskTimerServiceStub },
         { provide: TaskTimerEditorService, useClass: TaskTimerEditorStub },
         { provide: TimesheetService, useClass: TimesheetServiceStub },
@@ -69,7 +78,7 @@ describe('TimesheetComponent', () => {
     expect(app).toBeTruthy();
   }));
 
-  describe('OnInit', () => {
+  describe('Initialization', () => {
     it('gets the current timesheet', () => {
       const fixture = TestBed.createComponent(TimesheetComponent);
       const app = fixture.debugElement.componentInstance;
@@ -145,7 +154,7 @@ describe('TimesheetComponent', () => {
     });
   });
 
-  describe('addTaskTimer', () => {
+  describe('adding a task timer', () => {
     let app;
     let editor;
     let timesheetReportService;
@@ -188,7 +197,55 @@ describe('TimesheetComponent', () => {
     });
   });
 
-  describe('editTaskTimer', () => {
+  describe('deleting a task timer', () => {
+    let app;
+    let ask;
+    let fixture;
+    let taskTimerService;
+    beforeEach(() => {
+      fixture = TestBed.createComponent(TimesheetComponent);
+      app = fixture.debugElement.componentInstance;
+      ask = fixture.debugElement.injector.get(AskDialogService);
+      const timesheetService = fixture.debugElement.injector.get(TimesheetService);
+      spyOn(timesheetService, 'getCurrent').and.returnValue(Observable.of({ _id: '11383141594273', endDate: '2017-02-04' }));
+      taskTimerService = fixture.debugElement.injector.get(TaskTimerService);
+      spyOn(taskTimerService, 'getAll').and.returnValue(Observable.of(testTaskTimers));
+      app.ngOnInit();
+    });
+
+    it('it asks the user if they would like to remove the task timer', () => {
+      spyOn(ask, 'open').and.returnValue(Observable.empty());
+      app.deleteTaskTimer(app.days[5].taskTimers[1]);
+      expect(ask.open).toHaveBeenCalledTimes(1);
+      expect(ask.open.calls.argsFor(0)[0]).toEqual('Delete Task?');
+      expect(ask.open.calls.argsFor(0)[1]).toEqual('Are you sure you want to remove this task?');
+    });
+
+    it('deletes the task timer if the user says yes', () => {
+      spyOn(ask, 'open').and.returnValue(Observable.of(true));
+      spyOn(taskTimerService, 'delete').and.returnValue(Observable.empty());
+      app.deleteTaskTimer(app.days[5].taskTimers[1]);
+      expect(taskTimerService.delete).toHaveBeenCalledTimes(1);
+      expect(taskTimerService.delete).toHaveBeenCalledWith(app.days[5].taskTimers[1]);
+    });
+
+    it('does not delete the task timer if the user says no', () => {
+      spyOn(ask, 'open').and.returnValue(Observable.of(false));
+      spyOn(taskTimerService, 'delete').and.returnValue(Observable.empty());
+      app.deleteTaskTimer(app.days[5].taskTimers[1]);
+      expect(taskTimerService.delete).not.toHaveBeenCalled();
+    });
+
+    it('refreshes the data', () => {
+      taskTimerService.getAll.calls.reset();
+      spyOn(ask, 'open').and.returnValue(Observable.of(true));
+      spyOn(taskTimerService, 'delete').and.returnValue(Observable.of({}));
+      app.deleteTaskTimer(app.days[5].taskTimers[1]);
+      expect(taskTimerService.getAll).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('editing a task timer', () => {
     let app;
     let editor;
     beforeEach(() => {
@@ -258,7 +315,7 @@ describe('TimesheetComponent', () => {
     });
   });
 
-  describe('toggleTaskTimer', () => {
+  describe('toggling a task timer', () => {
     let app;
     let editor;
     let taskTimerService;
