@@ -39,7 +39,7 @@ class TaskTimerEditorStub {
 
 let testTaskTimers;
 
-describe('Component: Timesheet', () => {
+describe('TimesheetComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -316,13 +316,6 @@ describe('Component: Timesheet', () => {
           isActive: true,
           milliseconds: 99385
         })));
-        app.toggleTaskTimer(app.days[3].taskTimers[1]);
-        app.toggleTaskTimer(app.days[3].taskTimers[1]);
-        expect(taskTimerService.stop).toHaveBeenCalledTimes(2);
-      });
-
-      it('allows calling of stop after original stop throws', () => {
-        spyOn(taskTimerService, 'stop').and.returnValue(Observable.throw(new Error()));
         app.toggleTaskTimer(app.days[3].taskTimers[1]);
         app.toggleTaskTimer(app.days[3].taskTimers[1]);
         expect(taskTimerService.stop).toHaveBeenCalledTimes(2);

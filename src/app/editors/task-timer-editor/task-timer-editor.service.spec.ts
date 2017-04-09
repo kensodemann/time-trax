@@ -1,91 +1,126 @@
-/* tslint:disable:no-unused-variable */
-
-import { MdDialogConfig, MdDialogRef } from '@angular/material';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
+import { Component, NgModule, ViewChild, ViewContainerRef } from '@angular/core';
+import { ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MdAutocompleteModule, MdDialog, MdDialogModule, MdDialogConfig, MdDialogRef, MdInputModule } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 
-import { TaskTimer } from '../../data/models/task-timer';
+import { Project } from '../../data/models/project';
 import { TaskTimerEditorComponent } from './task-timer-editor.component';
 import { TaskTimerEditorService } from './task-timer-editor.service';
 
-class DialogStub {
-  Component: any;
-  componentInstance: TaskTimerEditorComponent;
-  config: MdDialogConfig;
-  ref: MdDialogRef<TaskTimerEditorComponent>;
-
-  constructor() {
-    this.ref = new MdDialogRef<TaskTimerEditorComponent>(null, null);
-  }
-
-  open(Component: any, config: MdDialogConfig): MdDialogRef<TaskTimerEditorComponent> {
-    this.Component = Component;
-    this.config = config;
-
-    this.componentInstance = new Component();
-    this.ref.componentInstance = this.componentInstance;
-    return this.ref;
-  }
-};
 
 describe('TaskTimerEditorService', () => {
-  let dialog;
-  let service: TaskTimerEditorService;
   beforeEach(() => {
-    dialog = new DialogStub();
-    service = new TaskTimerEditorService(dialog);
+    TestBed.configureTestingModule({
+      imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MdAutocompleteModule,
+        MdDialogModule.forRoot(),
+        MdInputModule,
+        NoopAnimationsModule,
+        DialogTestModule],
+      providers: [TaskTimerEditorService],
+    });
   });
 
-  it('exists', () => {
-    expect(service).toBeTruthy();
+  let service;
+  let testViewContainerRef: ViewContainerRef;
+  let viewContainerFixture: ComponentFixture<ChildViewContainerComponent>;
+
+  beforeEach(inject([TaskTimerEditorService], (s: TaskTimerEditorService) => { service = s; }));
+
+  beforeEach(() => {
+    viewContainerFixture = TestBed.createComponent(ChildViewContainerComponent);
+
+    viewContainerFixture.detectChanges();
+    testViewContainerRef = viewContainerFixture.componentInstance.childViewContainer;
   });
+
+  it('exists', () => { expect(service).toBeTruthy(); });
 
   describe('open', () => {
-    let tt: TaskTimer;
+    let dialog;
+    let dialogRef;
+    let prj: Project;
     beforeEach(() => {
-      tt = new TaskTimer({ timesheetRid: '42', workDate: '2017-01-16' });
+      dialog = viewContainerFixture.debugElement.injector.get(MdDialog);
+      dialogRef = {
+        componentInstance: {
+          initialize: (p: Project) => { }
+        },
+        afterClosed: () => Observable.empty()
+      };
+      spyOn(dialog, 'open').and.returnValue(dialogRef);
+
+      prj = new Project();
+      prj.name = 'I am a test project';
     });
 
     it('opens the dialog', () => {
-      const vcr = {
-        name: 'I am a view component ref',
-        element: null,
-        injector: null,
-        parentInjector: null,
-        clear: null,
-        get: null,
-        length: null,
-        createEmbeddedView: null,
-        createComponent: null,
-        insert: null,
-        move: null,
-        indexOf: null,
-        remove: null,
-        detach: null
-      };
-      service.open(tt, vcr);
-      expect(dialog.Component).toEqual(TaskTimerEditorComponent);
-      expect(dialog.config.viewContainerRef).toEqual(vcr);
+      service.open(prj, testViewContainerRef);
+      expect(dialog.open).toHaveBeenCalledTimes(1);
     });
 
-    it('sets the title and button label for a new project', () => {
-      tt._id = undefined;
-      service.open(tt, null);
-      expect(dialog.componentInstance.title).toEqual('New Task');
-      expect(dialog.componentInstance.buttonLabel).toEqual('Create');
-    });
-
-    it('sets the title and button label for editing an existing project', () => {
-      tt._id = '11384273314159';
-      service.open(tt, null);
-      expect(dialog.componentInstance.title).toEqual('Modify Task');
-      expect(dialog.componentInstance.buttonLabel).toEqual('Done');
+    it('initializes the component instance', () => {
+      spyOn(dialogRef.componentInstance, 'initialize');
+      service.open(prj, testViewContainerRef);
+      expect(dialogRef.componentInstance.initialize).toHaveBeenCalledTimes(1);
+      expect(dialogRef.componentInstance.initialize).toHaveBeenCalledWith(prj);
     });
 
     it('returns the after closed observable', () => {
-      spyOn(dialog.ref, 'afterClosed').and.returnValue(Observable.of('toast'));
+      dialogRef.afterClosed = () => Observable.of('toast');
       let result: string;
-      service.open(tt, null).subscribe(res => result = res);
+      service.open(prj, null).subscribe(res => result = res);
       expect(result).toEqual('toast');
     });
   });
 });
+
+@Component({
+  selector: 'trx-view-container',
+  template: '<div></div>'
+})
+class ViewContainerComponent {
+  constructor(public viewContainerRef: ViewContainerRef) { }
+}
+
+@Component({
+  selector: 'trx-arbitrary-component',
+  template: `<trx-view-container></trx-view-container>`,
+})
+class ChildViewContainerComponent {
+  @ViewChild(ViewContainerComponent) childWithViewContainer: ViewContainerComponent;
+
+  get childViewContainer() {
+    return this.childWithViewContainer.viewContainerRef;
+  }
+}
+
+// Create a real (non-test) NgModule as a workaround for
+// https://github.com/angular/angular/issues/10760
+const TEST_DIRECTIVES = [
+  TaskTimerEditorComponent,
+  ChildViewContainerComponent,
+  ViewContainerComponent
+];
+
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MdAutocompleteModule,
+    MdDialogModule,
+    MdInputModule,
+    NoopAnimationsModule
+  ],
+  exports: TEST_DIRECTIVES,
+  declarations: TEST_DIRECTIVES,
+  entryComponents: TEST_DIRECTIVES
+})
+class DialogTestModule { }

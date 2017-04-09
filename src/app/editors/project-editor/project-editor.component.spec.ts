@@ -2,9 +2,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-
 import { FormsModule } from '@angular/forms';
 import { MaterialModule, MdDialogRef } from '@angular/material';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Observable } from 'rxjs/Observable';
 
 import { Project } from '../../data/models/project';
@@ -31,7 +31,8 @@ describe('ProjectEditorComponent', () => {
       declarations: [ProjectEditorComponent],
       imports: [
         FormsModule,
-        MaterialModule
+        MaterialModule,
+        NoopAnimationsModule
       ],
       providers: [
         { provide: MdDialogRef, useClass: DialogRefStub },

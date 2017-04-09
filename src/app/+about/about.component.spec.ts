@@ -20,7 +20,7 @@ class ErrorMessageStub {
   }
 }
 
-describe('Component: About', () => {
+describe('AboutComponent', () => {
   let app;
   let fixture;
 

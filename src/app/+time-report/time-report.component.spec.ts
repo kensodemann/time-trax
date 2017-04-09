@@ -12,7 +12,7 @@ class DialogStub {
   }
 }
 
-describe('Component: Time Report', () => {
+describe('TimeReportComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [

@@ -1,6 +1,8 @@
-$warn: map-get($theme, warn);
+@mixin theme-error-message($theme) {
+  $warn: map-get($theme, warn);
 
-.error-msg {
-  color: mat-color($warn);
-  font-size: small;
+  .error-msg {
+    color: mat-color($warn);
+    font-size: small;
+  }
 }
