@@ -1,6 +1,7 @@
-<div class="page-root flexDemoContainer">
-  <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlex>
-    <div fxFlex> I'm above on mobile, and left on larger devices. </div>
-    <div fxFlex> I'm below on mobile, and right on larger devices. </div>
-  </div>
+<div class="page-root timesheet-history">
+  <md-list>
+    <md-list-item class="timesheet" *ngFor="let timesheet of timesheets">
+      Week Ending: {{timesheet.endDate | date: 'mediumDate'}}
+    </md-list-item>
+  </md-list>
 </div>
