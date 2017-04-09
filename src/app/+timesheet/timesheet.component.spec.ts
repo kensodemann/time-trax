@@ -1,6 +1,6 @@
 import { TestBed, async } from '@angular/core/testing';
 import { ViewContainerRef } from '@angular/core';
-import { MaterialModule } from '@angular/material';
+import { MdIconModule } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/observable/empty';
@@ -51,7 +51,7 @@ describe('TimesheetComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        MaterialModule
+        MdIconModule
       ],
       declarations: [
         HoursMinutesPipe,

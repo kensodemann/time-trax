@@ -1,11 +1,15 @@
 import { NgModule } from '@angular/core';
-import { MaterialModule } from '@angular/material';
+import { MdButtonModule, MdDialogModule, MdIconModule } from '@angular/material';
 
 import { AskDialogComponent } from './ask-dialog.component';
 import { AskDialogService } from './ask-dialog.service';
 
 @NgModule({
-  imports: [MaterialModule],
+  imports: [
+    MdButtonModule,
+    MdDialogModule,
+    MdIconModule
+  ],
   declarations: [AskDialogComponent],
   providers: [AskDialogService],
   entryComponents: [AskDialogComponent]

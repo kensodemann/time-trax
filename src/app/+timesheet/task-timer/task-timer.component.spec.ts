@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { MaterialModule } from '@angular/material';
+import { MdIconModule } from '@angular/material';
 
 import { HoursMinutesPipe } from '../../shared/pipes/hours-minutes.pipe';
 import { ProjectTitlePipe } from '../../shared/pipes/project-title.pipe';
@@ -16,7 +16,7 @@ describe('TaskTimerComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        MaterialModule
+        MdIconModule
       ],
       declarations: [
         HoursMinutesPipe,

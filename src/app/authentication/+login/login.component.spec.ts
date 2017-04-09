@@ -4,7 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { LoginComponent } from './login.component';
 import { AuthenticationService } from '../../shared/services/authentication/authentication.service';
 
-import { MaterialModule, MdSnackBar, MdSnackBarConfig } from '@angular/material';
+import { MdButtonModule, MdInputModule, MdSnackBarModule, MdSnackBar, MdSnackBarConfig } from '@angular/material';
 
 import { Observable } from 'rxjs/Observable';
 
@@ -31,7 +31,9 @@ describe('LoginComponent', () => {
       ],
       imports: [
         FormsModule,
-        MaterialModule,
+        MdButtonModule,
+        MdInputModule,
+        MdSnackBarModule,
         RouterModule
       ],
       providers: [

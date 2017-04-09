@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MaterialModule, MdDialogRef } from '@angular/material';
+import { MdCheckboxModule, MdDialogModule, MdDialogRef, MdInputModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Observable } from 'rxjs/Observable';
 
@@ -31,7 +31,9 @@ describe('ProjectEditorComponent', () => {
       declarations: [ProjectEditorComponent],
       imports: [
         FormsModule,
-        MaterialModule,
+        MdCheckboxModule,
+        MdDialogModule,
+        MdInputModule,
         NoopAnimationsModule
       ],
       providers: [

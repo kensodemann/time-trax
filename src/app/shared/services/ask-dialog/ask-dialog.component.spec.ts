@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MaterialModule, MdDialogRef } from '@angular/material';
+import { MdDialogModule, MdDialogRef, MdIconModule } from '@angular/material';
 
 import { AskDialogComponent } from './ask-dialog.component';
 
@@ -13,7 +13,8 @@ describe('AskDialogComponent', () => {
     TestBed.configureTestingModule({
       declarations: [AskDialogComponent],
       imports: [
-        MaterialModule
+        MdDialogModule,
+        MdIconModule
       ],
       providers: [
         { provide: MdDialogRef, useClass: DialogRefStub }

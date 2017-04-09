@@ -2,7 +2,7 @@ import { TestBed, async } from '@angular/core/testing';
 import { ViewContainerRef } from '@angular/core';
 import { Response, ResponseOptions } from '@angular/http';
 import { FormsModule } from '@angular/forms';
-import { MaterialModule } from '@angular/material';
+import { MdCheckboxModule, MdInputModule } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 
 import { ErrorMessageService } from '../shared/services/error-message/error-message.service';
@@ -39,7 +39,8 @@ describe('ProjectsComponent', () => {
       ],
       imports: [
         FormsModule,
-        MaterialModule
+        MdCheckboxModule,
+        MdInputModule
       ],
       providers: [
         { provide: ErrorMessageService, useClass: ErrorMessageStub },

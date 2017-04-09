@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from '@angular/material';
+import { MdAutocompleteModule, MdButtonModule, MdDialogModule, MdInputModule } from '@angular/material';
 
 import { DataModule } from '../../data/data.module';
 import { TaskTimerEditorComponent } from './task-timer-editor.component';
@@ -10,7 +10,11 @@ import { SharedModule } from '../../shared/shared.module';
 @NgModule({
   imports: [
     FormsModule,
-    MaterialModule,
+    MdAutocompleteModule,
+    MdButtonModule,
+
+    MdDialogModule,
+    MdInputModule,
     ReactiveFormsModule,
 
     DataModule,
