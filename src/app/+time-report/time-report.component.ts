@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import { AskDialogService } from '../shared/services/ask-dialog/ask-dialog.service';
-import { ErrorDialogService } from '../shared/services/error-dialog/error-dialog.service';
+import { TaskTimerService } from '../data/services/task-timer/task-timer.service';
+import { TimesheetService } from '../data/services/timesheet/timesheet.service';
+import { DailyTimeLog } from '../shared/services/timesheet-report/daily-time-log';
+import { TimesheetReportService } from '../shared/services/timesheet-report/timesheet-report.service';
 
 @Component({
   selector: 'trx-time-report',
@@ -9,24 +11,13 @@ import { ErrorDialogService } from '../shared/services/error-dialog/error-dialog
   styleUrls: ['./time-report.component.scss']
 })
 export class TimeReportComponent implements OnInit {
+  days: Array<DailyTimeLog>;
 
-  constructor(private viewContainerRef: ViewContainerRef, private askDialog: AskDialogService, private errorDialog: ErrorDialogService) { }
+  constructor(private timesheet: TimesheetService, private taskTimers: TaskTimerService, private report: TimesheetReportService) { }
 
-  ngOnInit() { }
-
-  showAskDialog() {
-    this.askDialog.open('Deep Thought',
-      'Do you know the average airspeed velocity of an unlaiden swallow?',
-      this.viewContainerRef).subscribe(res => console.log(res));
+  ngOnInit() {
+    this.timesheet.getCurrent()
+      .subscribe(ts => this.taskTimers.getAll({ timesheetId: ts._id })
+        .subscribe(tt => this.days = this.report.dailyTasks(ts, tt)));
   }
-
-  showErrorDialog() {
-    this.errorDialog.open('Error',
-      // 'This is how it will look with a short message',
-      'I really really hope this works. This is a long message. Longer than most will probablby be. I just want to see' +
-      ' what happens when there is really long crap like this. Hopefully this will wrap and scroll and whatnot. I am also' +
-      ' thinking of making the title something that cannot be specified. I do not really see a need for that.',
-      this.viewContainerRef);
-  }
-
 }

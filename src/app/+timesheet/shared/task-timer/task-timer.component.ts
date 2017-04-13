@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import { TaskTimer } from '../../data/models/task-timer';
+import { TaskTimer } from '../../../data/models/task-timer';
 
 @Component({
   selector: 'trx-task-timer',
@@ -15,7 +15,5 @@ export class TaskTimerComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() { }
 }

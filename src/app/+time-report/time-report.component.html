@@ -1,5 +1,29 @@
-<div>&nbsp;</div>
-<div>
-  <button md-raised-button color="primary" (click)="showAskDialog()">Ask Dialog</button>
-  <button md-raised-button color="warn" (click)="showErrorDialog()">Error Dialog</button>
+<div class="page-root timesheet">
+  <section class="day" *ngFor="let day of days">
+    <div class="header section-header" fxLayout="row">
+      <div fxFlex class="title">{{day.date | date: 'mediumDate'}}</div>
+      <div fxFlex class="title title-hours">{{day.milliseconds | hoursMinutes}}</div>
+    </div>
+
+    <div class="content">
+      <div class="flex-container" fxLayout="row" fxLayoutAlign="space-between stretch" fxLayout.sm="column">
+
+        <md-card fxFlex="49">
+          <div class="title-section">
+            <div class="primary-text">JIRA Tasks</div>
+          </div>
+
+          <trx-time-list [tasks]="day.jiraTasks"></trx-time-list>
+        </md-card>
+
+        <md-card fxFlex="49">
+          <div class="title-section">
+            <div class="primary-text">SBVB Tasks</div>
+          </div>
+
+          <trx-time-list [tasks]="day.sbvbTasks"></trx-time-list>
+        </md-card>
+      </div>
+    </div>
+  </section>
 </div>
