@@ -10,7 +10,6 @@ import { routing } from './app.routing';
 import { SharedModule } from './shared/shared.module';
 
 import { LocalStorageModule } from 'angular-2-local-storage';
-import 'hammerjs';
 
 @NgModule({
   declarations: [AppComponent],
