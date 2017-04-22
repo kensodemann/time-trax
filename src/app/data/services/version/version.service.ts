@@ -20,8 +20,8 @@ export class VersionService {
       .map((res) => {
         return {
           server: res[0].name,
-          client: 'Sopping Escutchen (1.0.0)',
-          releaseDate: moment('2016-12-29')
+          client: 'Sopping Escutchen Beta Testing (1.0.0-Beta.1)',
+          releaseDate: moment('2017-04-22')
         };
       });
   }
