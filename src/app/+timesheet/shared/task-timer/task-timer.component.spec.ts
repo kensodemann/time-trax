@@ -5,8 +5,8 @@ import { DebugElement } from '@angular/core';
 
 import { MdIconModule } from '@angular/material';
 
-import { HoursMinutesPipe } from '../../shared/pipes/hours-minutes.pipe';
-import { ProjectTitlePipe } from '../../shared/pipes/project-title.pipe';
+import { HoursMinutesPipe } from '../../../shared/pipes/hours-minutes.pipe';
+import { ProjectTitlePipe } from '../../../shared/pipes/project-title.pipe';
 import { TaskTimerComponent } from './task-timer.component';
 
 describe('TaskTimerComponent', () => {

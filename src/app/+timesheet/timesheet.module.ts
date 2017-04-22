@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { MdIconModule } from '@angular/material';
 
-import { TaskTimerComponent } from './task-timer/task-timer.component';
+import { TaskTimerComponent } from './shared/task-timer/task-timer.component';
 import { TimesheetComponent } from './timesheet.component';
 import { routing } from './timesheet.routing';
 import { DataModule } from '../data/data.module';

@@ -8,8 +8,10 @@ import 'rxjs/add/observable/never';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
 
-import { TaskTimerComponent } from './task-timer/task-timer.component';
+import { TaskTimerComponent } from './shared/task-timer/task-timer.component';
 import { TimesheetComponent } from './timesheet.component';
+import { Project } from '../data/models/project';
+import { Stage } from '../data/models/stage';
 import { TaskTimer } from '../data/models/task-timer';
 import { Timesheet } from '../data/models/timesheet';
 import { TaskTimerService } from '../data/services/task-timer/task-timer.service';
@@ -29,7 +31,6 @@ class DialogStub {
 
 class TimesheetServiceStub {
   getCurrent(): Observable<Timesheet> { return Observable.empty(); }
-  save(ts: Timesheet): Observable<Timesheet> { return Observable.empty(); }
 };
 
 class TaskTimerServiceStub {
@@ -88,7 +89,7 @@ describe('TimesheetComponent', () => {
       expect(timesheetService.getCurrent).toHaveBeenCalledTimes(1);
     });
 
-    describe('when there is a current timesheeet', () => {
+    describe('after getting the current timesheeet', () => {
       let app;
       let taskTimerService;
       beforeEach(() => {
@@ -266,7 +267,9 @@ describe('TimesheetComponent', () => {
       expect(editor.open.calls.argsFor(0)[0]).toEqual({
         _id: 903,
         timesheetRid: '11383141594273',
-        workDate: '2017-02-01'
+        workDate: '2017-02-01',
+        project: new Project(),
+        stage: new Stage()
       });
     });
 
@@ -310,7 +313,9 @@ describe('TimesheetComponent', () => {
       expect(app.days[3].taskTimers[1]).toEqual({
         _id: 903,
         timesheetRid: '11383141594273',
-        workDate: '2017-02-01'
+        workDate: '2017-02-01',
+        project: new Project(),
+        stage: new Stage()
       });
     });
   });
@@ -441,43 +446,63 @@ describe('TimesheetComponent', () => {
     testTaskTimers = [{
       _id: 1,
       timesheetRid: '11383141594273',
-      workDate: '2017-02-03'
+      workDate: '2017-02-03',
+      project: new Project(),
+      stage: new Stage()
     }, {
       _id: 112,
       timesheetRid: '11383141594273',
-      workDate: '2017-02-01'
+      workDate: '2017-02-01',
+      project: new Project(),
+      stage: new Stage()
     }, {
       _id: 123,
       timesheetRid: '11383141594273',
-      workDate: '2017-02-02'
+      workDate: '2017-02-02',
+      project: new Project(),
+      stage: new Stage()
     }, {
       _id: 134,
       timesheetRid: '11383141594273',
-      workDate: '2017-01-30'
+      workDate: '2017-01-30',
+      project: new Project(),
+      stage: new Stage()
     }, {
       _id: 156,
       timesheetRid: '11383141594273',
-      workDate: '2017-01-31'
+      workDate: '2017-01-31',
+      project: new Project(),
+      stage: new Stage()
     }, {
       _id: 174,
       timesheetRid: '11383141594273',
-      workDate: '2017-01-31'
+      workDate: '2017-01-31',
+      project: new Project(),
+      stage: new Stage()
     }, {
       _id: 189,
       timesheetRid: '11383141594273',
-      workDate: '2017-02-03'
+      workDate: '2017-02-03',
+      project: new Project(),
+      stage: new Stage()
     }, {
       _id: 201,
       timesheetRid: '11383141594273',
-      workDate: '2017-02-03'
+      workDate: '2017-02-03',
+      project: new Project(),
+      stage: new Stage()
     }, {
       _id: 903,
       timesheetRid: '11383141594273',
-      workDate: '2017-02-01'
+      workDate: '2017-02-01',
+      project: new Project(),
+      stage: new Stage()
     }, {
       _id: 9873,
       timesheetRid: '11383141594273',
-      workDate: '2017-02-01'
+      workDate: '2017-02-01',
+      project: new Project(),
+      stage: new Stage()
     }];
   }
 });
