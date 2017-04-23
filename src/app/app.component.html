@@ -1,7 +1,7 @@
 <md-sidenav-container fullscreen>
   <md-sidenav #sidenav mode="over" class="trx-sidenav">
     <md-nav-list (click)="sidenav.close()">
-      <a md-list-item [routerLink]="['/timesheet/current']">
+      <a md-list-item [routerLink]="['/timesheet']">
         <md-icon md-list-icon>schedule</md-icon>
         <span md-line>Current Week</span>
       </a>
@@ -9,7 +9,7 @@
         <md-icon md-list-icon>work</md-icon>
         <span md-line>Projects</span>
       </a>
-      <a md-list-item [routerLink]="['/time-report/current']">
+      <a md-list-item [routerLink]="['/time-report']">
         <md-icon md-list-icon>timeline</md-icon>
         <span md-line>Time Report</span>
       </a>

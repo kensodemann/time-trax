@@ -4,7 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { TimesheetComponent } from './timesheet.component';
 
 const ROUTES: Routes = [
-  { path: '', component: TimesheetComponent }
+  { path: '', component: TimesheetComponent },
+  { path: ':id', component: TimesheetComponent }
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forChild(ROUTES);
