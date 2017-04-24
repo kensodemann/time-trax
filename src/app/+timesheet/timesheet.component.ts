@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -24,6 +25,7 @@ export class TimesheetComponent implements OnInit, OnDestroy {
   private refreshInterval: Subscription;
 
   constructor(
+    private route: ActivatedRoute,
     private ask: AskDialogService,
     private editor: TaskTimerEditorService,
     private report: TimesheetReportService,
@@ -32,10 +34,12 @@ export class TimesheetComponent implements OnInit, OnDestroy {
     private viewContainerRef: ViewContainerRef) { }
 
   ngOnInit() {
-    this.timesheetData.getCurrent().subscribe(ts => {
-      this.timesheet = ts;
-      this.refresh();
-    });
+    this.route.params
+      .switchMap((params: Params) => params.id ? this.timesheetData.get(params.id) : this.timesheetData.getCurrent())
+      .subscribe(ts => {
+        this.timesheet = ts;
+        this.refresh();
+      });
 
     this.refreshInterval = Observable.interval(15000).subscribe(res => this.refresh());
   }

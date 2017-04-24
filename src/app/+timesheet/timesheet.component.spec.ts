@@ -22,6 +22,7 @@ import { ProjectTitlePipe } from '../shared/pipes/project-title.pipe';
 import { AskDialogService } from '../shared/services/ask-dialog/ask-dialog.service';
 import { DateService } from '../shared/services/date/date.service';
 import { TimesheetReportService } from '../shared/services/timesheet-report/timesheet-report.service';
+import { ActivatedRoute, ActivatedRouteStub } from '../../../testing/router-stubs';
 
 class DialogStub {
   open(title: string, message: string, viewContainerRef: ViewContainerRef): Observable<any> {
@@ -31,6 +32,7 @@ class DialogStub {
 
 class TimesheetServiceStub {
   getCurrent(): Observable<Timesheet> { return Observable.empty(); }
+  get(id: string): Observable<Timesheet> { return Observable.empty(); }
 };
 
 class TaskTimerServiceStub {
@@ -61,6 +63,7 @@ describe('TimesheetComponent', () => {
         TimesheetComponent
       ],
       providers: [
+        { provide: ActivatedRoute, useClass: ActivatedRouteStub },
         { provide: AskDialogService, useClass: DialogStub },
         { provide: TaskTimerService, useClass: TaskTimerServiceStub },
         { provide: TaskTimerEditorService, useClass: TaskTimerEditorStub },
@@ -73,68 +76,121 @@ describe('TimesheetComponent', () => {
 
   beforeEach(initializeTestData);
 
+  let fixture;
+  let app;
+  let route;
+  beforeEach(() => {
+    initializeTestData();
+    fixture = TestBed.createComponent(TimesheetComponent);
+    app = fixture.debugElement.componentInstance;
+    route = fixture.debugElement.injector.get(ActivatedRoute);
+    route.testParams = {};
+  });
+
   it('builds', async(() => {
-    const fixture = TestBed.createComponent(TimesheetComponent);
-    const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));
 
   describe('Initialization', () => {
-    it('gets the current timesheet', () => {
-      const fixture = TestBed.createComponent(TimesheetComponent);
-      const app = fixture.debugElement.componentInstance;
-      const timesheetService = fixture.debugElement.injector.get(TimesheetService);
-      spyOn(timesheetService, 'getCurrent').and.returnValue(Observable.empty());
-      app.ngOnInit();
-      expect(timesheetService.getCurrent).toHaveBeenCalledTimes(1);
+    describe('without an id', () => {
+      it('gets the current timesheet', () => {
+        const timesheetService = fixture.debugElement.injector.get(TimesheetService);
+        spyOn(timesheetService, 'getCurrent').and.returnValue(Observable.empty());
+        app.ngOnInit();
+        expect(timesheetService.getCurrent).toHaveBeenCalledTimes(1);
+      });
+
+      describe('after getting the current timesheeet', () => {
+        let taskTimerService;
+        beforeEach(() => {
+          const timesheetService = fixture.debugElement.injector.get(TimesheetService);
+          taskTimerService = fixture.debugElement.injector.get(TaskTimerService);
+          spyOn(timesheetService, 'getCurrent').and.returnValue(Observable.of({ _id: '11383141594273', endDate: '2017-02-04' }));
+        });
+
+        it('gets all of the task timers for the current timesheet', () => {
+          spyOn(taskTimerService, 'getAll').and.returnValue(Observable.empty());
+          app.ngOnInit();
+          expect(taskTimerService.getAll).toHaveBeenCalledTimes(1);
+          expect(taskTimerService.getAll).toHaveBeenCalledWith({ timesheetId: '11383141594273' });
+        });
+
+        it('separates the tasks by day', () => {
+          spyOn(taskTimerService, 'getAll').and.returnValue(Observable.of(testTaskTimers));
+          app.ngOnInit();
+          expect(app.days.length).toEqual(7);
+          expect(app.days[0].date).toEqual(new Date(2017, 0, 29));
+          expect(app.days[1].date).toEqual(new Date(2017, 0, 30));
+          expect(app.days[2].date).toEqual(new Date(2017, 0, 31));
+          expect(app.days[3].date).toEqual(new Date(2017, 1, 1));
+          expect(app.days[4].date).toEqual(new Date(2017, 1, 2));
+          expect(app.days[5].date).toEqual(new Date(2017, 1, 3));
+          expect(app.days[6].date).toEqual(new Date(2017, 1, 4));
+          expect(app.days[0].taskTimers.length).toEqual(0, 'Sunday');
+          expect(app.days[1].taskTimers.length).toEqual(1, 'Monday');
+          expect(app.days[2].taskTimers.length).toEqual(2, 'Tuesday');
+          expect(app.days[3].taskTimers.length).toEqual(3, 'Wednesday');
+          expect(app.days[4].taskTimers.length).toEqual(1, 'Thursday');
+          expect(app.days[5].taskTimers.length).toEqual(3, 'Friday');
+          expect(app.days[6].taskTimers.length).toEqual(0, 'Saturday');
+        });
+      });
     });
 
-    describe('after getting the current timesheeet', () => {
-      let app;
-      let taskTimerService;
+    describe('with an id', () => {
       beforeEach(() => {
-        const fixture = TestBed.createComponent(TimesheetComponent);
-        app = fixture.debugElement.componentInstance;
+        route.testParams = { id: '73423141591138420' };
+      });
+
+      it('gets the specified timesheet', () => {
         const timesheetService = fixture.debugElement.injector.get(TimesheetService);
-        taskTimerService = fixture.debugElement.injector.get(TaskTimerService);
-        spyOn(timesheetService, 'getCurrent').and.returnValue(Observable.of({ _id: '11383141594273', endDate: '2017-02-04' }));
+        spyOn(timesheetService, 'get').and.returnValue(Observable.empty());
+        app.ngOnInit();
+        expect(timesheetService.get).toHaveBeenCalledTimes(1);
+        expect(timesheetService.get).toHaveBeenCalledWith('73423141591138420');
       });
 
-      it('gets all of the task timers for the current timesheet', () => {
-        spyOn(taskTimerService, 'getAll').and.returnValue(Observable.empty());
-        app.ngOnInit();
-        expect(taskTimerService.getAll).toHaveBeenCalledTimes(1);
-        expect(taskTimerService.getAll).toHaveBeenCalledWith({ timesheetId: '11383141594273' });
-      });
+      describe('after getting the specified timesheeet', () => {
+        let taskTimerService;
+        beforeEach(() => {
+          const timesheetService = fixture.debugElement.injector.get(TimesheetService);
+          taskTimerService = fixture.debugElement.injector.get(TaskTimerService);
+          spyOn(timesheetService, 'get').and.returnValue(Observable.of({ _id: '73423141591138420', endDate: '2017-02-04' }));
+        });
 
-      it('separates the tasks by day', () => {
-        spyOn(taskTimerService, 'getAll').and.returnValue(Observable.of(testTaskTimers));
-        app.ngOnInit();
-        expect(app.days.length).toEqual(7);
-        expect(app.days[0].date).toEqual(new Date(2017, 0, 29));
-        expect(app.days[1].date).toEqual(new Date(2017, 0, 30));
-        expect(app.days[2].date).toEqual(new Date(2017, 0, 31));
-        expect(app.days[3].date).toEqual(new Date(2017, 1, 1));
-        expect(app.days[4].date).toEqual(new Date(2017, 1, 2));
-        expect(app.days[5].date).toEqual(new Date(2017, 1, 3));
-        expect(app.days[6].date).toEqual(new Date(2017, 1, 4));
-        expect(app.days[0].taskTimers.length).toEqual(0, 'Sunday');
-        expect(app.days[1].taskTimers.length).toEqual(1, 'Monday');
-        expect(app.days[2].taskTimers.length).toEqual(2, 'Tuesday');
-        expect(app.days[3].taskTimers.length).toEqual(3, 'Wednesday');
-        expect(app.days[4].taskTimers.length).toEqual(1, 'Thursday');
-        expect(app.days[5].taskTimers.length).toEqual(3, 'Friday');
-        expect(app.days[6].taskTimers.length).toEqual(0, 'Saturday');
+        it('gets all of the task timers for the timesheet', () => {
+          spyOn(taskTimerService, 'getAll').and.returnValue(Observable.empty());
+          app.ngOnInit();
+          expect(taskTimerService.getAll).toHaveBeenCalledTimes(1);
+          expect(taskTimerService.getAll).toHaveBeenCalledWith({ timesheetId: '73423141591138420' });
+        });
+
+        it('separates the tasks by day', () => {
+          spyOn(taskTimerService, 'getAll').and.returnValue(Observable.of(testTaskTimers));
+          app.ngOnInit();
+          expect(app.days.length).toEqual(7);
+          expect(app.days[0].date).toEqual(new Date(2017, 0, 29));
+          expect(app.days[1].date).toEqual(new Date(2017, 0, 30));
+          expect(app.days[2].date).toEqual(new Date(2017, 0, 31));
+          expect(app.days[3].date).toEqual(new Date(2017, 1, 1));
+          expect(app.days[4].date).toEqual(new Date(2017, 1, 2));
+          expect(app.days[5].date).toEqual(new Date(2017, 1, 3));
+          expect(app.days[6].date).toEqual(new Date(2017, 1, 4));
+          expect(app.days[0].taskTimers.length).toEqual(0, 'Sunday');
+          expect(app.days[1].taskTimers.length).toEqual(1, 'Monday');
+          expect(app.days[2].taskTimers.length).toEqual(2, 'Tuesday');
+          expect(app.days[3].taskTimers.length).toEqual(3, 'Wednesday');
+          expect(app.days[4].taskTimers.length).toEqual(1, 'Thursday');
+          expect(app.days[5].taskTimers.length).toEqual(3, 'Friday');
+          expect(app.days[6].taskTimers.length).toEqual(0, 'Saturday');
+        });
       });
     });
   });
 
   describe('task timer refresh', () => {
-    let app;
     let taskTimerService;
     beforeEach(() => {
-      const fixture = TestBed.createComponent(TimesheetComponent);
-      app = fixture.debugElement.componentInstance;
       const timesheetService = fixture.debugElement.injector.get(TimesheetService);
       taskTimerService = fixture.debugElement.injector.get(TaskTimerService);
       spyOn(timesheetService, 'getCurrent').and.returnValue(Observable.of({ _id: '11383141594273', endDate: '2017-02-04' }));
@@ -156,12 +212,9 @@ describe('TimesheetComponent', () => {
   });
 
   describe('adding a task timer', () => {
-    let app;
     let editor;
     let timesheetReportService;
     beforeEach(() => {
-      const fixture = TestBed.createComponent(TimesheetComponent);
-      app = fixture.debugElement.componentInstance;
       const timesheetService = fixture.debugElement.injector.get(TimesheetService);
       editor = fixture.debugElement.injector.get(TaskTimerEditorService);
       spyOn(timesheetService, 'getCurrent').and.returnValue(Observable.of({ _id: '11383141594273', endDate: '2017-02-04' }));
@@ -199,13 +252,9 @@ describe('TimesheetComponent', () => {
   });
 
   describe('deleting a task timer', () => {
-    let app;
     let ask;
-    let fixture;
     let taskTimerService;
     beforeEach(() => {
-      fixture = TestBed.createComponent(TimesheetComponent);
-      app = fixture.debugElement.componentInstance;
       ask = fixture.debugElement.injector.get(AskDialogService);
       const timesheetService = fixture.debugElement.injector.get(TimesheetService);
       spyOn(timesheetService, 'getCurrent').and.returnValue(Observable.of({ _id: '11383141594273', endDate: '2017-02-04' }));
@@ -247,11 +296,8 @@ describe('TimesheetComponent', () => {
   });
 
   describe('editing a task timer', () => {
-    let app;
     let editor;
     beforeEach(() => {
-      const fixture = TestBed.createComponent(TimesheetComponent);
-      app = fixture.debugElement.componentInstance;
       const timesheetService = fixture.debugElement.injector.get(TimesheetService);
       editor = fixture.debugElement.injector.get(TaskTimerEditorService);
       spyOn(timesheetService, 'getCurrent').and.returnValue(Observable.of({ _id: '11383141594273', endDate: '2017-02-04' }));
@@ -321,12 +367,9 @@ describe('TimesheetComponent', () => {
   });
 
   describe('toggling a task timer', () => {
-    let app;
     let editor;
     let taskTimerService;
     beforeEach(() => {
-      const fixture = TestBed.createComponent(TimesheetComponent);
-      app = fixture.debugElement.componentInstance;
       const timesheetService = fixture.debugElement.injector.get(TimesheetService);
       editor = fixture.debugElement.injector.get(TaskTimerEditorService);
       spyOn(timesheetService, 'getCurrent').and.returnValue(Observable.of({ _id: '11383141594273', endDate: '2017-02-04' }));

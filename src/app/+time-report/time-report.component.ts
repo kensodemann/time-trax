@@ -14,7 +14,11 @@ import { TimesheetReportService } from '../shared/services/timesheet-report/time
 export class TimeReportComponent implements OnInit {
   days: Array<DailyTimeLog>;
 
-  constructor(private route: ActivatedRoute, private timesheet: TimesheetService, private taskTimers: TaskTimerService, private report: TimesheetReportService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private timesheet: TimesheetService,
+    private taskTimers: TaskTimerService,
+    private report: TimesheetReportService) { }
 
   ngOnInit() {
     this.route.params
