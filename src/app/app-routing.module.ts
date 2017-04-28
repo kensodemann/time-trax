@@ -1,8 +1,8 @@
+import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ModuleWithProviders } from '@angular/core';
 
-const ROUTES: Routes = [
-  { path: '', redirectTo: '/authentication/login', pathMatch: 'full' },
+const routes: Routes = [
+  { path: '', redirectTo: '/timesheet', pathMatch: 'full' },
   { path: 'timesheet-history', loadChildren: 'app/+timesheet-history/timesheet-history.module#TimesheetHistoryModule' },
   { path: 'about', loadChildren: 'app/+about/about.module#AboutModule' },
   { path: 'authentication', loadChildren: 'app/authentication/authentication.module#AuthenticationModule' },
@@ -11,4 +11,8 @@ const ROUTES: Routes = [
   { path: 'timesheet', loadChildren: 'app/+timesheet/timesheet.module#TimesheetModule' }
 ];
 
-export const routing: ModuleWithProviders = RouterModule.forRoot(ROUTES);
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }

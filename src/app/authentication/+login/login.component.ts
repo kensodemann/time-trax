@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     const router = this.router;
     this.authService.login(this.emailAddress, this.password).subscribe((success) => {
       if (success) {
-        router.navigate(['timesheet', 'current']);
+        router.navigate(['timesheet']);
       } else {
         this.password = '';
         this.displayLoginFailure();
