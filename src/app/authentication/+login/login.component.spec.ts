@@ -76,7 +76,7 @@ describe('LoginComponent', () => {
       app.login();
 
       expect(router.navigate).toHaveBeenCalledTimes(1);
-      expect(router.navigate).toHaveBeenCalledWith(['timesheet', 'current']);
+      expect(router.navigate).toHaveBeenCalledWith(['timesheet']);
     });
 
     it('clears the password and displays an error message if the login fails', () => {

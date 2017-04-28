@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { routing } from './app.routing';
+import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 
 import { LocalStorageModule } from 'angular-2-local-storage';
@@ -27,7 +27,7 @@ import { LocalStorageModule } from 'angular-2-local-storage';
 
     CoreModule,
     SharedModule,
-    routing
+    AppRoutingModule
   ],
   bootstrap: [AppComponent]
 })
