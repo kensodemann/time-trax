@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { MdListModule } from '@angular/material';
+import { MdIconModule, MdListModule } from '@angular/material';
+import { RouterModule } from '@angular/router';
 
 import { DataModule } from '../data/data.module';
 import { routing } from './timesheet-history.routing';
@@ -9,7 +10,9 @@ import { TimesheetHistoryComponent } from './timesheet-history.component';
 @NgModule({
   imports: [
     DataModule,
+    MdIconModule,
     MdListModule,
+    RouterModule,
     routing,
     SharedModule
   ],

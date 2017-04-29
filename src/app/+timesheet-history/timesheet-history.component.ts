@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import * as _ from 'lodash';
 
@@ -13,11 +14,19 @@ import { TimesheetService } from '../data/services/timesheet/timesheet.service';
 export class TimesheetHistoryComponent implements OnInit {
   timesheets: Array<Timesheet>;
 
-  constructor(private timesheetData: TimesheetService) { }
+  constructor(private router: Router, private timesheetData: TimesheetService) { }
 
   ngOnInit() {
     this.timesheetData.getAll().subscribe((res) => {
       this.timesheets = _.orderBy(res, 'endDate', 'desc');
     });
+  }
+
+  edit(timesheet: Timesheet): void {
+    this.router.navigate(['timesheet', timesheet._id]);
+  }
+
+  view(timesheet: Timesheet): void {
+    this.router.navigate(['time-report', timesheet._id]);
   }
 }

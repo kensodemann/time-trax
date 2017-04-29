@@ -71,7 +71,7 @@ describe('LogoutComponent', () => {
 
       app.stay();
       expect(router.navigate).toHaveBeenCalledTimes(1);
-      expect(router.navigate).toHaveBeenCalledWith(['timesheet', 'current']);
+      expect(router.navigate).toHaveBeenCalledWith(['timesheet']);
     });
   });
 });

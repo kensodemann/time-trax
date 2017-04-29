@@ -1,7 +1,14 @@
 <div class="page-root timesheet-history">
   <md-list>
-    <md-list-item class="timesheet" *ngFor="let timesheet of timesheets">
-      Week Ending: {{timesheet.endDate | date: 'mediumDate'}}
+    <md-list-item *ngFor="let timesheet of timesheets">
+      <div class="timesheet" fxLayout="row" fxFill>
+        <div class="clickable" (click)="view(timesheet)" fxFlex="90">
+          Week Ending: {{timesheet.endDate | date: 'mediumDate'}}
+        </div>
+        <div fxFlex="10" class="actions">
+          <md-icon class="clickable" (click)="edit(timesheet)">mode_edit</md-icon>
+        </div>
+      </div>
     </md-list-item>
   </md-list>
 </div>
