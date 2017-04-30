@@ -40,9 +40,13 @@ cp dist/index.html dist/404.html
 echo "\ndeploying..."
 ngh --message="chore: deploy version $tag"
 
+echo "\ncleaning up..."
+git push -q
+git push --tags -q
+git checkout -q gh-pages
+git pull -q
+git checkout -q master
+
 echo "\nDone."
-echo "The modifications have not been committed."
-echo "Verify the changes and if everything looks good, then:"
-echo "\tgit push --tags"
 
 exit 0
