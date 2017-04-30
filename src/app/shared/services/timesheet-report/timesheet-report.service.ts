@@ -57,6 +57,7 @@ export class TimesheetReportService {
 
   private summarizedJiraTasks(tasks: Array<TaskTimer>): Array<TaskSummary> {
     return _.chain(tasks)
+      .filter(t => t.project.jiraTaskId)
       .uniqBy(t => t.project.jiraTaskId)
       .map((t) => {
         return {

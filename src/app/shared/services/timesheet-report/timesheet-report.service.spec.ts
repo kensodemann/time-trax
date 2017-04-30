@@ -11,6 +11,7 @@ const allProjects: Array<Project> = [
   new Project({ _id: '99999', name: 'Test Project 2', jiraTaskId: 'XYZ-987', sbvbTaskId: 'RFP11420' }),
   new Project({ _id: '88888', name: 'Test Project 3', jiraTaskId: 'PDQ-314', sbvbTaskId: 'RFP11422' }),
   new Project({ _id: '77777', name: 'Test Project 4', jiraTaskId: 'PDQ-420', sbvbTaskId: 'RFP11422' }),
+  new Project({ _id: '66666', name: 'Test Project 5 (no JIRA)', sbvbTaskId: 'RFP11422' })
 ];
 
 const allStages: Array<Stage> = [
@@ -72,7 +73,10 @@ describe('TimesheetReportService', () => {
         newTaskTimer('2017-04-11', 44599405, allProjects[1], allStages[3]),
         newTaskTimer('2017-04-11', 2993005, allProjects[2], allStages[4]),
         newTaskTimer('2017-04-10', 3885234, allProjects[0], allStages[0]),
-        newTaskTimer('2017-04-11', 20002995, allProjects[3], allStages[4])
+        newTaskTimer('2017-04-11', 20002995, allProjects[3], allStages[4]),
+        newTaskTimer('2017-04-11', 20002995, allProjects[4], allStages[4]),
+        newTaskTimer('2017-04-10', 20002995, allProjects[4], allStages[4]),
+        newTaskTimer('2017-04-12', 20002995, allProjects[4], allStages[4])
       ]);
 
       expect(d[0].jiraTasks.length).toEqual(0);
