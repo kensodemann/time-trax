@@ -11,6 +11,7 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class VersionService {
+  private versionName = 'sopping escutchen';
   private versionTag = '1.0.0-Beta.2';
 
   constructor(private http: Http) { }
@@ -21,7 +22,7 @@ export class VersionService {
       .map((res) => {
         return {
           server: res[0].name,
-          client: `Sopping Escutchen Beta Testing (${this.versionTag})`,
+          client: `${this.versionTag} (${this.versionName})`,
           releaseDate: moment('2017-04-28')
         };
       });
