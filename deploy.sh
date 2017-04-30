@@ -3,7 +3,7 @@
 tag="$1"
 if [ ! "$tag" ]; then
   echo 'Usage: deploy.sh tag'
-  echo 'NOTE: the specified tag should not exist yet, this script will create it'
+  echo 'NOTE: the specified tag should not exist yet'
   exit 1
 fi
 
@@ -21,6 +21,8 @@ mv version.service.ts src/app/data/services/version/version.service.ts
 sed "s/\"version\": .*/\"version\": \"$tag\",/" package.json > package.json.new
 mv package.json.new package.json
 
+conventional-changelog -p angular -i CHANGELOG.md -s
+
 echo "\nstarting build..."
 ng build --prod --base-href "/time-trax/"
 cp dist/index.html dist/404.html
@@ -30,6 +32,7 @@ ngh --message="chore: deploy version $tag"
 
 echo "\nDone. Verify the changes and if everything looks good, then:"
 echo "\tgit commit -am \"chore: deploy version $tag\""
+echo "\tgit tag $tag"
 echo "\tgit push --tags"
 
 exit 0
