@@ -15,6 +15,7 @@ import { HoursMinutesPipe } from './pipes/hours-minutes.pipe';
 import { ProjectTitlePipe } from './pipes/project-title.pipe';
 import { ValidTimeDirective } from './validators/valid-time.directive';
 import { MillisecondsPipe } from './pipes/milliseconds.pipe';
+import { StagePipe } from './pipes/stage.pipe';
 
 @NgModule({
   exports: [
@@ -30,13 +31,15 @@ import { MillisecondsPipe } from './pipes/milliseconds.pipe';
 
     HoursMinutesPipe,
     MillisecondsPipe,
-    ProjectTitlePipe
+    ProjectTitlePipe,
+    StagePipe
   ],
   declarations: [
     HoursMinutesPipe,
     MillisecondsPipe,
     ProjectTitlePipe,
-    ValidTimeDirective
+    ValidTimeDirective,
+    StagePipe
   ],
   providers: [
     TimesheetReportService,

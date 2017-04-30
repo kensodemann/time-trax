@@ -15,6 +15,7 @@ import { Timesheet } from '../data/models/timesheet';
 import { TaskTimerService } from '../data/services/task-timer/task-timer.service';
 import { TimesheetService } from '../data/services/timesheet/timesheet.service';
 import { HoursMinutesPipe } from '../shared/pipes/hours-minutes.pipe';
+import { StagePipe } from '../shared/pipes/stage.pipe';
 import { TimesheetReportService } from '../shared/services/timesheet-report/timesheet-report.service';
 import { ActivatedRoute, ActivatedRouteStub } from '../../../testing/router-stubs';
 
@@ -34,6 +35,7 @@ describe('TimeReportComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         HoursMinutesPipe,
+        StagePipe,
         TimeListComponent,
         TimeReportComponent
       ],
