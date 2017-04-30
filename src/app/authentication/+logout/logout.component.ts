@@ -21,7 +21,7 @@ export class LogoutComponent implements OnInit {
   }
 
   stay() {
-    this.router.navigate(['timesheet', 'current']);
+    this.router.navigate(['timesheet']);
   }
 
 }
