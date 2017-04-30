@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  dataService: 'https://hometraxdata-kensodemann.rhcloud.com'
+  dataService: 'https://timetraxdata-kensodemann.rhcloud.com'
 };
