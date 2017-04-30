@@ -12,6 +12,12 @@ if [ `git tag -l "$tag"` ]; then
   exit 1
 fi
 
+if [ `git branch | grep \* | cut -d ' ' -f2` != 'master' ]; then
+  echo "Error: you are not currently on the master branch"
+  exit 1
+fi
+
+echo "\nmodifying version..."
 name=`adj-noun`
 
 sed "s/versionName = .*/versionName = '$name';/" src/app/data/services/version/version.service.ts | \
@@ -23,16 +29,20 @@ mv package.json.new package.json
 
 conventional-changelog -p angular -i CHANGELOG.md -s
 
-echo "\nstarting build..."
+echo "\ncommitting and tagging..."
+git commit -am "chore: deploy version $tag"
+git tag "$tag"
+
+echo "\nbuilding..."
 ng build --prod --base-href "/time-trax/"
 cp dist/index.html dist/404.html
 
-echo "\ndeploying to github.io..."
+echo "\ndeploying..."
 ngh --message="chore: deploy version $tag"
 
-echo "\nDone. Verify the changes and if everything looks good, then:"
-echo "\tgit commit -am \"chore: deploy version $tag\""
-echo "\tgit tag $tag"
+echo "\nDone."
+echo "The modifications have not been committed."
+echo "Verify the changes and if everything looks good, then:"
 echo "\tgit push --tags"
 
 exit 0
