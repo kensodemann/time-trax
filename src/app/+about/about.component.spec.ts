@@ -1,6 +1,7 @@
 import { TestBed, async } from '@angular/core/testing';
 import { ViewContainerRef } from '@angular/core';
 import { Response, ResponseOptions } from '@angular/http';
+import { MdIconModule } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 
 import * as moment from 'moment';
@@ -28,6 +29,9 @@ describe('AboutComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         AboutComponent
+      ],
+      imports: [
+        MdIconModule
       ],
       providers: [
         { provide: ErrorMessageService, useClass: ErrorMessageStub },
