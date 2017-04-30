@@ -4,6 +4,7 @@
   <div *ngIf="tasks && tasks.length > 0" fxFlex>
     <div *ngFor="let task of tasks" fxLayout="row">
       <div fxFlex>{{task.name}}</div>
+      <div fxFlex>{{task.stage | stage}}</div>
       <div fxFlex class="time">{{task.milliseconds | hoursMinutes}}</div>
     </div>
   </div>
