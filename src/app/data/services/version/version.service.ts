@@ -11,8 +11,8 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class VersionService {
-  private versionName = 'sopping escutchen';
-  private versionTag = '1.0.0-Beta.2';
+  private versionName = 'traditional debutante';
+  private versionTag = '1.0.2';
 
   constructor(private http: Http) { }
 

@@ -1,3 +1,13 @@
+<a name="1.0.2"></a>
+## [1.0.2](https://github.com/kensodemann/time-trax/compare/1.0.1...v1.0.2) (2017-04-30)
+
+
+### Features
+
+* **timesheet-history:** layout the view ([5f12c4b](https://github.com/kensodemann/time-trax/commit/5f12c4b))
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/kensodemann/time-trax/compare/3536887...1.0.0) (2017-04-22)
 
