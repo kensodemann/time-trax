@@ -1,3 +1,15 @@
+<a name="1.0.3"></a>
+## [1.0.3](https://github.com/kensodemann/time-trax/compare/1.0.2...v1.0.3) (2017-04-30)
+
+
+### Bug Fixes
+
+* **about:** replace the application icon ([2a20634](https://github.com/kensodemann/time-trax/commit/2a20634))
+* **time-report:** ignore unclassified tasks in JIRA list ([26caec0](https://github.com/kensodemann/time-trax/commit/26caec0))
+* **time-report:** include the stage with SBVB tasks ([ffb35de](https://github.com/kensodemann/time-trax/commit/ffb35de))
+
+
+
 <a name="1.0.2"></a>
 ## [1.0.2](https://github.com/kensodemann/time-trax/compare/1.0.1...v1.0.2) (2017-04-30)
 
