@@ -4,13 +4,13 @@ import { MdIconModule } from '@angular/material';
 import { AboutComponent } from './about.component';
 import { DataModule } from '../data/data.module';
 import { SharedModule } from '../shared/shared.module';
-import { routing } from './about.routing';
+import { AboutRoutingModule } from './about-routing.module';
 
 @NgModule({
   imports: [
+    AboutRoutingModule,
     DataModule,
     MdIconModule,
-    routing,
     SharedModule
   ],
   declarations: [AboutComponent]
