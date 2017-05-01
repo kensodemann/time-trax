@@ -1,9 +1,10 @@
 sudo: required
+dist: trusty
 language: node_js
 node_js:
   - "7"
 
-apt: 
+apt:
   sources:
     - google-chrome
   packages:

@@ -15,10 +15,11 @@ export function timeFormatValidator(): ValidatorFn {
   providers: [{ provide: NG_VALIDATORS, useExisting: ValidTimeDirective, multi: true }]
 })
 export class ValidTimeDirective implements Validator {
+  private valFn = timeFormatValidator();
 
   constructor() { }
 
   validate(control: AbstractControl): { [key: string]: any } {
-    return timeFormatValidator()(control);
+    return this.valFn(control);
   }
 }

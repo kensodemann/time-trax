@@ -8,7 +8,8 @@ const routes: Routes = [
   { path: 'authentication', loadChildren: 'app/+authentication/authentication.module#AuthenticationModule' },
   { path: 'projects', loadChildren: 'app/+projects/projects.module#ProjectsModule' },
   { path: 'time-report', loadChildren: 'app/+time-report/time-report.module#TimeReportModule' },
-  { path: 'timesheet', loadChildren: 'app/+timesheet/timesheet.module#TimesheetModule' }
+  { path: 'timesheet', loadChildren: 'app/+timesheet/timesheet.module#TimesheetModule' },
+  { path: 'user-administration', loadChildren: 'app/+user-administration/user-administration.module#UserAdministrationModule' }
 ];
 
 @NgModule({

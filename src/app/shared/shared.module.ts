@@ -13,6 +13,7 @@ import { TimesheetReportService } from './services/timesheet-report/timesheet-re
 
 import { HoursMinutesPipe } from './pipes/hours-minutes.pipe';
 import { ProjectTitlePipe } from './pipes/project-title.pipe';
+import { MatchesDirective } from './validators/matches.directive';
 import { ValidTimeDirective } from './validators/valid-time.directive';
 import { MillisecondsPipe } from './pipes/milliseconds.pipe';
 import { StagePipe } from './pipes/stage.pipe';
@@ -32,14 +33,19 @@ import { StagePipe } from './pipes/stage.pipe';
     HoursMinutesPipe,
     MillisecondsPipe,
     ProjectTitlePipe,
-    StagePipe
+    StagePipe,
+
+    MatchesDirective,
+    ValidTimeDirective
   ],
   declarations: [
     HoursMinutesPipe,
     MillisecondsPipe,
     ProjectTitlePipe,
-    ValidTimeDirective,
-    StagePipe
+    StagePipe,
+
+    MatchesDirective,
+    ValidTimeDirective
   ],
   providers: [
     TimesheetReportService,

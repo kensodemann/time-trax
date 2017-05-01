@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MdAutocompleteModule, MdButtonModule, MdDialogModule, MdInputModule } from '@angular/material';
 
 import { DataModule } from '../../data/data.module';
@@ -9,7 +9,6 @@ import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   imports: [
-    FormsModule,
     MdAutocompleteModule,
     MdButtonModule,
 
