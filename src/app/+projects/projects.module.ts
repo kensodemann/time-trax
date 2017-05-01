@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MdButtonModule, MdCardModule, MdCheckboxModule, MdInputModule } from '@angular/material';
 
-import { routing } from './projects.routing';
+import { ProjectsRoutingModule } from './projects-routing.module';
 import { DataModule } from '../data/data.module';
 import { ProjectEditorModule} from '../editors/project-editor/project-editor.module';
 import { SharedModule } from '../shared/shared.module';
@@ -17,7 +17,7 @@ import { ProjectsComponent } from './projects.component';
     MdCheckboxModule,
     MdInputModule,
     ProjectEditorModule,
-    routing,
+    ProjectsRoutingModule,
     SharedModule
   ],
   declarations: [ProjectsComponent],

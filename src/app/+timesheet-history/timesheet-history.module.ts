@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { MdIconModule, MdListModule } from '@angular/material';
-import { RouterModule } from '@angular/router';
 
 import { DataModule } from '../data/data.module';
-import { routing } from './timesheet-history.routing';
+import { TimesheetHistoryRoutingModule } from './timesheet-history-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { TimesheetHistoryComponent } from './timesheet-history.component';
 
@@ -12,9 +11,8 @@ import { TimesheetHistoryComponent } from './timesheet-history.component';
     DataModule,
     MdIconModule,
     MdListModule,
-    RouterModule,
-    routing,
-    SharedModule
+    SharedModule,
+    TimesheetHistoryRoutingModule
   ],
   declarations: [TimesheetHistoryComponent],
 })

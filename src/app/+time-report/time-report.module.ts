@@ -4,7 +4,7 @@ import { MdCardModule } from '@angular/material';
 import { DataModule } from '../data/data.module';
 import { SharedModule } from '../shared/shared.module';
 
-import { routing } from './time-report.routing';
+import { TimeReportRoutingModule } from './time-report-routing.module';
 import { TimeReportComponent } from './time-report.component';
 import { TimeListComponent } from './shared/time-list/time-list.component';
 
@@ -12,8 +12,8 @@ import { TimeListComponent } from './shared/time-list/time-list.component';
   imports: [
     DataModule,
     MdCardModule,
-    routing,
-    SharedModule
+    SharedModule,
+    TimeReportRoutingModule
   ],
   declarations: [
     TimeReportComponent,

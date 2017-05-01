@@ -1,11 +1,15 @@
-import { ModuleWithProviders } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { TimesheetComponent } from './timesheet.component';
 
-const ROUTES: Routes = [
+const routes: Routes = [
   { path: '', component: TimesheetComponent },
   { path: ':id', component: TimesheetComponent }
 ];
 
-export const routing: ModuleWithProviders = RouterModule.forChild(ROUTES);
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class TimesheetRoutingModule { }
