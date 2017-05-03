@@ -1,5 +1,7 @@
 # TimeTrax
 
+[![Build Status][travis-badge]][travis-badge-url]
+
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.15.
 
 ## Development server
@@ -36,3 +38,7 @@ For more information, see [angular-cli-ghpages](https://github.com/angular-buch/
 ## Further help
 
 To get more help on the `angular-cli` use `ng --help` or go check out the [Angular-CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+[travis-badge]: https://travis-ci.org/kensodemann/time-trax.svg?branch=master
+[travis-badge-url]: https://travis-ci.org/kensodemann/time-trax
+
