@@ -41,4 +41,3 @@ To get more help on the `angular-cli` use `ng --help` or go check out the [Angul
 
 [travis-badge]: https://travis-ci.org/kensodemann/time-trax.svg?branch=master
 [travis-badge-url]: https://travis-ci.org/kensodemann/time-trax
-
