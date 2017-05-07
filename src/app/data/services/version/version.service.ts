@@ -11,8 +11,8 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class VersionService {
-  private versionName = 'empirical thinker';
-  private versionTag = '1.0.4';
+  private versionName = 'oldest crater';
+  private versionTag = '1.1.0';
 
   constructor(private http: Http) { }
 
@@ -23,7 +23,7 @@ export class VersionService {
         return {
           server: res[0].name,
           client: `${this.versionTag} (${this.versionName})`,
-          releaseDate: moment('2017-04-28')
+          releaseDate: moment('2017-05-05')
         };
       });
   }

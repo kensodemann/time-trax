@@ -1,3 +1,13 @@
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/kensodemann/time-trax/compare/1.0.4...1.1.0) (2017-05-07)
+
+
+### Features
+
+* **user-admin:** create change password page ([b92aa4f](https://github.com/kensodemann/time-trax/commit/b92aa4f))
+
+
+
 <a name="1.0.4"></a>
 ## [1.0.4](https://github.com/kensodemann/time-trax/compare/1.0.3...v1.0.4) (2017-04-30)
 
