@@ -1,0 +1,35 @@
+<form #myProfileForm="ngForm" class="my-profile">
+  <h2>Edit Profile</h2>
+
+  <div>
+    <md-input-container>
+      <input mdInput type="text" name="firstName" placeholder="First Name" [(ngModel)]="firstName" #fname="ngModel"
+        required />
+    </md-input-container>
+    <div *ngIf="fname.errors && (fname.dirty || fname.touched)" class='error-msg'>
+      <div [hidden]="!fname.errors.required">
+        First Name is required
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <md-input-container>
+      <input mdInput type="text" name="lastName" placeholder="Last Name" [(ngModel)]="lastName" #lname="ngModel" />
+    </md-input-container>
+  </div>
+
+  <div>
+    <md-input-container>
+      <input mdInput type="text" name="email" placeholder="E-Mail Address" [(ngModel)]="username" #email="ngModel" />
+    </md-input-container>
+  </div>
+
+  <div *ngIf="errorMessage" class="error-msg">{{errorMessage}}</div>
+
+  <div class="button-section">
+    <button type="submit" md-raised-button color="primary" [disabled]="!myProfileForm.dirty || myProfileForm.invalid" (click)="save()">Save Changes</button>
+    <a md-raised-button color="accent" routerLink="/user-administration/change-password" skipLocationChange="true">Change Password</a>
+    <button type="button" md-button (click)="cancel()">Cancel</button>
+  </div>
+</form>

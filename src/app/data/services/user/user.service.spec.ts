@@ -53,4 +53,114 @@ describe('UserService', () => {
       });
     });
   });
+
+  describe('get', () => {
+    it('gets the specified user', () => {
+      let connection: MockConnection;
+      mockBackend.connections.subscribe(c => connection = c);
+
+      let result;
+      service.get('11387651').subscribe(res => result = res);
+
+      expect(connection.request.url).toEqual(`${environment.dataService}/users/11387651`);
+      expect(connection.request.method).toEqual(RequestMethod.Get);
+
+      connection.mockRespond(new Response(new ResponseOptions({
+        status: 200,
+        body: {
+          _id: '11387651',
+          firstName: 'Baron',
+          lastName: 'von Stinky-Head',
+          username: 'bvonsh@aol.com'
+        }
+      })));
+
+      expect(result).toEqual(new User({
+        _id: '11387651',
+        firstName: 'Baron',
+        lastName: 'von Stinky-Head',
+        username: 'bvonsh@aol.com'
+      }));
+    });
+  });
+
+  describe('save', () => {
+    it('posts an existing user properly', () => {
+      let connection: MockConnection;
+      mockBackend.connections.subscribe(c => connection = c);
+
+      let result;
+      service.save(new User({
+        _id: '11387651',
+        firstName: 'Baron',
+        lastName: 'von Stinky-Head',
+        username: 'bvonsh@aol.com'
+      })).subscribe(res => result = res);
+
+      expect(connection.request.url).toEqual(`${environment.dataService}/users/11387651`);
+      expect(connection.request.method).toEqual(RequestMethod.Post);
+      expect(JSON.parse(connection.request.getBody())).toEqual({
+         _id: '11387651',
+        firstName: 'Baron',
+        lastName: 'von Stinky-Head',
+        username: 'bvonsh@aol.com'
+      });
+
+      connection.mockRespond(new Response(new ResponseOptions({
+        status: 200,
+        body: {
+          _id: '11387651',
+          firstName: 'Baron',
+          lastName: 'von Stinky-Head',
+          username: 'bvonsh@aol.com'
+        }
+      })));
+
+      expect(result).toEqual(new User({
+        _id: '11387651',
+        firstName: 'Baron',
+        lastName: 'von Stinky-Head',
+        username: 'bvonsh@aol.com'
+      }));
+    });
+
+    it('posts a new user properly', () => {
+      let connection: MockConnection;
+      mockBackend.connections.subscribe(c => connection = c);
+
+      let result;
+      service.save(new User({
+        firstName: 'Baron',
+        lastName: 'von Stinky-Head',
+        username: 'bvonsh@aol.com',
+        password: 'MyHeadSmellsBad'
+      })).subscribe(res => result = res);
+
+      expect(connection.request.url).toEqual(`${environment.dataService}/users`);
+      expect(connection.request.method).toEqual(RequestMethod.Post);
+      expect(JSON.parse(connection.request.getBody())).toEqual({
+        firstName: 'Baron',
+        lastName: 'von Stinky-Head',
+        username: 'bvonsh@aol.com',
+        password: 'MyHeadSmellsBad'
+      });
+
+      connection.mockRespond(new Response(new ResponseOptions({
+        status: 200,
+        body: {
+          _id: '11387651',
+          firstName: 'Baron',
+          lastName: 'von Stinky-Head',
+          username: 'bvonsh@aol.com'
+        }
+      })));
+
+      expect(result).toEqual(new User({
+        _id: '11387651',
+        firstName: 'Baron',
+        lastName: 'von Stinky-Head',
+        username: 'bvonsh@aol.com'
+      }));
+    });
+  });
 });

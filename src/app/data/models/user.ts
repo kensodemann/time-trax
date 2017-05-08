@@ -5,6 +5,7 @@ export class User {
   username: string;
   isDefaultAdmin: boolean;
   roles: Array<string>;
+  password: string; // NOTE: only populated when creating a new user
 
   constructor(obj?: any) {
     if (obj) {
@@ -13,6 +14,7 @@ export class User {
       this.lastName = obj.lastName;
       this.username = obj.username;
       this.isDefaultAdmin = obj.isDefaultAdmin;
+      this.password = obj.password;
       if (obj.roles) {
         this.roles = [];
         obj.roles.forEach(role => {
