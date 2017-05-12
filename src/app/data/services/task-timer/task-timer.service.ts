@@ -9,7 +9,6 @@ import { environment } from '../../../../environments/environment';
 import * as _ from 'lodash';
 
 import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/map';
 
 @Injectable()
