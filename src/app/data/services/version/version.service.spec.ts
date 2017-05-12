@@ -1,7 +1,7 @@
-/* tslint:disable:no-unused-variable */
-
 import { Http, Response, ResponseOptions, RequestMethod, BaseRequestOptions } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
+
+import * as moment from 'moment';
 
 import { Version } from '../../models/version';
 import { VersionService } from './version.service';
@@ -34,6 +34,19 @@ describe('TimesheetService', () => {
       expect(connection.request.method).toEqual(RequestMethod.Get);
     });
 
+    it('reads the client version informtion after the server information is obtained', () => {
+      let connection: MockConnection;
+      mockBackend.connections.subscribe(c => connection = c);
+
+      service.get().subscribe();
+      connection.mockRespond(new Response(new ResponseOptions({
+        status: 200,
+        body: [{ id: '2.0.4', name: 'Misty (2.0.4)', releaseDate: '2016-07-15' }]
+      })));
+      expect(connection.request.url).toEqual('assets/version.json');
+      expect(connection.request.method).toEqual(RequestMethod.Get);
+    });
+
     it('returns the server version string', () => {
       let connection: MockConnection;
       mockBackend.connections.subscribe(c => connection = c);
@@ -48,6 +61,14 @@ describe('TimesheetService', () => {
         { id: '2.0.1', name: 'Lilly (2.0.1)', releaseDate: '2015-11-26' },
         { id: '2.0.0', name: 'BETA (2.0.0)', releaseDate: '2015-11-22' }]
       })));
+      connection.mockRespond(new Response(new ResponseOptions({
+        status: 200,
+        body: {
+          id: '1.2.0',
+          name: 'rusty nail',
+          date: '2017-05-10'
+        }
+      })));
       expect(result.server).toEqual('Misty (2.0.4)');
     });
 
@@ -61,7 +82,15 @@ describe('TimesheetService', () => {
         status: 200,
         body: [{ id: '2.0.4', name: 'Misty (2.0.4)', releaseDate: '2016-07-15' }]
       })));
-      expect(result.client).toBeTruthy();
+      connection.mockRespond(new Response(new ResponseOptions({
+        status: 200,
+        body: {
+          id: '1.2.0',
+          name: 'rusty nail',
+          date: '2017-05-10'
+        }
+      })));
+      expect(result.client).toEqual('1.2.0 (rusty nail)');
     });
 
     it('add a client release date', () => {
@@ -74,7 +103,15 @@ describe('TimesheetService', () => {
         status: 200,
         body: [{ id: '2.0.4', name: 'Misty (2.0.4)', releaseDate: '2016-07-15' }]
       })));
-      expect(result.releaseDate).toBeTruthy();
+      connection.mockRespond(new Response(new ResponseOptions({
+        status: 200,
+        body: {
+          id: '1.2.0',
+          name: 'rusty nail',
+          date: '2017-05-10'
+        }
+      })));
+      expect(result.releaseDate).toEqual(moment('2017-05-10'));
     });
   });
 });

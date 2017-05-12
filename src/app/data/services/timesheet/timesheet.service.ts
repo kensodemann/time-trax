@@ -8,6 +8,7 @@ import { Timesheet } from '../../models/timesheet';
 import { environment } from '../../../../environments/environment';
 
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
 
@@ -37,7 +38,7 @@ export class TimesheetService implements DataService<Timesheet> {
   getCurrent(): Observable<Timesheet> {
     const endDate = this.dates.weekEndDate(new Date());
     return this.http.get(this.url + `?endDate=${endDate}`)
-      .flatMap(res => {
+      .mergeMap(res => {
         const data = res.json()[0];
         if (data) {
           return Observable.of(new Timesheet(data));

@@ -8,6 +8,7 @@ import { Version } from '../../models/version';
 import { environment } from '../../../../environments/environment';
 
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mergeMap';
 
 @Injectable()
 export class VersionService {
@@ -16,16 +17,17 @@ export class VersionService {
 
   constructor(private http: Http) { }
 
-  get(): Observable<Version> {
+  get(): Observable<any> {
     return this.http.get(`${environment.dataService}/versions`)
-      .map(res => res.json())
-      .map((res) => {
+      .mergeMap(res => this.http.get('assets/version.json'),
+      (server, client) => {
+        const s = server.json();
+        const c = client.json();
         return {
-          server: res[0].name,
-          client: `${this.versionTag} (${this.versionName})`,
-          releaseDate: moment('2017-05-05')
+          server: s[0].name,
+          client: `${c.id} (${c.name})`,
+          releaseDate: moment(c.date)
         };
       });
   }
-
 }
