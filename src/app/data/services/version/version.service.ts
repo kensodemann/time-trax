@@ -12,9 +12,6 @@ import 'rxjs/add/operator/mergeMap';
 
 @Injectable()
 export class VersionService {
-  private versionName = 'oldest crater';
-  private versionTag = '1.1.0';
-
   constructor(private http: Http) { }
 
   get(): Observable<any> {
