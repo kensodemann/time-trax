@@ -14,7 +14,7 @@ import { ProjectEditorService } from './project-editor.service';
 describe('ProjectEditorService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [CommonModule, FormsModule, MdDialogModule.forRoot(), MdInputModule, NoopAnimationsModule, DialogTestModule],
+      imports: [CommonModule, FormsModule, MdDialogModule, MdInputModule, NoopAnimationsModule, DialogTestModule],
       providers: [ProjectEditorService],
     });
   });
