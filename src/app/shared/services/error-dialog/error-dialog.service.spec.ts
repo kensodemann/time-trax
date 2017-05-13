@@ -11,7 +11,7 @@ import { ErrorDialogService } from './error-dialog.service';
 describe('ErrorDialogService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [MdDialogModule.forRoot(), DialogTestModule],
+      imports: [MdDialogModule, DialogTestModule],
       providers: [ErrorDialogService],
     });
   });

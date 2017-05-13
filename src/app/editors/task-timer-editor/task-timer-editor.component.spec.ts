@@ -44,7 +44,7 @@ describe('TaskTimerEditorComponent', () => {
       imports: [
         FormsModule,
         MdAutocompleteModule,
-        MdDialogModule.forRoot(),
+        MdDialogModule,
         MdInputModule,
         NoopAnimationsModule,
         ReactiveFormsModule

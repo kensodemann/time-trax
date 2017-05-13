@@ -11,7 +11,7 @@ import { AskDialogService } from './ask-dialog.service';
 describe('AskDialogService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [MdDialogModule.forRoot(), DialogTestModule],
+      imports: [MdDialogModule, DialogTestModule],
       providers: [AskDialogService],
     });
   });

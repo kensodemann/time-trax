@@ -19,7 +19,7 @@ describe('TaskTimerEditorService', () => {
         FormsModule,
         ReactiveFormsModule,
         MdAutocompleteModule,
-        MdDialogModule.forRoot(),
+        MdDialogModule,
         MdInputModule,
         NoopAnimationsModule,
         DialogTestModule],
