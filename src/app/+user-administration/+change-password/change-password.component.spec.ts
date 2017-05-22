@@ -17,11 +17,11 @@ import { SharedModule } from '../../shared/shared.module';
 
 class MdSnackBarStub {
   open(message: string, actionLabel: string, config: MdSnackBarConfig) { }
-};
+}
 
 class RouterStub {
   navigate() { }
-};
+}
 
 class UserServiceStub {
   changePassword(prevpasswd: string, newpasswd: string): Observable<any> {
@@ -65,12 +65,12 @@ describe('ChangePasswordComponent', () => {
   });
 
   describe('cancel', () => {
-    it('navigates to the current timesheet page (for now)', () => {
+    it('navigates to the my profile page', () => {
       const router = fixture.debugElement.injector.get(Router);
       spyOn(router, 'navigate');
       component.cancel();
       expect(router.navigate).toHaveBeenCalledTimes(1);
-      expect(router.navigate).toHaveBeenCalledWith(['timesheet']);
+      expect(router.navigate).toHaveBeenCalledWith(['user-administration', 'my-profile']);
     });
   });
 
@@ -105,12 +105,12 @@ describe('ChangePasswordComponent', () => {
         expect(snackBar.open).toHaveBeenCalledWith('Success', 'Your password has been changed successfully', { duration: 3000 });
       });
 
-      it('navigates to the current timesheet view (for now)', () => {
+      it('navigates to the my profile view', () => {
         const router = fixture.debugElement.injector.get(Router);
         spyOn(router, 'navigate');
         component.changePassword();
         expect(router.navigate).toHaveBeenCalledTimes(1);
-        expect(router.navigate).toHaveBeenCalledWith(['timesheet']);
+        expect(router.navigate).toHaveBeenCalledWith(['user-administration', 'my-profile']);
       });
     });
 

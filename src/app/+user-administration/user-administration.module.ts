@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { ChangePasswordModule } from './+change-password/change-password.module';
 import { DataModule } from '../data/data.module';
 import { SharedModule } from '../shared/shared.module';
+import { UserAdministrationComponent } from './user-administration.component';
 import { UserAdministrationtRoutingModule } from './user-administration-routing.module';
 
 @NgModule({
+  declarations: [UserAdministrationComponent],
   imports: [
-    ChangePasswordModule,
     CommonModule,
     DataModule,
     SharedModule,

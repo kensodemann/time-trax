@@ -4,14 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { MdButtonModule, MdInputModule, MdSnackBarModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 
-import { ChangePasswordComponent } from './change-password.component';
-import { ChangePasswordRoutingModule } from './change-password-routing.module';
+import { MyProfileComponent } from './my-profile.component';
+import { MyProfileRoutingModule } from './my-profile-routing.module';
 import { DataModule } from '../../data/data.module';
 import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   imports: [
-    ChangePasswordRoutingModule,
+    MyProfileRoutingModule,
 
     CommonModule,
     DataModule,
@@ -22,6 +22,6 @@ import { SharedModule } from '../../shared/shared.module';
     RouterModule,
     SharedModule
   ],
-  declarations: [ChangePasswordComponent]
+  declarations: [MyProfileComponent]
 })
-export class ChangePasswordModule { }
+export class MyProfileModule { }

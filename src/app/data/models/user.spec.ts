@@ -25,6 +25,25 @@ describe('User', () => {
     expect((user as any).bogus).toBeUndefined();
   });
 
+  it('includes the password if provided (only used for new users)', () => {
+    const user = new User({
+      username: 'dude',
+      firstName: 'Big',
+      lastName: 'Jimbo',
+      isDefaultAdmin: false,
+      roles: ['user', 'admin'],
+      bogus: 'you should not see me',
+      password: 'IAmAVerySecurePassword'
+    });
+    expect(user.username).toEqual('dude');
+    expect(user.firstName).toEqual('Big');
+    expect(user.lastName).toEqual('Jimbo');
+    expect(user.isDefaultAdmin).toEqual(false);
+    expect(user.roles).toEqual(['user', 'admin']);
+    expect(user.password).toEqual('IAmAVerySecurePassword');
+    expect((user as any).bogus).toBeUndefined();
+  });
+
   describe('is authorized', () => {
     it('is false for a blank user', () => {
       const user = new User();
