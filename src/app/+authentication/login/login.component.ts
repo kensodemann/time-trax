@@ -3,6 +3,7 @@ import { MdSnackBar, MdSnackBarRef } from '@angular/material';
 import { Router } from '@angular/router';
 
 import { AuthenticationService } from '../../shared/services/authentication/authentication.service';
+import { IdentityService } from '../../core/identity/identity.service';
 
 @Component({
   selector: 'trx-login',
@@ -14,9 +15,11 @@ export class LoginComponent implements OnInit {
   public password: string;
   private loginFailureMessage: MdSnackBarRef<any>;
 
-  constructor(private authService: AuthenticationService, private router: Router, private snackBar: MdSnackBar) { }
+  constructor(private authService: AuthenticationService, private identity: IdentityService,
+    private router: Router, private snackBar: MdSnackBar) { }
 
   ngOnInit() {
+    this.identity.clear();
   }
 
   login() {

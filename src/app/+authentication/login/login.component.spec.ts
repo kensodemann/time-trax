@@ -1,16 +1,21 @@
 import { TestBed, async } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
+import { MdButtonModule, MdInputModule, MdSnackBarModule, MdSnackBar, MdSnackBarConfig } from '@angular/material';
 import { Router, RouterModule } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+
 import { LoginComponent } from './login.component';
 import { AuthenticationService } from '../../shared/services/authentication/authentication.service';
+import { IdentityService } from '../../core/identity/identity.service';
 
-import { MdButtonModule, MdInputModule, MdSnackBarModule, MdSnackBar, MdSnackBarConfig } from '@angular/material';
-
-import { Observable } from 'rxjs/Observable';
 
 class AuthenticationServiceStub {
   login(emailAddress: string, password: string) { }
 };
+
+class IdentityServiceMock {
+  clear(): void { }
+}
 
 class RouterStub {
   navigate() { }
@@ -38,6 +43,7 @@ describe('LoginComponent', () => {
       ],
       providers: [
         { provide: AuthenticationService, useClass: AuthenticationServiceStub },
+        { provide: IdentityService, useClass: IdentityServiceMock },
         { provide: MdSnackBar, useClass: MdSnackBarStub },
         { provide: Router, useClass: RouterStub }
       ]
@@ -50,6 +56,15 @@ describe('LoginComponent', () => {
   it('should create the component', async(() => {
     expect(app).toBeTruthy();
   }));
+
+  describe('initialization', () => {
+    it('clears the current identity', () => {
+      const identity = fixture.debugElement.injector.get(IdentityService);
+      spyOn(identity, 'clear');
+      app.ngOnInit();
+      expect(identity.clear).toHaveBeenCalledTimes(1);
+    });
+  });
 
   describe('method: login', () => {
     it('calls the authentication service, passing the email address and password', () => {
