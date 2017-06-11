@@ -65,12 +65,12 @@ describe('ChangePasswordComponent', () => {
   });
 
   describe('cancel', () => {
-    it('navigates to the my profile page', () => {
+    it('navigates to the profile page', () => {
       const router = fixture.debugElement.injector.get(Router);
       spyOn(router, 'navigate');
       component.cancel();
       expect(router.navigate).toHaveBeenCalledTimes(1);
-      expect(router.navigate).toHaveBeenCalledWith(['user-administration', 'my-profile']);
+      expect(router.navigate).toHaveBeenCalledWith(['user-administration', 'profile']);
     });
   });
 
@@ -105,12 +105,12 @@ describe('ChangePasswordComponent', () => {
         expect(snackBar.open).toHaveBeenCalledWith('Success', 'Your password has been changed successfully', { duration: 3000 });
       });
 
-      it('navigates to the my profile view', () => {
+      it('navigates to the profile view', () => {
         const router = fixture.debugElement.injector.get(Router);
         spyOn(router, 'navigate');
         component.changePassword();
         expect(router.navigate).toHaveBeenCalledTimes(1);
-        expect(router.navigate).toHaveBeenCalledWith(['user-administration', 'my-profile']);
+        expect(router.navigate).toHaveBeenCalledWith(['user-administration', 'profile']);
       });
     });
 

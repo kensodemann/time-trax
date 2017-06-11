@@ -11,11 +11,11 @@ import { UserService } from '../../data/services/user/user.service';
 import { User } from '../../data/models/user';
 
 @Component({
-  selector: 'trx-my-profile',
-  templateUrl: './my-profile.component.html',
-  styleUrls: ['./my-profile.component.scss']
+  selector: 'trx-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.scss']
 })
-export class MyProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit {
   firstName: string;
   lastName: string;
   username: string;
