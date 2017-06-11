@@ -3,10 +3,12 @@ import { FormsModule } from '@angular/forms';
 import { MdButtonModule, MdInputModule, MdSnackBarModule, MdSnackBar, MdSnackBarConfig } from '@angular/material';
 import { Router, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 
 import { LoginComponent } from './login.component';
 import { AuthenticationService } from '../../shared/services/authentication/authentication.service';
 import { IdentityService } from '../../core/identity/identity.service';
+import { User } from '../../data/models/user';
 
 
 class AuthenticationServiceStub {
@@ -15,6 +17,9 @@ class AuthenticationServiceStub {
 
 class IdentityServiceMock {
   clear(): void { }
+  get(): Observable<User> {
+    return Observable.of(null);
+  }
 }
 
 class RouterStub {
@@ -78,6 +83,19 @@ describe('LoginComponent', () => {
 
       expect(authenticationServiceStub.login).toHaveBeenCalledTimes(1);
       expect(authenticationServiceStub.login).toHaveBeenCalledWith('jimmy.poo@njdb.org', 'iAmaSecret');
+    });
+
+    it('fetches the identity information for the user that just logged in', () => {
+      const authenticationServiceStub = fixture.debugElement.injector.get(AuthenticationService);
+      const identity = fixture.debugElement.injector.get(IdentityService);
+
+      spyOn(authenticationServiceStub, 'login').and.returnValue(Observable.of(true));
+      spyOn(identity, 'get').and.callThrough();
+      app.emailAddress = 'jimmy.poo@njdb.org';
+      app.password = 'iAmaSecret';
+      app.login();
+
+      expect(identity.get).toHaveBeenCalledTimes(1);
     });
 
     it('navigates to the current timesheet view if the login succeeds', () => {

@@ -145,4 +145,51 @@ describe('IdentityService', () => {
       }));
     });
   });
+
+  describe('changed', () => {
+    it('fires when the user changes', () => {
+      let connection: MockConnection;
+      mockBackend.connections.subscribe(c => connection = c);
+      let identityChanges = 0;
+      service.changed.subscribe(c => identityChanges++);
+
+      service.get().subscribe((res) => { });
+      expect(identityChanges).toEqual(0);
+      connection.mockRespond(new Response(new ResponseOptions({
+        status: 200,
+        body: {
+          _id: '42',
+          firstName: 'Deep',
+          lastName: 'Thought',
+          username: 'dadams',
+          isDefaultAdmin: false,
+          roles: ['user']
+        }
+      })));
+      expect(identityChanges).toEqual(1);
+
+      for (let x = 0; x < 100; x++) {
+        service.get().subscribe(res => { });
+      }
+      expect(identityChanges).toEqual(1);
+
+      service.clear();
+      expect(identityChanges).toEqual(2);
+
+      service.get().subscribe((res) => { });
+      expect(identityChanges).toEqual(2);
+      connection.mockRespond(new Response(new ResponseOptions({
+        status: 200,
+        body: {
+          _id: '73',
+          firstName: 'Less',
+          lastName: 'Lesterman',
+          username: 'lll',
+          isDefaultAdmin: false,
+          roles: ['user', 'admin']
+        }
+      })));
+      expect(identityChanges).toEqual(3);
+    });
+  });
 });

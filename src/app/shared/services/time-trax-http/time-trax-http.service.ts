@@ -65,10 +65,8 @@ export class TimeTraxHttpService extends Http {
     return observable.catch((err, source) => {
       if (err.status === 401) {
         this.router.navigate(['authentication', 'login']);
-        return Observable.empty();
-      } else {
-        return Observable.throw(err);
       }
+      return Observable.throw(err);
     });
   }
 }
