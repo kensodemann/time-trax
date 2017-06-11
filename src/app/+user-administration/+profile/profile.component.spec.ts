@@ -10,7 +10,7 @@ import 'rxjs/add/observable/of';
 
 import { RouterLinkStubDirective, RouterOutletStubComponent } from '../../../../testing/router-stubs';
 
-import { MyProfileComponent } from './my-profile.component';
+import { ProfileComponent } from './profile.component';
 import { ErrorDialogService } from '../../shared/services/error-dialog/error-dialog.service';
 import { ErrorMessageService } from '../../shared/services/error-message/error-message.service';
 import { IdentityService } from '../../core/identity/identity.service';
@@ -43,14 +43,14 @@ class UserStub {
   }
 }
 
-describe('MyProfileComponent', () => {
-  let component: MyProfileComponent;
-  let fixture: ComponentFixture<MyProfileComponent>;
+describe('ProfileComponent', () => {
+  let component: ProfileComponent;
+  let fixture: ComponentFixture<ProfileComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        MyProfileComponent,
+        ProfileComponent,
         RouterLinkStubDirective,
         RouterOutletStubComponent
       ],
@@ -73,7 +73,7 @@ describe('MyProfileComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MyProfileComponent);
+    fixture = TestBed.createComponent(ProfileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -184,7 +184,7 @@ describe('MyProfileComponent', () => {
         expect(snackBar.open).toHaveBeenCalledWith('Success', 'Your profile has been updated', { duration: 3000 });
       });
 
-      it('navigates to the my profile view', () => {
+      it('navigates to the profile view', () => {
         const location = fixture.debugElement.injector.get(Location);
         spyOn(location, 'back');
         component.save();

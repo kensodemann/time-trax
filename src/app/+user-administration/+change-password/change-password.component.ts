@@ -40,7 +40,7 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   private navigateBack() {
-    this.router.navigate(['user-administration', 'my-profile']);
+    this.router.navigate(['user-administration', 'profile']);
   }
 
 }

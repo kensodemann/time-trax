@@ -1,4 +1,4 @@
-<form #myProfileForm="ngForm" class="my-profile">
+<form #profileForm="ngForm" class="profile">
   <h2>Edit Profile</h2>
 
   <div>
@@ -28,7 +28,7 @@
   <div *ngIf="errorMessage" class="error-msg">{{errorMessage}}</div>
 
   <div class="button-section">
-    <button type="submit" md-raised-button color="primary" [disabled]="!myProfileForm.dirty || myProfileForm.invalid" (click)="save()">Save Changes</button>
+    <button type="submit" md-raised-button color="primary" [disabled]="!profileForm.dirty || profileForm.invalid" (click)="save()">Save Changes</button>
     <a md-raised-button color="accent" routerLink="/user-administration/change-password" skipLocationChange="true">Change Password</a>
     <button type="button" md-button (click)="cancel()">Cancel</button>
   </div>

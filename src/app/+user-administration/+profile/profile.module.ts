@@ -4,14 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { MdButtonModule, MdInputModule, MdSnackBarModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 
-import { MyProfileComponent } from './my-profile.component';
-import { MyProfileRoutingModule } from './my-profile-routing.module';
+import { ProfileComponent } from './profile.component';
+import { ProfileRoutingModule } from './profile-routing.module';
 import { DataModule } from '../../data/data.module';
 import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   imports: [
-    MyProfileRoutingModule,
+    ProfileRoutingModule,
 
     CommonModule,
     DataModule,
@@ -22,6 +22,6 @@ import { SharedModule } from '../../shared/shared.module';
     RouterModule,
     SharedModule
   ],
-  declarations: [MyProfileComponent]
+  declarations: [ProfileComponent]
 })
-export class MyProfileModule { }
+export class ProfileModule { }
