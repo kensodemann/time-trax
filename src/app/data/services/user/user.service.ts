@@ -19,6 +19,16 @@ export class UserService {
         { password: previousPassword, newPassword: newPassword }));
   }
 
+  getAll(): Observable<Array<User>> {
+    return this.http.get(this.baseUrl())
+      .map(res => {
+        const data = res.json();
+        const users: Array<User> = [];
+        data.forEach(element => users.push(new User(element)));
+        return users;
+      });
+  }
+
   get(id: string): Observable<User> {
     return this.http.get(this.baseUrl(id)).map(res => new User(res.json()));
   }
@@ -27,7 +37,7 @@ export class UserService {
     return this.http.post(this.baseUrl(user._id), user).map(res => new User(res.json()));
   }
 
-  private baseUrl(id: string) {
+  private baseUrl(id?: string) {
     return `${environment.dataService}/users` + (id ? `/${id}` : '');
   }
 }

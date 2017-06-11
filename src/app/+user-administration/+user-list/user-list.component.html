@@ -1,3 +1,33 @@
-<p>
-  user-list works!
-</p>
+<div class="page-root">
+  <div class="header">
+    <div class="flex-container" fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="start stretch" fxLayoutAlign.gt-sm="start center">
+      <div fxFlex>
+        <md-input-container>
+          <input mdInput placeholder="Find User..." [(ngModel)]="filterText" />
+        </md-input-container>
+      </div>
+
+      <div fxFlex="50">
+        <div class="actions">
+          <button md-button color="primary" (click)="newUser()">Add User</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="flex-container" fxLayout="row" fxLayoutWrap="wrap" fxLayout.xs="column" fxLayoutWrap.xs="none">
+      <div fxFlex="25" fxFlex.md="33.33333" fxFlex.sm="50" *ngFor="let user of filteredUsers()">
+        <md-card class="clickable" (click)="editUser(user)">
+          <div class="title-section">
+            <div class="primary-text">{{user?.firstName}} {{user?.lastName}}</div>
+
+            <div class="secondary-text">{{user?.username}}</div>
+          </div>
+
+          <!--<div>{{project?.name}}</div>-->
+        </md-card>
+      </div>
+    </div>
+  </div>
+</div>
