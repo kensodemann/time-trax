@@ -54,6 +54,68 @@ describe('UserService', () => {
     });
   });
 
+  describe('getAll', () => {
+    it('gets all the users', () => {
+      let connection: MockConnection;
+      mockBackend.connections.subscribe(c => connection = c);
+
+      let result;
+      service.getAll().subscribe(res => result = res);
+
+      expect(connection.request.url).toEqual(`${environment.dataService}/users`);
+      expect(connection.request.method).toEqual(RequestMethod.Get);
+
+      connection.mockRespond(new Response(new ResponseOptions({
+        status: 200,
+        body: [{
+          _id: '11387651',
+          firstName: 'Baron',
+          lastName: 'von Stinky-Head',
+          username: 'bvonsh@aol.com'
+        }, {
+          _id: '73',
+          firstName: 'Sheldon',
+          lastName: 'Cooper',
+          username: 'sciasp@bb.com'
+        }, {
+          _id: '42',
+          firstName: 'Deep',
+          lastName: 'Thought',
+          username: 'zaphod@dadams.com'
+        }, {
+          _id: '420',
+          firstName: 'Stan',
+          lastName: 'Vandeweed',
+          username: 'dude@aol.com'
+        }]
+      })));
+
+      expect(result).toEqual([
+        new User({
+          _id: '11387651',
+          firstName: 'Baron',
+          lastName: 'von Stinky-Head',
+          username: 'bvonsh@aol.com'
+        }), new User({
+          _id: '73',
+          firstName: 'Sheldon',
+          lastName: 'Cooper',
+          username: 'sciasp@bb.com'
+        }), new User({
+          _id: '42',
+          firstName: 'Deep',
+          lastName: 'Thought',
+          username: 'zaphod@dadams.com'
+        }), new User({
+          _id: '420',
+          firstName: 'Stan',
+          lastName: 'Vandeweed',
+          username: 'dude@aol.com'
+        })
+      ]);
+    });
+  });
+
   describe('get', () => {
     it('gets the specified user', () => {
       let connection: MockConnection;
@@ -100,7 +162,7 @@ describe('UserService', () => {
       expect(connection.request.url).toEqual(`${environment.dataService}/users/11387651`);
       expect(connection.request.method).toEqual(RequestMethod.Post);
       expect(JSON.parse(connection.request.getBody())).toEqual({
-         _id: '11387651',
+        _id: '11387651',
         firstName: 'Baron',
         lastName: 'von Stinky-Head',
         username: 'bvonsh@aol.com'
