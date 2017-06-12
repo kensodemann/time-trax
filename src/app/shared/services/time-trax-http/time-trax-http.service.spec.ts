@@ -60,7 +60,7 @@ describe('TimeTraxHttpService', () => {
       expect(connection.request.headers.get('Authorization')).toEqual('Bearer IAmABigFatToken');
     });
 
-    it('redirects to login on a 401 error', () => {
+    it('redirects to login and retrhows on a 401 error', () => {
       let connection: MockConnection;
       token = null;
 
@@ -73,6 +73,7 @@ describe('TimeTraxHttpService', () => {
       connection.mockError(response as any as Error);
       expect(mockRouter.navigate).toHaveBeenCalledTimes(1);
       expect(mockRouter.navigate).toHaveBeenCalledWith(['authentication', 'login']);
+      expect(err.status).toEqual(401);
     });
 
     it('rethrows non 401 errors', () => {
@@ -133,7 +134,7 @@ describe('TimeTraxHttpService', () => {
       expect(connection.request.headers.get('Authorization')).toEqual('Bearer IAmABigFatToken');
     });
 
-    it('redirects to login on a 401 error', () => {
+    it('redirects to login and rethrows on a 401 error', () => {
       let connection: MockConnection;
       token = null;
 
@@ -146,6 +147,7 @@ describe('TimeTraxHttpService', () => {
       connection.mockError(response as any as Error);
       expect(mockRouter.navigate).toHaveBeenCalledTimes(1);
       expect(mockRouter.navigate).toHaveBeenCalledWith(['authentication', 'login']);
+      expect(err.status).toEqual(401);
     });
 
     it('rethrows non 401 errors', () => {
@@ -180,7 +182,7 @@ describe('TimeTraxHttpService', () => {
       expect(connection.request.method).toEqual(RequestMethod.Delete);
     });
 
-    it('does add an Authorization header if there no token', () => {
+    it('does not add an Authorization header if there no token', () => {
       let connection: MockConnection;
       token = null;
 
@@ -198,7 +200,7 @@ describe('TimeTraxHttpService', () => {
       expect(connection.request.headers.get('Authorization')).toEqual('Bearer IAmABigFatToken');
     });
 
-    it('redirects to login on a 401 error', () => {
+    it('redirects to login and rethrows on a 401 error', () => {
       let connection: MockConnection;
       token = null;
 
@@ -211,6 +213,7 @@ describe('TimeTraxHttpService', () => {
       connection.mockError(response as any as Error);
       expect(mockRouter.navigate).toHaveBeenCalledTimes(1);
       expect(mockRouter.navigate).toHaveBeenCalledWith(['authentication', 'login']);
+      expect(err.status).toEqual(401);
     });
 
     it('rethrows non 401 errors', () => {
@@ -263,7 +266,7 @@ describe('TimeTraxHttpService', () => {
       expect(connection.request.headers.get('Authorization')).toEqual('Bearer IAmABigFatToken');
     });
 
-    it('redirects to login on a 401 error', () => {
+    it('redirects to login and rethrows on a 401 error', () => {
       let connection: MockConnection;
       token = null;
 
@@ -276,6 +279,7 @@ describe('TimeTraxHttpService', () => {
       connection.mockError(response as any as Error);
       expect(mockRouter.navigate).toHaveBeenCalledTimes(1);
       expect(mockRouter.navigate).toHaveBeenCalledWith(['authentication', 'login']);
+      expect(err.status).toEqual(401);
     });
 
     it('rethrows non 401 errors', () => {
