@@ -28,14 +28,7 @@ export class ProfileComponent implements OnInit {
     private users: UserService, private error: ErrorMessageService) { }
 
   ngOnInit() {
-    this.identity.get()
-      .switchMap((u) => this.users.get(u._id))
-      .subscribe((user) => {
-        this.user = user;
-        this.firstName = user.firstName;
-        this.lastName = user.lastName;
-        this.username = user.username;
-      });
+    this.identity.get().subscribe((u) => this.getUser(u._id));
   }
 
   cancel(): void {
@@ -55,5 +48,14 @@ export class ProfileComponent implements OnInit {
         this.snackBar.open('Success', 'Your profile has been updated', { duration: 3000 });
         this.location.back();
       });
+  }
+
+  private getUser(id) {
+    return this.users.get(id).subscribe((user) => {
+      this.user = user;
+        this.firstName = user.firstName;
+        this.lastName = user.lastName;
+        this.username = user.username;
+    });
   }
 }
