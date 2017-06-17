@@ -4,11 +4,15 @@ import { FormsModule } from '@angular/forms';
 import { MdButtonModule, MdInputModule, MdSnackBarModule, MdSnackBar, MdSnackBarConfig } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Observable } from 'rxjs/Observable';
-
 import 'rxjs/add/observable/empty';
 import 'rxjs/add/observable/of';
 
-import { RouterLinkStubDirective, RouterOutletStubComponent } from '../../../../testing/router-stubs';
+import {
+  ActivatedRoute,
+  ActivatedRouteStub,
+  RouterLinkStubDirective,
+  RouterOutletStubComponent
+} from '../../../../testing/router-stubs';
 
 import { ProfileComponent } from './profile.component';
 import { ErrorDialogService } from '../../shared/services/error-dialog/error-dialog.service';
@@ -46,6 +50,7 @@ class UserStub {
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
   let fixture: ComponentFixture<ProfileComponent>;
+  let route;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -62,6 +67,7 @@ describe('ProfileComponent', () => {
       ],
       providers: [
         ErrorMessageService,
+        { provide: ActivatedRoute, useClass: ActivatedRouteStub },
         { provide: ErrorDialogService, useClass: ErrorDialogStub },
         { provide: IdentityService, useClass: IdentityStub },
         { provide: Location, useClass: LocationStub },
@@ -75,6 +81,8 @@ describe('ProfileComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ProfileComponent);
     component = fixture.componentInstance;
+    route = fixture.debugElement.injector.get(ActivatedRoute);
+    route.testParams = {};
     fixture.detectChanges();
   });
 
@@ -83,48 +91,75 @@ describe('ProfileComponent', () => {
   });
 
   describe('initialization', () => {
-    it('gets the current user', () => {
-      const identity = fixture.debugElement.injector.get(IdentityService);
-      spyOn(identity, 'get').and.callThrough();
-      component.ngOnInit();
-      expect(identity.get).toHaveBeenCalledTimes(1);
+    describe('without and ID in the route', () => {
+      it('gets the current user', () => {
+        const identity = fixture.debugElement.injector.get(IdentityService);
+        spyOn(identity, 'get').and.callThrough();
+        component.ngOnInit();
+        expect(identity.get).toHaveBeenCalledTimes(1);
+      });
+
+      it('gets the full user information for this current user', () => {
+        const identity = fixture.debugElement.injector.get(IdentityService);
+        spyOn(identity, 'get').and.returnValue(Observable.of({
+          _id: '777423',
+          username: 'bm@willy.com'
+        }));
+        const users = fixture.debugElement.injector.get(UserService);
+        spyOn(users, 'get').and.returnValue(Observable.of({
+          _id: '777423',
+          firstName: 'Billy',
+          lastName: 'Madison',
+          username: 'bm@willy.com'
+        }));
+        component.ngOnInit();
+        expect(users.get).toHaveBeenCalledTimes(1);
+        expect(users.get).toHaveBeenCalledWith('777423');
+      });
+
+      it('populates the fields with information from the current user', () => {
+        const identity = fixture.debugElement.injector.get(IdentityService);
+        spyOn(identity, 'get').and.returnValue(Observable.of({
+          _id: '777423',
+          username: 'bm@willy.com'
+        }));
+        const users = fixture.debugElement.injector.get(UserService);
+        spyOn(users, 'get').and.returnValue(Observable.of({
+          _id: '777423',
+          firstName: 'Billy',
+          lastName: 'Madison',
+          username: 'bm@willy.com'
+        }));
+        component.ngOnInit();
+        expect(component.firstName).toEqual('Billy');
+        expect(component.lastName).toEqual('Madison');
+        expect(component.username).toEqual('bm@willy.com');
+      });
     });
 
-    it('gets the full user information for this current user', () => {
-      const identity = fixture.debugElement.injector.get(IdentityService);
-      spyOn(identity, 'get').and.returnValue(Observable.of({
-        _id: '777423',
-        username: 'bm@willy.com'
-      }));
-      const users = fixture.debugElement.injector.get(UserService);
-      spyOn(users, 'get').and.returnValue(Observable.of({
-        _id: '777423',
-        firstName: 'Billy',
-        lastName: 'Madison',
-        username: 'bm@willy.com'
-      }));
-      component.ngOnInit();
-      expect(users.get).toHaveBeenCalledTimes(1);
-      expect(users.get).toHaveBeenCalledWith('777423');
-    });
+    describe('with an ID in the route', () => {
+      beforeEach(() => {
+        route.testParams = { id: '73423141591138420' };
+      });
 
-    it('populates the fields with information from the current user', () => {
-      const identity = fixture.debugElement.injector.get(IdentityService);
-      spyOn(identity, 'get').and.returnValue(Observable.of({
-        _id: '777423',
-        username: 'bm@willy.com'
-      }));
-      const users = fixture.debugElement.injector.get(UserService);
-      spyOn(users, 'get').and.returnValue(Observable.of({
-        _id: '777423',
-        firstName: 'Billy',
-        lastName: 'Madison',
-        username: 'bm@willy.com'
-      }));
-      component.ngOnInit();
-      expect(component.firstName).toEqual('Billy');
-      expect(component.lastName).toEqual('Madison');
-      expect(component.username).toEqual('bm@willy.com');
+      it('gets the user information for that ID', () => {
+        const identity = fixture.debugElement.injector.get(IdentityService);
+        spyOn(identity, 'get').and.callThrough();
+        const users = fixture.debugElement.injector.get(UserService);
+        spyOn(users, 'get').and.returnValue(Observable.of({
+          _id: '73423141591138420',
+          firstName: 'Jimmy',
+          lastName: 'Crackorn',
+          username: 'idc@mgaway.com'
+        }));
+        component.ngOnInit();
+        expect(identity.get).not.toHaveBeenCalled();
+        expect(users.get).toHaveBeenCalledTimes(1);
+        expect(users.get).toHaveBeenCalledWith('73423141591138420');
+      });
+
+      it('populates the fields', () => {
+      });
     });
   });
 

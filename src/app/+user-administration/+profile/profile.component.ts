@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { MdSnackBar } from '@angular/material';
+import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 
 import { ErrorMessageService } from '../../shared/services/error-message/error-message.service';
@@ -24,11 +26,18 @@ export class ProfileComponent implements OnInit {
 
   private user: User;
 
-  constructor(private location: Location, private snackBar: MdSnackBar, private identity: IdentityService,
+  constructor(private route: ActivatedRoute, private location: Location, private snackBar: MdSnackBar, private identity: IdentityService,
     private users: UserService, private error: ErrorMessageService) { }
 
   ngOnInit() {
-    this.identity.get().subscribe((u) => this.getUser(u._id));
+    this.route.params
+      .switchMap((params) => {
+        if (params.id) {
+          return Observable.of(params.id);
+        } else {
+          return this.identity.get().map((u) => u._id);
+        }
+      }).subscribe(id => this.getUser(id));
   }
 
   cancel(): void {
