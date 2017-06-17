@@ -3,6 +3,9 @@
 import { RequestMethod, BaseRequestOptions, Response, ResponseOptions } from '@angular/http';
 import { Router } from '@angular/router';
 import { MockBackend, MockConnection } from '@angular/http/testing';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/empty';
+
 import { AuthenticationTokenService } from '../../../core/authentication-token/authentication-token.service';
 import { TimeTraxHttpService } from './time-trax-http.service';
 
@@ -63,7 +66,7 @@ describe('TimeTraxHttpService', () => {
 
       spyOn(mockRouter, 'navigate');
       mockBackend.connections.subscribe(c => connection = c);
-      service.get('http://test.dr.who/companions').subscribe();
+      service.get('http://test.dr.who/companions').catch(res => Observable.empty()).subscribe();
       const response = new Response(new ResponseOptions({
         status: 401
       }));
@@ -136,7 +139,7 @@ describe('TimeTraxHttpService', () => {
 
       spyOn(mockRouter, 'navigate');
       mockBackend.connections.subscribe(c => connection = c);
-      service.post('http://test.dr.who/companions', { name: 'Rose Tyler' }).subscribe();
+      service.post('http://test.dr.who/companions', { name: 'Rose Tyler' }).catch(res => Observable.empty()).subscribe();
       const response = new Response(new ResponseOptions({
         status: 401
       }));
@@ -201,7 +204,7 @@ describe('TimeTraxHttpService', () => {
 
       spyOn(mockRouter, 'navigate');
       mockBackend.connections.subscribe(c => connection = c);
-      service.delete('http://test.dr.who/companions/73').subscribe();
+      service.delete('http://test.dr.who/companions/73').catch(res => Observable.empty()).subscribe();
       const response = new Response(new ResponseOptions({
         status: 401
       }));
@@ -266,7 +269,7 @@ describe('TimeTraxHttpService', () => {
 
       spyOn(mockRouter, 'navigate');
       mockBackend.connections.subscribe(c => connection = c);
-      service.put('http://test.dr.who/companions/42', { id: '42', name: 'Amy Pond' }).subscribe();
+      service.put('http://test.dr.who/companions/42', { id: '42', name: 'Amy Pond' }).catch(res => Observable.empty()).subscribe();
       const response = new Response(new ResponseOptions({
         status: 401
       }));
