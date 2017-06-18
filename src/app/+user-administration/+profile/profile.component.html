@@ -3,8 +3,7 @@
 
   <div>
     <md-input-container>
-      <input mdInput type="text" name="firstName" placeholder="First Name" [(ngModel)]="firstName" #fname="ngModel"
-        required />
+      <input mdInput type="text" name="firstName" placeholder="First Name" [(ngModel)]="firstName" #fname="ngModel" required />
     </md-input-container>
     <div *ngIf="fname.errors && (fname.dirty || fname.touched)" class='error-msg'>
       <div [hidden]="!fname.errors.required">
@@ -21,14 +20,51 @@
 
   <div>
     <md-input-container>
-      <input mdInput type="text" name="email" placeholder="E-Mail Address" [(ngModel)]="username" #email="ngModel" />
+      <input mdInput type="text" name="email" placeholder="E-Mail Address" [(ngModel)]="username" #email="ngModel" required/>
     </md-input-container>
+    <div *ngIf="email.errors && (email.dirty || email.touched)" class='error-msg'>
+      <div [hidden]="!email.errors.required">
+        E-Mail Address is required
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="true">
+    <div>
+      <md-input-container>
+        <input mdInput type="password" name="newPassword" placeholder="Password" [(ngModel)]="password" #pswd="ngModel" minlength="8"
+          required />
+      </md-input-container>
+      <div *ngIf="pswd.errors && (pswd.dirty || pswd.touched)" class='error-msg'>
+        <div [hidden]="!pswd.errors.required">
+          Password is required
+        </div>
+        <div [hidden]="!pswd.errors.minlength">
+          Password must be at least 8 characters
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <md-input-container>
+        <input mdInput type="password" name="verifyNewPassword" placeholder="Verify Password" [(ngModel)]="verifyPassword" #verifyPswd="ngModel"
+          required trxMatches="{{password}}" />
+      </md-input-container>
+      <div *ngIf="verifyPswd.errors && (verifyPswd.dirty || verifyPswd.touched)" class='error-msg'>
+        <div [hidden]="!verifyPswd.errors.required">
+          Verification Password is required
+        </div>
+        <div [hidden]="!verifyPswd.errors.trxMatches">
+          Verification Password must match Password
+        </div>
+      </div>
+    </div>
   </div>
 
   <div *ngIf="errorMessage" class="error-msg">{{errorMessage}}</div>
 
   <div class="button-section">
-    <button type="submit" md-raised-button color="primary" [disabled]="!profileForm.dirty || profileForm.invalid" (click)="save()">Save Changes</button>
+    <button type="submit" md-raised-button color="primary" [disabled]="!profileForm.dirty || profileForm.invalid" (click)="save()">{{buttonLabel}}</button>
     <a md-raised-button color="accent" routerLink="/user-administration/change-password" skipLocationChange="true">Change Password</a>
     <button type="button" md-button (click)="cancel()">Cancel</button>
   </div>

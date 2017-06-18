@@ -17,6 +17,7 @@ import { ProfileComponent } from './profile.component';
 import { ErrorDialogService } from '../../shared/services/error-dialog/error-dialog.service';
 import { ErrorMessageService } from '../../shared/services/error-message/error-message.service';
 import { IdentityService } from '../../core/identity/identity.service';
+import { SharedModule } from '../../shared/shared.module';
 import { User } from '../../data/models/user';
 import { UserService } from '../../data/services/user/user.service';
 
@@ -61,7 +62,8 @@ describe('ProfileComponent', () => {
         MdButtonModule,
         MdInputModule,
         NoopAnimationsModule,
-        RouterTestingModule
+        RouterTestingModule,
+        SharedModule
       ],
       providers: [
         ErrorMessageService,
@@ -90,9 +92,13 @@ describe('ProfileComponent', () => {
   describe('initialization', () => {
     describe('without and ID in the route', () => {
       it('sets the title to Your Profile', () => {
-        const identity = fixture.debugElement.injector.get(IdentityService);
         component.ngOnInit();
         expect(component.title).toEqual('Your Profile');
+      });
+
+      it('sets the button text to Save Changes', () => {
+        component.ngOnInit();
+        expect(component.buttonLabel).toEqual('Save Changes');
       });
 
       it('gets the current user', () => {
@@ -146,9 +152,13 @@ describe('ProfileComponent', () => {
       });
 
       it('sets the title to Edit User Profile', () => {
-        const identity = fixture.debugElement.injector.get(IdentityService);
         component.ngOnInit();
         expect(component.title).toEqual('Edit User Profile');
+      });
+
+       it('sets the button text to Save Changes', () => {
+        component.ngOnInit();
+        expect(component.buttonLabel).toEqual('Save Changes');
       });
 
       it('gets the user information for that ID', () => {
@@ -189,9 +199,13 @@ describe('ProfileComponent', () => {
       });
 
       it('sets the title to Create User', () => {
-        const identity = fixture.debugElement.injector.get(IdentityService);
         component.ngOnInit();
         expect(component.title).toEqual('Create User');
+      });
+
+       it('sets the button text to Create User', () => {
+        component.ngOnInit();
+        expect(component.buttonLabel).toEqual('Create User');
       });
 
       it('does not attempt to get a user', () => {

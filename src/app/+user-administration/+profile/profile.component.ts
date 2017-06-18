@@ -19,11 +19,15 @@ import { User } from '../../data/models/user';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
+  buttonLabel: string;
   title: string;
 
   firstName: string;
   lastName: string;
   username: string;
+
+  password: string;
+  verifyPassword: string;
 
   errorMessage: string;
 
@@ -80,12 +84,15 @@ export class ProfileComponent implements OnInit {
   private initialize(id) {
     if (!id) {
       this.successMessage = 'Your profile has been updated';
+      this.buttonLabel = 'Save Changes';
       this.title = 'Your Profile';
     } else if (id === 'new') {
       this.successMessage = 'New user has been created';
+      this.buttonLabel = 'Create User';
       this.title = 'Create User';
     } else {
       this.successMessage = 'User profile has been updated';
+      this.buttonLabel = 'Save Changes';
       this.title = 'Edit User Profile'
     }
   }
