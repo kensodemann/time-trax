@@ -75,10 +75,13 @@ export class ProfileComponent implements OnInit {
 
   private initialize(id) {
     if (!id) {
-      this.successMessage = 'Your profile has been updated';
+      this.successMessage = 'Your profile updated';
       this.title = 'Your Profile';
-    } else {
-      this.successMessage = 'User profile has been updated';
+    } else if (id === 'new') {
+      this.successMessage = 'New user created';
+      this.title = 'Create User';
+     } else {
+      this.successMessage = 'User profile updated';
       this.title = 'Edit User Profile'
     }
   }

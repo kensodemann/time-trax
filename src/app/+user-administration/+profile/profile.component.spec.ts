@@ -168,6 +168,38 @@ describe('ProfileComponent', () => {
       });
 
       it('populates the fields', () => {
+        const identity = fixture.debugElement.injector.get(IdentityService);
+        const users = fixture.debugElement.injector.get(UserService);
+        spyOn(users, 'get').and.returnValue(Observable.of({
+          _id: '73423141591138420',
+          firstName: 'Jimmy',
+          lastName: 'Crackorn',
+          username: 'idc@mgaway.com'
+        }));
+        component.ngOnInit();
+        expect(component.firstName).toEqual('Jimmy');
+        expect(component.lastName).toEqual('Crackorn');
+        expect(component.username).toEqual('idc@mgaway.com');
+      });
+    });
+
+    describe('with an ID in the route', () => {
+      beforeEach(() => {
+        route.testParams = { id: 'new' };
+      });
+
+      it('sets the title to Create User', () => {
+        const identity = fixture.debugElement.injector.get(IdentityService);
+        component.ngOnInit();
+        expect(component.title).toEqual('Create User');
+      });
+
+      it('does not attempt to get a user', () => {
+
+      });
+
+      it('leaves the field blank', () => {
+
       });
     });
   });
@@ -220,21 +252,30 @@ describe('ProfileComponent', () => {
         spyOn(user, 'save').and.returnValue(Observable.of({}));
       });
 
-      it('displays a snack bar', () => {
+      it('displays a snack bar with appropriate message for current user', () => {
         const snackBar = fixture.debugElement.injector.get(MdSnackBar);
         spyOn(snackBar, 'open');
         component.save();
         expect(snackBar.open).toHaveBeenCalledTimes(1);
-        expect(snackBar.open).toHaveBeenCalledWith('Success', 'Your profile has been updated', { duration: 3000 });
+        expect(snackBar.open).toHaveBeenCalledWith('Success', 'Your profile updated', { duration: 3000 });
       });
 
-      it('displays a snack bar', () => {
+      it('displays a snack bar with appropriate message for specified user', () => {
         route.testParams = { id: '73423141591138420' };
         const snackBar = fixture.debugElement.injector.get(MdSnackBar);
         spyOn(snackBar, 'open');
         component.save();
         expect(snackBar.open).toHaveBeenCalledTimes(1);
-        expect(snackBar.open).toHaveBeenCalledWith('Success', 'User profile has been updated', { duration: 3000 });
+        expect(snackBar.open).toHaveBeenCalledWith('Success', 'User profile updated', { duration: 3000 });
+      });
+
+      it('displays a snack bar with appropriate message for new user', () => {
+        route.testParams = { id: 'new' };
+        const snackBar = fixture.debugElement.injector.get(MdSnackBar);
+        spyOn(snackBar, 'open');
+        component.save();
+        expect(snackBar.open).toHaveBeenCalledTimes(1);
+        expect(snackBar.open).toHaveBeenCalledWith('Success', 'New user created', { duration: 3000 });
       });
 
       it('navigates to the profile view', () => {
