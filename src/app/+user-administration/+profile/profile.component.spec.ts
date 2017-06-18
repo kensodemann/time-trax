@@ -101,6 +101,11 @@ describe('ProfileComponent', () => {
         expect(component.buttonLabel).toEqual('Save Changes');
       });
 
+      it('does not allow password entry', () => {
+        component.ngOnInit();
+        expect(component.allowPasswordEntry).toEqual(false);
+      });
+
       it('gets the current user', () => {
         const identity = fixture.debugElement.injector.get(IdentityService);
         spyOn(identity, 'get').and.callThrough();
@@ -159,6 +164,11 @@ describe('ProfileComponent', () => {
        it('sets the button text to Save Changes', () => {
         component.ngOnInit();
         expect(component.buttonLabel).toEqual('Save Changes');
+       });
+
+      it('does not allow password entry', () => {
+        component.ngOnInit();
+        expect(component.allowPasswordEntry).toEqual(false);
       });
 
       it('gets the user information for that ID', () => {
@@ -193,7 +203,7 @@ describe('ProfileComponent', () => {
       });
     });
 
-    describe('with an ID in the route', () => {
+    describe('for a new user', () => {
       beforeEach(() => {
         route.testParams = { id: 'new' };
       });
@@ -206,6 +216,11 @@ describe('ProfileComponent', () => {
        it('sets the button text to Create User', () => {
         component.ngOnInit();
         expect(component.buttonLabel).toEqual('Create User');
+       });
+
+      it('does not allow password entry', () => {
+        component.ngOnInit();
+        expect(component.allowPasswordEntry).toEqual(true);
       });
 
       it('does not attempt to get a user', () => {
