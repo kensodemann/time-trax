@@ -228,6 +228,15 @@ describe('ProfileComponent', () => {
         expect(snackBar.open).toHaveBeenCalledWith('Success', 'Your profile has been updated', { duration: 3000 });
       });
 
+      it('displays a snack bar', () => {
+        route.testParams = { id: '73423141591138420' };
+        const snackBar = fixture.debugElement.injector.get(MdSnackBar);
+        spyOn(snackBar, 'open');
+        component.save();
+        expect(snackBar.open).toHaveBeenCalledTimes(1);
+        expect(snackBar.open).toHaveBeenCalledWith('Success', 'User profile has been updated', { duration: 3000 });
+      });
+
       it('navigates to the profile view', () => {
         const location = fixture.debugElement.injector.get(Location);
         spyOn(location, 'back');
