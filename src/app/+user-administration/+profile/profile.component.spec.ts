@@ -195,11 +195,24 @@ describe('ProfileComponent', () => {
       });
 
       it('does not attempt to get a user', () => {
-
+        const identity = fixture.debugElement.injector.get(IdentityService);
+        spyOn(identity, 'get').and.callThrough();
+        const users = fixture.debugElement.injector.get(UserService);
+        spyOn(users, 'get').and.callThrough();
+        component.ngOnInit();
+        expect(identity.get).not.toHaveBeenCalled();
+        expect(users.get).not.toHaveBeenCalled();
       });
 
       it('leaves the field blank', () => {
-
+        const identity = fixture.debugElement.injector.get(IdentityService);
+        spyOn(identity, 'get').and.callThrough();
+        const users = fixture.debugElement.injector.get(UserService);
+        spyOn(users, 'get').and.callThrough();
+        component.ngOnInit();
+        expect(component.firstName).toBeUndefined();
+        expect(component.lastName).toBeUndefined();
+        expect(component.username).toBeUndefined();
       });
     });
   });
@@ -257,7 +270,7 @@ describe('ProfileComponent', () => {
         spyOn(snackBar, 'open');
         component.save();
         expect(snackBar.open).toHaveBeenCalledTimes(1);
-        expect(snackBar.open).toHaveBeenCalledWith('Success', 'Your profile updated', { duration: 3000 });
+        expect(snackBar.open).toHaveBeenCalledWith('Success', 'Your profile has been updated', { duration: 3000 });
       });
 
       it('displays a snack bar with appropriate message for specified user', () => {
@@ -266,7 +279,7 @@ describe('ProfileComponent', () => {
         spyOn(snackBar, 'open');
         component.save();
         expect(snackBar.open).toHaveBeenCalledTimes(1);
-        expect(snackBar.open).toHaveBeenCalledWith('Success', 'User profile updated', { duration: 3000 });
+        expect(snackBar.open).toHaveBeenCalledWith('Success', 'User profile has been updated', { duration: 3000 });
       });
 
       it('displays a snack bar with appropriate message for new user', () => {
@@ -275,7 +288,7 @@ describe('ProfileComponent', () => {
         spyOn(snackBar, 'open');
         component.save();
         expect(snackBar.open).toHaveBeenCalledTimes(1);
-        expect(snackBar.open).toHaveBeenCalledWith('Success', 'New user created', { duration: 3000 });
+        expect(snackBar.open).toHaveBeenCalledWith('Success', 'New user has been created', { duration: 3000 });
       });
 
       it('navigates to the profile view', () => {

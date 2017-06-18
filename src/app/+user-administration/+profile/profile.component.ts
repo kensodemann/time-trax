@@ -64,24 +64,28 @@ export class ProfileComponent implements OnInit {
       });
   }
 
-  private getUser(id) {
-    return this.users.get(id).subscribe((user) => {
-      this.user = user;
-      this.firstName = user.firstName;
-      this.lastName = user.lastName;
-      this.username = user.username;
-    });
+  private getUser(id): void {
+    if (id === 'new') {
+      this.user = new User();
+    } else {
+      this.users.get(id).subscribe((user) => {
+        this.user = user;
+        this.firstName = user.firstName;
+        this.lastName = user.lastName;
+        this.username = user.username;
+      });
+    }
   }
 
   private initialize(id) {
     if (!id) {
-      this.successMessage = 'Your profile updated';
+      this.successMessage = 'Your profile has been updated';
       this.title = 'Your Profile';
     } else if (id === 'new') {
-      this.successMessage = 'New user created';
+      this.successMessage = 'New user has been created';
       this.title = 'Create User';
-     } else {
-      this.successMessage = 'User profile updated';
+    } else {
+      this.successMessage = 'User profile has been updated';
       this.title = 'Edit User Profile'
     }
   }
