@@ -73,7 +73,6 @@ describe('TimeTraxHttpService', () => {
       connection.mockError(response as any as Error);
       expect(mockRouter.navigate).toHaveBeenCalledTimes(1);
       expect(mockRouter.navigate).toHaveBeenCalledWith(['authentication', 'login']);
-      expect(err.status).toEqual(401);
     });
 
     it('rethrows non 401 errors', () => {
@@ -147,7 +146,6 @@ describe('TimeTraxHttpService', () => {
       connection.mockError(response as any as Error);
       expect(mockRouter.navigate).toHaveBeenCalledTimes(1);
       expect(mockRouter.navigate).toHaveBeenCalledWith(['authentication', 'login']);
-      expect(err.status).toEqual(401);
     });
 
     it('rethrows non 401 errors', () => {
@@ -213,7 +211,6 @@ describe('TimeTraxHttpService', () => {
       connection.mockError(response as any as Error);
       expect(mockRouter.navigate).toHaveBeenCalledTimes(1);
       expect(mockRouter.navigate).toHaveBeenCalledWith(['authentication', 'login']);
-      expect(err.status).toEqual(401);
     });
 
     it('rethrows non 401 errors', () => {
@@ -279,7 +276,6 @@ describe('TimeTraxHttpService', () => {
       connection.mockError(response as any as Error);
       expect(mockRouter.navigate).toHaveBeenCalledTimes(1);
       expect(mockRouter.navigate).toHaveBeenCalledWith(['authentication', 'login']);
-      expect(err.status).toEqual(401);
     });
 
     it('rethrows non 401 errors', () => {

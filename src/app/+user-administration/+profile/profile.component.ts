@@ -54,7 +54,7 @@ export class ProfileComponent implements OnInit {
         return Observable.empty();
       })
       .subscribe(u => {
-        this.snackBar.open('Success', 'Your profile has been updated', { duration: 3000 });
+        this.snackBar.open('Success', 'User profile has been updated', { duration: 3000 });
         this.location.back();
       });
   }

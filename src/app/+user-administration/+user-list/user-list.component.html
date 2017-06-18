@@ -18,7 +18,7 @@
   <div class="content">
     <div class="flex-container" fxLayout="row" fxLayoutWrap="wrap" fxLayout.xs="column" fxLayoutWrap.xs="none">
       <div fxFlex="25" fxFlex.md="33.33333" fxFlex.sm="50" *ngFor="let user of filteredUsers()">
-        <md-card class="clickable" (click)="editUser(user)">
+        <md-card class="clickable" [routerLink]="['/user-administration', 'profile', user._id]">
           <div class="title-section">
             <div class="primary-text">{{user?.firstName}} {{user?.lastName}}</div>
 

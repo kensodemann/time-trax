@@ -13,15 +13,15 @@
         <md-icon md-list-icon>timeline</md-icon>
         <span md-line>Time Report</span>
       </a>
-      <a md-list-item  [routerLink]="['/timesheet-history']">
+      <a md-list-item [routerLink]="['/timesheet-history']">
         <md-icon md-list-icon>history</md-icon>
         <span md-line>Time Tracking History</span>
       </a>
-      <a md-list-item  [routerLink]="['/user-administration/profile']">
+      <a md-list-item [routerLink]="['/user-administration', 'profile']">
         <md-icon md-list-icon>account_circle</md-icon>
         <span md-line>My Profile</span>
       </a>
-      <a *ngIf="userIsAdmin" md-list-item  [routerLink]="['/user-administration/user-list']">
+      <a *ngIf="userIsAdmin" md-list-item [routerLink]="['/user-administration', 'user-list']">
         <md-icon md-list-icon>people</md-icon>
         <span md-line>Manage Users</span>
       </a>
@@ -29,7 +29,7 @@
         <md-icon md-list-icon>info</md-icon>
         <span md-line>About</span>
       </a>
-      <a md-list-item [routerLink]="['authentication/logout']">
+      <a md-list-item [routerLink]="['authentication', 'logout']">
         <md-icon md-list-icon>power</md-icon>
         <span md-line>Logout</span>
       </a>
