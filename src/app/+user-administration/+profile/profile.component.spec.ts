@@ -3,15 +3,14 @@ import { Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MdButtonModule, MdInputModule, MdSnackBarModule, MdSnackBar, MdSnackBarConfig } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/empty';
 import 'rxjs/add/observable/of';
 
 import {
   ActivatedRoute,
-  ActivatedRouteStub,
-  RouterLinkStubDirective,
-  RouterOutletStubComponent
+  ActivatedRouteStub
 } from '../../../../testing/router-stubs';
 
 import { ProfileComponent } from './profile.component';
@@ -55,15 +54,14 @@ describe('ProfileComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        ProfileComponent,
-        RouterLinkStubDirective,
-        RouterOutletStubComponent
+        ProfileComponent
       ],
       imports: [
         FormsModule,
         MdButtonModule,
         MdInputModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        RouterTestingModule
       ],
       providers: [
         ErrorMessageService,
@@ -74,8 +72,7 @@ describe('ProfileComponent', () => {
         { provide: MdSnackBar, useClass: MdSnackBarStub },
         { provide: UserService, useClass: UserStub }
       ]
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -92,6 +89,12 @@ describe('ProfileComponent', () => {
 
   describe('initialization', () => {
     describe('without and ID in the route', () => {
+      it('sets the title to Your Profile', () => {
+        const identity = fixture.debugElement.injector.get(IdentityService);
+        component.ngOnInit();
+        expect(component.title).toEqual('Your Profile');
+      });
+
       it('gets the current user', () => {
         const identity = fixture.debugElement.injector.get(IdentityService);
         spyOn(identity, 'get').and.callThrough();
@@ -140,6 +143,12 @@ describe('ProfileComponent', () => {
     describe('with an ID in the route', () => {
       beforeEach(() => {
         route.testParams = { id: '73423141591138420' };
+      });
+
+      it('sets the title to Edit User Profile', () => {
+        const identity = fixture.debugElement.injector.get(IdentityService);
+        component.ngOnInit();
+        expect(component.title).toEqual('Edit User Profile');
       });
 
       it('gets the user information for that ID', () => {

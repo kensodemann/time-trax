@@ -19,15 +19,11 @@ export class UserListComponent implements OnInit {
     this.userService.getAll().subscribe(u => this.users = u);
   }
 
-  editUser(user: User): void { }
-
   filteredUsers(): Array<User> {
     const str = this.filterText ? this.filterText.toLowerCase() : '';
     return this.users ? this.users.filter(u => u.firstName.toLowerCase().includes(str) ||
       u.lastName.toLowerCase().includes(str) ||
       u.username.toLowerCase().includes(str)) : [];
   }
-
-  newUser(): void { }
 
 }

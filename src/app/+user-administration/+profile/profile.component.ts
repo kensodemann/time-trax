@@ -4,6 +4,7 @@ import { MdSnackBar } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 
@@ -18,12 +19,15 @@ import { User } from '../../data/models/user';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
+  title: string;
+
   firstName: string;
   lastName: string;
   username: string;
 
   errorMessage: string;
 
+  private successMessage: string;
   private user: User;
 
   constructor(private route: ActivatedRoute, private location: Location, private snackBar: MdSnackBar, private identity: IdentityService,
@@ -31,6 +35,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.route.params
+      .do(params => this.initialize(params.id))
       .switchMap((params) => {
         if (params.id) {
           return Observable.of(params.id);
@@ -54,7 +59,7 @@ export class ProfileComponent implements OnInit {
         return Observable.empty();
       })
       .subscribe(u => {
-        this.snackBar.open('Success', 'User profile has been updated', { duration: 3000 });
+        this.snackBar.open('Success', this.successMessage, { duration: 3000 });
         this.location.back();
       });
   }
@@ -62,9 +67,19 @@ export class ProfileComponent implements OnInit {
   private getUser(id) {
     return this.users.get(id).subscribe((user) => {
       this.user = user;
-        this.firstName = user.firstName;
-        this.lastName = user.lastName;
-        this.username = user.username;
+      this.firstName = user.firstName;
+      this.lastName = user.lastName;
+      this.username = user.username;
     });
+  }
+
+  private initialize(id) {
+    if (!id) {
+      this.successMessage = 'Your profile has been updated';
+      this.title = 'Your Profile';
+    } else {
+      this.successMessage = 'User profile has been updated';
+      this.title = 'Edit User Profile'
+    }
   }
 }
