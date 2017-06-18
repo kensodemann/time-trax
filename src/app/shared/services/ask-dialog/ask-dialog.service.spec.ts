@@ -8,6 +8,42 @@ import { Observable } from 'rxjs/Observable';
 import { AskDialogComponent } from './ask-dialog.component';
 import { AskDialogService } from './ask-dialog.service';
 
+@Component({
+  selector: 'trx-view-container',
+  template: '<div></div>'
+})
+class ViewContainerComponent {
+  constructor(public viewContainerRef: ViewContainerRef) { }
+}
+
+@Component({
+  selector: 'trx-arbitrary-component',
+  template: `<trx-view-container></trx-view-container>`,
+})
+class ChildViewContainerComponent {
+  @ViewChild(ViewContainerComponent) childWithViewContainer: ViewContainerComponent;
+
+  get childViewContainer() {
+    return this.childWithViewContainer.viewContainerRef;
+  }
+}
+
+// Create a real (non-test) NgModule as a workaround for
+// https://github.com/angular/angular/issues/10760
+const TEST_DIRECTIVES = [
+  AskDialogComponent,
+  ChildViewContainerComponent,
+  ViewContainerComponent
+];
+
+@NgModule({
+  imports: [MdDialogModule, NoopAnimationsModule],
+  exports: TEST_DIRECTIVES,
+  declarations: TEST_DIRECTIVES,
+  entryComponents: TEST_DIRECTIVES
+})
+class DialogTestModule { }
+
 describe('AskDialogService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -69,39 +105,3 @@ describe('AskDialogService', () => {
     });
   });
 });
-
-@Component({
-  selector: 'trx-view-container',
-  template: '<div></div>'
-})
-class ViewContainerComponent {
-  constructor(public viewContainerRef: ViewContainerRef) { }
-}
-
-@Component({
-  selector: 'trx-arbitrary-component',
-  template: `<trx-view-container></trx-view-container>`,
-})
-class ChildViewContainerComponent {
-  @ViewChild(ViewContainerComponent) childWithViewContainer: ViewContainerComponent;
-
-  get childViewContainer() {
-    return this.childWithViewContainer.viewContainerRef;
-  }
-}
-
-// Create a real (non-test) NgModule as a workaround for
-// https://github.com/angular/angular/issues/10760
-const TEST_DIRECTIVES = [
-  AskDialogComponent,
-  ChildViewContainerComponent,
-  ViewContainerComponent
-];
-
-@NgModule({
-  imports: [MdDialogModule, NoopAnimationsModule],
-  exports: TEST_DIRECTIVES,
-  declarations: TEST_DIRECTIVES,
-  entryComponents: TEST_DIRECTIVES
-})
-class DialogTestModule { }

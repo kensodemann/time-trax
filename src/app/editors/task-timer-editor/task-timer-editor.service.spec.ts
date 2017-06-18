@@ -10,6 +10,50 @@ import { Project } from '../../data/models/project';
 import { TaskTimerEditorComponent } from './task-timer-editor.component';
 import { TaskTimerEditorService } from './task-timer-editor.service';
 
+@Component({
+  selector: 'trx-view-container',
+  template: '<div></div>'
+})
+class ViewContainerComponent {
+  constructor(public viewContainerRef: ViewContainerRef) { }
+}
+
+@Component({
+  selector: 'trx-arbitrary-component',
+  template: `<trx-view-container></trx-view-container>`,
+})
+class ChildViewContainerComponent {
+  @ViewChild(ViewContainerComponent) childWithViewContainer: ViewContainerComponent;
+
+  get childViewContainer() {
+    return this.childWithViewContainer.viewContainerRef;
+  }
+}
+
+// Create a real (non-test) NgModule as a workaround for
+// https://github.com/angular/angular/issues/10760
+const TEST_DIRECTIVES = [
+  TaskTimerEditorComponent,
+  ChildViewContainerComponent,
+  ViewContainerComponent
+];
+
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MdAutocompleteModule,
+    MdDialogModule,
+    MdInputModule,
+    NoopAnimationsModule
+  ],
+  exports: TEST_DIRECTIVES,
+  declarations: TEST_DIRECTIVES,
+  entryComponents: TEST_DIRECTIVES
+})
+class DialogTestModule { }
+
 
 describe('TaskTimerEditorService', () => {
   beforeEach(() => {
@@ -80,47 +124,3 @@ describe('TaskTimerEditorService', () => {
     });
   });
 });
-
-@Component({
-  selector: 'trx-view-container',
-  template: '<div></div>'
-})
-class ViewContainerComponent {
-  constructor(public viewContainerRef: ViewContainerRef) { }
-}
-
-@Component({
-  selector: 'trx-arbitrary-component',
-  template: `<trx-view-container></trx-view-container>`,
-})
-class ChildViewContainerComponent {
-  @ViewChild(ViewContainerComponent) childWithViewContainer: ViewContainerComponent;
-
-  get childViewContainer() {
-    return this.childWithViewContainer.viewContainerRef;
-  }
-}
-
-// Create a real (non-test) NgModule as a workaround for
-// https://github.com/angular/angular/issues/10760
-const TEST_DIRECTIVES = [
-  TaskTimerEditorComponent,
-  ChildViewContainerComponent,
-  ViewContainerComponent
-];
-
-@NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MdAutocompleteModule,
-    MdDialogModule,
-    MdInputModule,
-    NoopAnimationsModule
-  ],
-  exports: TEST_DIRECTIVES,
-  declarations: TEST_DIRECTIVES,
-  entryComponents: TEST_DIRECTIVES
-})
-class DialogTestModule { }

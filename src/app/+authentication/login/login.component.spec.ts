@@ -137,7 +137,7 @@ describe('LoginComponent', () => {
       const snackBarRef = { dismiss() { } };
 
       spyOn(snackBar, 'open').and.returnValue(snackBarRef);
-      spyOn(snackBarRef, 'dismiss').and.returnValue;
+      spyOn(snackBarRef, 'dismiss').and.callThrough();
 
       app.dismissErrorMessage();
       expect(snackBarRef.dismiss).not.toHaveBeenCalled();
