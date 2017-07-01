@@ -29,7 +29,7 @@
     </div>
   </div>
 
-  <div *ngIf="true">
+  <div *ngIf="allowPasswordEntry">
     <div>
       <md-input-container>
         <input mdInput type="password" name="newPassword" placeholder="Password" [(ngModel)]="password" #pswd="ngModel" minlength="8"
