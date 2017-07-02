@@ -256,86 +256,188 @@ describe('ProfileComponent', () => {
   });
 
   describe('save', () => {
-    beforeEach(() => {
-      const identity = fixture.debugElement.injector.get(IdentityService);
-      spyOn(identity, 'get').and.returnValue(Observable.of({
-        _id: '777423',
-        username: 'bm@willy.com'
-      }));
-      const users = fixture.debugElement.injector.get(UserService);
-      spyOn(users, 'get').and.returnValue(Observable.of(new User({
-        _id: '777423',
-        firstName: 'Billy',
-        lastName: 'Madison',
-        username: 'bm@willy.com'
-      })));
-      component.ngOnInit();
-    });
-
-    it('saves the value', () => {
-      const user = fixture.debugElement.injector.get(UserService);
-      spyOn(user, 'save').and.returnValue(Observable.of({}));
-      component.firstName = 'William';
-      component.lastName = 'Harrison';
-      component.username = 'wh@willy.com';
-      component.save();
-      expect(user.save).toHaveBeenCalledTimes(1);
-      expect(user.save).toHaveBeenCalledWith(new User({
-        _id: '777423',
-        firstName: 'William',
-        lastName: 'Harrison',
-        username: 'wh@willy.com'
-      }));
-    });
-
-    describe('on success', () => {
+    describe('current user', () => {
       beforeEach(() => {
+        const identity = fixture.debugElement.injector.get(IdentityService);
+        spyOn(identity, 'get').and.returnValue(Observable.of({
+          _id: '777423',
+          username: 'bm@willy.com'
+        }));
+        const users = fixture.debugElement.injector.get(UserService);
+        spyOn(users, 'get').and.returnValue(Observable.of(new User({
+          _id: '777423',
+          firstName: 'Billy',
+          lastName: 'Madison',
+          username: 'bm@willy.com'
+        })));
+        component.ngOnInit();
+      });
+
+      it('saves the value', () => {
         const user = fixture.debugElement.injector.get(UserService);
         spyOn(user, 'save').and.returnValue(Observable.of({}));
+        component.firstName = 'William';
+        component.lastName = 'Harrison';
+        component.username = 'wh@willy.com';
+        component.save();
+        expect(user.save).toHaveBeenCalledTimes(1);
+        expect(user.save).toHaveBeenCalledWith(new User({
+          _id: '777423',
+          firstName: 'William',
+          lastName: 'Harrison',
+          username: 'wh@willy.com'
+        }));
       });
 
-      it('displays a snack bar with appropriate message for current user', () => {
-        const snackBar = fixture.debugElement.injector.get(MdSnackBar);
-        spyOn(snackBar, 'open');
-        component.save();
-        expect(snackBar.open).toHaveBeenCalledTimes(1);
-        expect(snackBar.open).toHaveBeenCalledWith('Success', 'Your profile has been updated', { duration: 3000 });
+      describe('on success', () => {
+        beforeEach(() => {
+          const user = fixture.debugElement.injector.get(UserService);
+          spyOn(user, 'save').and.returnValue(Observable.of({}));
+        });
+
+        it('displays a snack bar message', () => {
+          const snackBar = fixture.debugElement.injector.get(MdSnackBar);
+          spyOn(snackBar, 'open');
+          component.save();
+          expect(snackBar.open).toHaveBeenCalledTimes(1);
+          expect(snackBar.open).toHaveBeenCalledWith('Success', 'Your profile has been updated', { duration: 3000 });
+        });
+
+        it('navigates to the previous view', () => {
+          const location = fixture.debugElement.injector.get(Location);
+          spyOn(location, 'back');
+          component.save();
+          expect(location.back).toHaveBeenCalledTimes(1);
+        });
       });
 
-      it('displays a snack bar with appropriate message for specified user', () => {
-        route.testParams = { id: '73423141591138420' };
-        const snackBar = fixture.debugElement.injector.get(MdSnackBar);
-        spyOn(snackBar, 'open');
-        component.save();
-        expect(snackBar.open).toHaveBeenCalledTimes(1);
-        expect(snackBar.open).toHaveBeenCalledWith('Success', 'User profile has been updated', { duration: 3000 });
-      });
-
-      it('displays a snack bar with appropriate message for new user', () => {
-        route.testParams = { id: 'new' };
-        const snackBar = fixture.debugElement.injector.get(MdSnackBar);
-        spyOn(snackBar, 'open');
-        component.save();
-        expect(snackBar.open).toHaveBeenCalledTimes(1);
-        expect(snackBar.open).toHaveBeenCalledWith('Success', 'New user has been created', { duration: 3000 });
-      });
-
-      it('navigates to the profile view', () => {
-        const location = fixture.debugElement.injector.get(Location);
-        spyOn(location, 'back');
-        component.save();
-        expect(location.back).toHaveBeenCalledTimes(1);
+      describe('on failure', () => {
+        it('sets an error message', () => {
+          const user = fixture.debugElement.injector.get(UserService);
+          spyOn(user, 'save').and.returnValue(Observable.throw({
+            json: function() { return { reason: 'I am an error' }; }
+          }));
+          component.save();
+          expect(component.errorMessage).toEqual('I am an error');
+        });
       });
     });
 
-    describe('on failure', () => {
-      it('sets an error message', () => {
+    describe('existing other user', () => {
+      beforeEach(() => {
+        route.testParams = { id: '73423141591138420' };
+        const users = fixture.debugElement.injector.get(UserService);
+        spyOn(users, 'get').and.returnValue(Observable.of(new User({
+          _id: '73423141591138420',
+          firstName: 'Billy',
+          lastName: 'Madison',
+          username: 'bm@willy.com'
+        })));
+        component.ngOnInit();
+      });
+
+      it('saves the value', () => {
         const user = fixture.debugElement.injector.get(UserService);
-        spyOn(user, 'save').and.returnValue(Observable.throw({
-          json: function() { return { reason: 'I am an error' }; }
-        }));
+        spyOn(user, 'save').and.returnValue(Observable.of({}));
+        component.firstName = 'William';
+        component.lastName = 'Harrison';
+        component.username = 'wh@willy.com';
         component.save();
-        expect(component.errorMessage).toEqual('I am an error');
+        expect(user.save).toHaveBeenCalledTimes(1);
+        expect(user.save).toHaveBeenCalledWith(new User({
+          _id: '73423141591138420',
+          firstName: 'William',
+          lastName: 'Harrison',
+          username: 'wh@willy.com'
+        }));
+      });
+
+      describe('on success', () => {
+        beforeEach(() => {
+          const user = fixture.debugElement.injector.get(UserService);
+          spyOn(user, 'save').and.returnValue(Observable.of({}));
+        });
+
+        it('displays a snack bar message', () => {
+          const snackBar = fixture.debugElement.injector.get(MdSnackBar);
+          spyOn(snackBar, 'open');
+          component.save();
+          expect(snackBar.open).toHaveBeenCalledTimes(1);
+          expect(snackBar.open).toHaveBeenCalledWith('Success', 'User profile has been updated', { duration: 3000 });
+        });
+
+        it('navigates to the previous view', () => {
+          const location = fixture.debugElement.injector.get(Location);
+          spyOn(location, 'back');
+          component.save();
+          expect(location.back).toHaveBeenCalledTimes(1);
+        });
+      });
+
+      describe('on failure', () => {
+        it('sets an error message', () => {
+          const user = fixture.debugElement.injector.get(UserService);
+          spyOn(user, 'save').and.returnValue(Observable.throw({
+            json: function() { return { reason: 'I am an error' }; }
+          }));
+          component.save();
+          expect(component.errorMessage).toEqual('I am an error');
+        });
+      });
+    });
+
+    describe('new user', () => {
+      beforeEach(() => {
+        route.testParams = { id: 'new' };
+        component.ngOnInit();
+      });
+
+      it('saves the value', () => {
+        const expectedUser = new User();
+        expectedUser.firstName = 'William';
+        expectedUser.lastName = 'Harrison';
+        expectedUser.username = 'wh@willy.com';
+        const user = fixture.debugElement.injector.get(UserService);
+        spyOn(user, 'save').and.returnValue(Observable.of({}));
+        component.firstName = 'William';
+        component.lastName = 'Harrison';
+        component.username = 'wh@willy.com';
+        component.save();
+        expect(user.save).toHaveBeenCalledTimes(1);
+        expect(user.save).toHaveBeenCalledWith(expectedUser);
+      });
+
+      describe('on success', () => {
+        beforeEach(() => {
+          const user = fixture.debugElement.injector.get(UserService);
+          spyOn(user, 'save').and.returnValue(Observable.of({}));
+        });
+
+        it('displays a snack bar message', () => {
+          const snackBar = fixture.debugElement.injector.get(MdSnackBar);
+          spyOn(snackBar, 'open');
+          component.save();
+          expect(snackBar.open).toHaveBeenCalledTimes(1);
+          expect(snackBar.open).toHaveBeenCalledWith('Success', 'New user has been created', { duration: 3000 });
+        });
+
+        it('navigates to the profile view', () => {
+          const location = fixture.debugElement.injector.get(Location);
+          spyOn(location, 'back');
+          component.save();
+          expect(location.back).toHaveBeenCalledTimes(1);
+        });
+      });
+
+      describe('on failure', () => {
+        it('sets an error message', () => {
+          const user = fixture.debugElement.injector.get(UserService);
+          spyOn(user, 'save').and.returnValue(Observable.throw({
+            json: function() { return { reason: 'I am an error' }; }
+          }));
+          component.save();
+          expect(component.errorMessage).toEqual('I am an error');
+        });
       });
     });
   });
