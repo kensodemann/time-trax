@@ -397,11 +397,13 @@ describe('ProfileComponent', () => {
         expectedUser.firstName = 'William';
         expectedUser.lastName = 'Harrison';
         expectedUser.username = 'wh@willy.com';
+        expectedUser.password = 'IAmTheRealWilly';
         const user = fixture.debugElement.injector.get(UserService);
         spyOn(user, 'save').and.returnValue(Observable.of({}));
         component.firstName = 'William';
         component.lastName = 'Harrison';
         component.username = 'wh@willy.com';
+        component.password = 'IAmTheRealWilly';
         component.save();
         expect(user.save).toHaveBeenCalledTimes(1);
         expect(user.save).toHaveBeenCalledWith(expectedUser);

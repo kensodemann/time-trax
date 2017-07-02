@@ -55,9 +55,7 @@ export class ProfileComponent implements OnInit {
   }
 
   save(): void {
-    this.user.firstName = this.firstName;
-    this.user.lastName = this.lastName;
-    this.user.username = this.username;
+    this.updateUser();
     this.users.save(this.user)
       .catch(res => {
         this.errorMessage = this.error.getMessage(res);
@@ -98,6 +96,15 @@ export class ProfileComponent implements OnInit {
       this.buttonLabel = 'Save Changes';
       this.title = 'Edit User Profile';
       this.allowPasswordEntry = false;
+    }
+  }
+
+  private updateUser() {
+    this.user.firstName = this.firstName;
+    this.user.lastName = this.lastName;
+    this.user.username = this.username;
+    if (this.allowPasswordEntry) {
+      this.user.password = this.password;
     }
   }
 }
