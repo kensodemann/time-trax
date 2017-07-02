@@ -101,9 +101,9 @@ describe('ProfileComponent', () => {
         expect(component.buttonLabel).toEqual('Save Changes');
       });
 
-      it('does not allow password entry', () => {
+      it('sets the mode to "currentUser"', () => {
         component.ngOnInit();
-        expect(component.allowPasswordEntry).toEqual(false);
+        expect(component.mode).toEqual('currentUser');
       });
 
       it('gets the current user', () => {
@@ -166,9 +166,9 @@ describe('ProfileComponent', () => {
         expect(component.buttonLabel).toEqual('Save Changes');
        });
 
-      it('does not allow password entry', () => {
+      it('sets the mode to "otherUser"', () => {
         component.ngOnInit();
-        expect(component.allowPasswordEntry).toEqual(false);
+        expect(component.mode).toEqual('otherUser');
       });
 
       it('gets the user information for that ID', () => {
@@ -218,9 +218,9 @@ describe('ProfileComponent', () => {
         expect(component.buttonLabel).toEqual('Create User');
        });
 
-      it('does not allow password entry', () => {
+      it('sets the mode to "newUser"', () => {
         component.ngOnInit();
-        expect(component.allowPasswordEntry).toEqual(true);
+        expect(component.mode).toEqual('newUser');
       });
 
       it('does not attempt to get a user', () => {

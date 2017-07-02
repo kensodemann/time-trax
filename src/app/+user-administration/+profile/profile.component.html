@@ -29,7 +29,7 @@
     </div>
   </div>
 
-  <div *ngIf="allowPasswordEntry">
+  <div *ngIf="mode === 'newUser'">
     <div>
       <md-input-container>
         <input mdInput type="password" name="newPassword" placeholder="Password" [(ngModel)]="password" #pswd="ngModel" minlength="8"
@@ -65,7 +65,7 @@
 
   <div class="button-section">
     <button type="submit" md-raised-button color="primary" [disabled]="!profileForm.dirty || profileForm.invalid" (click)="save()">{{buttonLabel}}</button>
-    <a *ngIf="!allowPasswordEntry" md-raised-button color="accent" routerLink="/user-administration/change-password" skipLocationChange="true">Change Password</a>
+    <a *ngIf="mode === 'currentUser'" md-raised-button color="accent" routerLink="/user-administration/change-password" skipLocationChange="true">Change Password</a>
     <button type="button" md-button (click)="cancel()">Cancel</button>
   </div>
 </form>

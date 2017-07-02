@@ -19,8 +19,8 @@ import { User } from '../../data/models/user';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  allowPasswordEntry: boolean;
   buttonLabel: string;
+  mode: string;
   title: string;
 
   firstName: string;
@@ -85,17 +85,17 @@ export class ProfileComponent implements OnInit {
       this.successMessage = 'Your profile has been updated';
       this.buttonLabel = 'Save Changes';
       this.title = 'Your Profile';
-      this.allowPasswordEntry = false;
+      this.mode = 'currentUser';
     } else if (id === 'new') {
       this.successMessage = 'New user has been created';
       this.buttonLabel = 'Create User';
       this.title = 'Create User';
-      this.allowPasswordEntry = true;
+      this.mode = 'newUser';
     } else {
       this.successMessage = 'User profile has been updated';
       this.buttonLabel = 'Save Changes';
       this.title = 'Edit User Profile';
-      this.allowPasswordEntry = false;
+      this.mode = 'otherUser';
     }
   }
 
@@ -103,7 +103,7 @@ export class ProfileComponent implements OnInit {
     this.user.firstName = this.firstName;
     this.user.lastName = this.lastName;
     this.user.username = this.username;
-    if (this.allowPasswordEntry) {
+    if (this.mode === 'newUser') {
       this.user.password = this.password;
     }
   }
