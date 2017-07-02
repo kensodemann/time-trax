@@ -85,10 +85,10 @@ describe('ChangePasswordComponent', () => {
     it('passes the current and new password', () => {
       const user = fixture.debugElement.injector.get(UserService);
       spyOn(user, 'changePassword').and.callThrough();
-      component.password = 'MyOldPassword';
+      component.currentPassword = 'MyOldPassword';
       component.newPassword = 'MyNewPassword';
       component.changePassword();
-      expect(user.changePassword).toHaveBeenCalledWith(component.password, component.newPassword);
+      expect(user.changePassword).toHaveBeenCalledWith(component.currentPassword, component.newPassword);
     });
 
     describe('on success', () => {

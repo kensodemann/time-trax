@@ -14,10 +14,11 @@ import { UserService } from '../../data/services/user/user.service';
   styleUrls: ['./change-password.component.scss']
 })
 export class ChangePasswordComponent implements OnInit {
-  password: string;
-  newPassword: string;
-  verifyPassword: string;
   errorMessage: string;
+  currentPassword: string;
+  newPassword: string;
+  showCurrentPassword: boolean;
+  verifyPassword: string;
 
   constructor(private router: Router, private snackBar: MdSnackBar, private user: UserService, private error: ErrorMessageService) { }
 
@@ -28,7 +29,7 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   changePassword() {
-    this.user.changePassword(this.password, this.newPassword)
+    this.user.changePassword(this.currentPassword, this.newPassword)
       .catch(res => {
         this.errorMessage = this.error.getMessage(res);
         return Observable.empty();
