@@ -19,7 +19,7 @@ export class TimeTraxHttpService extends Http {
     return this.redirectIfNotLoggedIn(super.get(url, options));
   }
 
-  post(url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
+  post(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
     options = this.appendToken(options);
     options = this.appendContentTypeJson(options);
     return this.redirectIfNotLoggedIn(super.post(url, body, options));
@@ -30,7 +30,7 @@ export class TimeTraxHttpService extends Http {
     return this.redirectIfNotLoggedIn(super.delete(url, options));
   }
 
-  put(url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
+  put(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
     options = this.appendToken(options);
     options = this.appendContentTypeJson(options);
     return this.redirectIfNotLoggedIn(super.put(url, body, options));
